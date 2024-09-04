@@ -56,10 +56,9 @@ for city in cities_list:
 
 
 
-# @app.route("/")
-# def home():
-#     pass
-#
-#
-# if __name__ == '__main__':
-#     app.run(debug=False)
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5001, debug=True)
