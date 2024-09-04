@@ -5,10 +5,11 @@ body {
     margin: 0 auto;
     scroll-behavior: smooth;
     overflow-x: hidden;
+    background-color: lightgoldenrodyellow;
 }
 
 header {
-    background-color: gold;
+    background: linear-gradient(to top, #f9e79f, #f1c40f);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,6 +52,31 @@ nav a {
 .current-location {
     margin-top: 20px;
     margin-bottom: 50px;
+}
+
+.input-group {
+    width: 100%; /* has to be 100% to allow centering */ 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.input-group-text {
+    background-color: lightgoldenrodyellow;
+    border: none;
+    display: flex; 
+    justify-content: right; 
+    align-items: center; 
+    width: 50%;
+}
+
+.form-control {
+    background-color: lightgoldenrodyellow;
+    border: none;
+    display: flex; 
+    justify-content: left; 
+    align-items: center; 
+    margin-right: 35%;
 }
 
 .input-field {
@@ -134,7 +160,7 @@ nav a {
 }
 
 footer {
-    background-color: gold;
+    background: linear-gradient(to bottom, #f9e79f, #f1c40f);
     display: flex;
     justify-content: center;
     text-align: center;
