@@ -17,8 +17,13 @@ MY_LONG = 10.278610
 
 app = Flask(__name__)
 
+# Setup the Open-Meteo API client with cache and retry on error
+cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
+retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
+openmeteo = openmeteo_requests.Client(session=retry_session)
 
-#Update coordinates in CVS file
+
+# Update coordinates in CVS file
 def update_coordinates():
     df = pd.read_csv('cities_airports.csv', usecols=['City'])
     cities_list = df['City'].tolist()
@@ -53,6 +58,11 @@ def update_coordinates():
     df.to_csv('cities_airports.csv', index=False)
 
 
+def get_cities_data():
+    df = pd.read_csv('cities_airports.csv', usecols=['City', 'Latitude', 'Longitude'])
+    return df.to_dict('records')
+
+
 def get_sunshine_forecast(city, lat, lon):
     url = "https://api.open-meteo.com/v1/forecast"
     params = {
@@ -78,7 +88,6 @@ def get_sunshine_forecast(city, lat, lon):
     return pd.DataFrame(data=daily_data)
 
 
-
 # Routes
 @app.route("/")
 def home():
@@ -92,4 +101,15 @@ def about():
 
 # Main execution
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    cities = get_cities_data()
+
+    for city in cities:
+        if pd.isna(city['Latitude']) or pd.isna(city['Longitude']):
+            print(f"\nWarning: Missing coordinates for {city['City']}. Skipping forecast.")
+            continue
+
+        print(f"\nSunshine forecast for {city['City']}:")
+        forecast = get_sunshine_forecast(city['City'], city['Latitude'], city['Longitude'])
+        if forecast is not None:
+            for _, row in forecast.iterrows():
+                print(f"  {row['date'].strftime('%Y-%m-%d')}: {row['sunshine_duration']:.2f} hours of sunshine")
