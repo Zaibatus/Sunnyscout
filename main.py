@@ -168,16 +168,16 @@ def result():
         })
 
     # Add debug logging
-    app.logger.debug(f"Adjusted date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
-    app.logger.debug(f"Total cities processed: {len(cities)}")
-    app.logger.debug(f"Cities with valid forecasts: {len(city_sunshine)}")
-    app.logger.debug(f"Top 5 cities: {[city['city'] for city in top_5_cities]}")
+    # app.logger.debug(f"Adjusted date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
+    # app.logger.debug(f"Total cities processed: {len(cities)}")
+    # app.logger.debug(f"Cities with valid forecasts: {len(city_sunshine)}")
+    # app.logger.debug(f"Top 5 cities: {[city['city'] for city in top_5_cities]}")
 
-    print(f"Adjusted date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
-    print(f"Total cities processed: {len(cities)}")
-    print(f"Cities with valid forecasts: {len(city_sunshine)}")
-    print(f"Top 5 cities: {[city['city'] for city in top_5_cities]}")
-    print(f"Result data: {result_data}")
+    # print(f"Adjusted date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
+    # print(f"Total cities processed: {len(cities)}")
+    # print(f"Cities with valid forecasts: {len(city_sunshine)}")
+    # print(f"Top 5 cities: {[city['city'] for city in top_5_cities]}")
+    # print(f"Result data: {result_data}")
 
     return render_template("results.html", results=result_data, start_date=start_date.strftime('%Y-%m-%d'), end_date=end_date.strftime('%Y-%m-%d'), current_location=current_location)
 
