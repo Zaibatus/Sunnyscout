@@ -1,39 +1,51 @@
+import os
 from flask import Flask, render_template, redirect, url_for, request
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
-import os
+import pandas as pd
 import requests
 
-'''
-Make sure the required packages are installed. Type: pip3 install -r requirements.txt
-
-This will install the packages from the requirements.txt for this project.
-'''
-
-app = Flask(__name__)
-
+# Constants
 OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
-account_sid = "ACd455f42c5bf06c805b5075033b1da34a"
-auth_token = "1c3ecbe8b623d1ebaa31a67af561542a"
+ACCOUNT_SID = "ACd455f42c5bf06c805b5075033b1da34a"
+AUTH_TOKEN = "1c3ecbe8b623d1ebaa31a67af561542a"
 MY_LAT = 45.943439
 MY_LONG = 10.278610
 
-cities_list = ["Milan", "Madrid", "Berlin", "Barcelona", "London", "Rome", "Geneva"]
+app = Flask(__name__)
 
 
-def get_coordinates(city):
-    city_params = {
-        "q": city,
-        "appid": OPEN_WEATHER_API_KEY,
-    }
-
-    response = requests.get(url="http://api.openweathermap.org/geo/1.0/direct", params=city_params)
-    response.raise_for_status()
-    city_data = response.json()
-    return city_data
+# Data retrieval functions
+def get_cities_data():
+    df = pd.read_csv('cities_airports.csv', usecols=['City'])
+    return df['City'].tolist()
 
 
-#Get weather forecasting via API call
+#coordinates API function
+def get_coordinates():
+    cities_list = get_cities_data()
+    city_coordinates = {}
+    for city in cities_list:
+        city_params = {
+            "q": city,
+            "appid": OPEN_WEATHER_API_KEY,
+            "limit": 1
+        }
+        response = requests.get("http://api.openweathermap.org/geo/1.0/direct", params=city_params)
+        response.raise_for_status()
+        data = response.json()
+
+        if data:
+            city_coordinates[city] = {
+                "lat": data[0]["lat"],
+                "lon": data[0]["lon"]
+            }
+        else:
+            print(f"No coordinates found for {city}")
+
+    return city_coordinates
+
+
 def get_weather():
     weather_params = {
         "lat": MY_LAT,
@@ -41,28 +53,22 @@ def get_weather():
         "appid": OPEN_WEATHER_API_KEY,
         "cnt": 16,
     }
-
-    response = requests.get(url="https://api.openweathermap.org/data/2.5/forecast", params=weather_params)
+    response = requests.get("https://api.openweathermap.org/data/2.5/forecast", params=weather_params)
     response.raise_for_status()
-    weather_data = response.json()
-    return weather_data
+    return response.json()
 
-
-for city in cities_list:
-    city_details = get_coordinates(city)
-    city_lat = city_details[0]['lat']
-    city_long = city_details[0]['lon']
-    print(f"{city}: lat:{city_lat} lon:{city_long}")
-
-
-
+# Routes
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 @app.route("/about")
 def about():
     return render_template("about.html")
 
+
+# Main execution
 if __name__ == '__main__':
+    print(get_coordinates())
     app.run(host='0.0.0.0', port=5001, debug=True)
