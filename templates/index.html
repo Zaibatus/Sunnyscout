@@ -19,6 +19,8 @@
           <a href="{{ url_for('about') }}">About</a>
         </nav>
     </header>
+                <!-- look into Datepicker / find a better calendar! (ideally airbnb style - one calendar to choose the range)-->
+                <!-- even more ideally - a calendar that allows only e.g. 14 days in advance (a la calendly)-->
 
     <main>
         <section class="hero">
@@ -27,26 +29,25 @@
                 <h6>Tired of gloomy weather? Find the <u>sunniest</u> destinations for your weekend trip!</h6>
             </div>
             <hr>
-            <div class="current-location">
-                <div class="input-group mb-3">
-                    <label for="current-location" class="input-group-text">I'm located in: </label>  
-                    <input type="text" id="current-location" class="form-control" placeholder="Your current location" aria-label="Your current location" />
+            <form id="search-form" action="{{ url_for('result') }}" method="GET">
+                <div class="current-location">
+                    <div class="input-group mb-3">
+                        <label for="current-location" class="input-group-text">I'm located in: </label>  
+                        <input type="text" id="current-location" name="current_location" class="form-control" placeholder="Your current location" aria-label="Your current location" required />
+                    </div>
                 </div>
-            </div>
-            <div class="date-range">
-                <label for="start-date">Select Dates:</label>
-                <div class="input-field">
-                    <input type="date" id="start-date" name="start-date">
-                    <span>to</span>
-                    <input type="date" id="end-date" name="end-date">
-                </div> 
-                <!-- look into Datepicker / find a better calendar! (ideally airbnb style - one calendar to choose the range)-->
-                <!-- even more ideally - a calendar that allows only e.g. 14 days in advance (a la calendly)-->
-            </div>
-
-            <div class="search-button">
-                <button class="btn btn-warning rounded-pill px-3" type="button">Explore</button>
-            </div>
+                <div class="date-range">
+                    <label for="start-date">Select Dates:</label>
+                    <div class="input-field">
+                        <input type="date" id="start-date" name="start_date" required>
+                        <span>to</span>
+                        <input type="date" id="end-date" name="end_date" required>
+                    </div> 
+                </div>
+                <div class="search-button">
+                    <button id="explore-button" class="btn btn-warning rounded-pill px-3" type="button">Explore</button>
+                </div>
+            </form>
         </section>
 
 
@@ -103,18 +104,27 @@
         
     </main>
 
+
     <footer>
         <p>&copy; 2024 PLACEHOLDER</p>
     </footer>
 
-
-
-
-    <!-- <div class="container">
-        Plan your trip
-    </div> -->
-
-
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const exploreButton = document.getElementById('explore-button');
+        const searchForm = document.getElementById('search-form');
+    
+        exploreButton.addEventListener('click', function() {
+            // Check if all required fields are filled
+            if (searchForm.checkValidity()) {
+                searchForm.submit();
+            } else {
+                // If not all fields are filled, trigger HTML5 validation
+                searchForm.reportValidity();
+                }
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
