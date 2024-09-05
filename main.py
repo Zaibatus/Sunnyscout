@@ -113,3 +113,5 @@ if __name__ == '__main__':
         if forecast is not None:
             for _, row in forecast.iterrows():
                 print(f"  {row['date'].strftime('%Y-%m-%d')}: {row['sunshine_duration']:.2f} hours of sunshine")
+
+    app.run(host='0.0.0.0', port=5001, debug=True)
