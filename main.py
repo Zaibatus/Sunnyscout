@@ -1,10 +1,10 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request
 import pandas as pd
+import requests
+from flask import Flask, render_template, redirect, url_for, request
 import openmeteo_requests
 import requests_cache
 from retry_requests import retry
-import requests
 
 # Constants
 OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
@@ -21,11 +21,10 @@ retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
 openmeteo = openmeteo_requests.Client(session=retry_session)
 
 
-# Update coordinates in CVS file
+# Data processing functions
 def update_coordinates():
     df = pd.read_csv('cities_airports.csv', usecols=['City'])
     cities_list = df['City'].tolist()
-
     city_coordinates = {}
 
     for city in cities_list:
@@ -39,7 +38,6 @@ def update_coordinates():
             response.raise_for_status()
             data = response.json()
 
-            # If data is available, extract latitude and longitude
             if data:
                 city_coordinates[city] = {
                     "lat": data[0]["lat"],
@@ -52,7 +50,6 @@ def update_coordinates():
 
     df['Latitude'] = df['City'].map(lambda x: city_coordinates.get(x, {}).get('lat'))
     df['Longitude'] = df['City'].map(lambda x: city_coordinates.get(x, {}).get('lon'))
-
     df.to_csv('cities_airports.csv', index=False)
 
 
@@ -76,17 +73,20 @@ def get_sunshine_forecast(city, lat, lon):
     daily = response.Daily()
     daily_sunshine_duration = daily.Variables(0).ValuesAsNumpy()
 
-    daily_data = {"date": pd.date_range(
-        start=pd.to_datetime(daily.Time(), unit="s", utc=True),
-        end=pd.to_datetime(daily.TimeEnd(), unit="s", utc=True),
-        freq=pd.Timedelta(seconds=daily.Interval()),
-        inclusive="left"
-    ), "sunshine_duration": daily_sunshine_duration / 3600}
+    daily_data = {
+        "date": pd.date_range(
+            start=pd.to_datetime(daily.Time(), unit="s", utc=True),
+            end=pd.to_datetime(daily.TimeEnd(), unit="s", utc=True),
+            freq=pd.Timedelta(seconds=daily.Interval()),
+            inclusive="left"
+        ),
+        "sunshine_duration": daily_sunshine_duration / 3600
+    }
 
     return pd.DataFrame(data=daily_data)
 
 
-# Routes
+# Flask routes
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -97,8 +97,9 @@ def about():
     return render_template("about.html")
 
 
-# Main execution
-if __name__ == '__main__':
+# Calculate the hours/day average for every city, Exclude cities that has an average below 11, Calculate total hrs of
+# sunlight for each remaining city, Pick the top 5 cities
+def sunlight_ranking():
     cities = get_cities_data()
     city_sunshine = []
 
@@ -128,4 +129,7 @@ if __name__ == '__main__':
         print(f"   Average sunshine: {city_data['avg_sunshine']:.2f} hours/day")
         print(f"   Total sunshine: {city_data['total_sunshine']:.2f} hours")
 
+
+if __name__ == '__main__':
+    sunlight_ranking()
     app.run(host='0.0.0.0', port=5001, debug=True)
