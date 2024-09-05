@@ -2,9 +2,9 @@ import os
 import pandas as pd
 import requests
 from flask import Flask, render_template, redirect, url_for, request
-import openmeteo_requests
-import requests_cache
-from retry_requests import retry
+import openmeteo_requests #should we add this to the requirements.txt? 
+import requests_cache #should we add this to the requirements.txt? 
+from retry_requests import retry #should we add this to the requirements.txt? 
 
 # Constants
 OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
@@ -66,22 +66,35 @@ def get_sunshine_forecast(city, lat, lon):
         "forecast_days": 16
     }
 
-    response = openmeteo.weather_api(url, params=params)[0]
+    try:
+        app.logger.debug(f"Requesting forecast for {city} with params: {params}")
+        response = openmeteo.weather_api(url, params=params)
+        app.logger.debug(f"Received response for {city}")
 
-    daily = response.Daily()
-    daily_sunshine_duration = daily.Variables(0).ValuesAsNumpy()
+        if not response:
+            app.logger.error(f"Empty response for {city}")
+            return None
 
-    daily_data = {
-        "date": pd.date_range(
-            start=pd.to_datetime(daily.Time(), unit="s", utc=True),
-            end=pd.to_datetime(daily.TimeEnd(), unit="s", utc=True),
-            freq=pd.Timedelta(seconds=daily.Interval()),
-            inclusive="left"
-        ),
-        "sunshine_duration": daily_sunshine_duration / 3600
-    }
+        daily = response[0].Daily()
+        daily_sunshine_duration = daily.Variables(0).ValuesAsNumpy()
 
-    return pd.DataFrame(data=daily_data)
+        app.logger.debug(f"Sunshine duration for {city}: {daily_sunshine_duration}")
+
+        daily_data = {
+            "date": pd.date_range(
+                start=pd.to_datetime(daily.Time(), unit="s", utc=True),
+                end=pd.to_datetime(daily.TimeEnd(), unit="s", utc=True),
+                freq=pd.Timedelta(seconds=daily.Interval()),
+                inclusive="left"
+            ).tz_convert('UTC'),
+            "sunshine_duration": daily_sunshine_duration / 3600
+        }
+
+        app.logger.debug(f"Successful forecast retrieval for {city}")
+        return pd.DataFrame(data=daily_data)
+    except Exception as e:
+        app.logger.error(f"Error getting forecast for {city}: {str(e)}")
+        return None
 
 
 # Flask routes
@@ -97,27 +110,50 @@ def about():
 
 @app.route("/results")
 def result():
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    current_location = request.args.get('current_location')
+
+    if not all([start_date, end_date, current_location]):
+        return redirect(url_for('home'))
+
+    start_date = pd.to_datetime(start_date).tz_localize('UTC')
+    end_date = pd.to_datetime(end_date).tz_localize('UTC')
+    
+    # Adjust date range to be within the next 16 days
+    today = pd.Timestamp.now().tz_localize('UTC').floor('D')
+    forecast_end = today + pd.Timedelta(days=15)
+    start_date = max(start_date, today)
+    end_date = min(end_date, forecast_end)
+    date_range = pd.date_range(start=start_date, end=end_date, tz='UTC')
+
     cities = get_cities_data()
     city_sunshine = []
 
     for city in cities:
         if pd.isna(city['Latitude']) or pd.isna(city['Longitude']):
-            # Instead of printing, we could log this information
             app.logger.warning(f"Missing coordinates for {city['City']}. Skipping forecast.")
             continue
 
+        app.logger.debug(f"Fetching forecast for {city['City']}")
         forecast = get_sunshine_forecast(city['City'], city['Latitude'], city['Longitude'])
         if forecast is not None:
-            avg_sunshine = forecast['sunshine_duration'].mean()
-            total_sunshine = forecast['sunshine_duration'].sum()
+            app.logger.debug(f"Forecast data for {city['City']}: {forecast.to_dict()}")
+            forecast_in_range = forecast[forecast['date'].isin(date_range)]
+            if not forecast_in_range.empty:
+                avg_sunshine = forecast_in_range['sunshine_duration'].mean()
+                total_sunshine = forecast_in_range['sunshine_duration'].sum()
 
-            if avg_sunshine >= 11:
                 city_sunshine.append({
                     'city': city['City'],
                     'avg_sunshine': avg_sunshine,
                     'total_sunshine': total_sunshine
                 })
-
+                app.logger.debug(f"Added {city['City']} to results with avg_sunshine: {avg_sunshine}, total_sunshine: {total_sunshine}")
+            else:
+                app.logger.debug(f"No data in range for {city['City']}. Date range: {date_range}, Forecast dates: {forecast['date'].tolist()}")
+        else:
+            app.logger.debug(f"No forecast data for {city['City']}")
     # Sort cities by total sunshine and get top 5
     top_5_cities = sorted(city_sunshine, key=lambda x: x['total_sunshine'], reverse=True)[:5]
 
@@ -131,7 +167,19 @@ def result():
             'total_sunshine': f"{city_data['total_sunshine']:.2f}"
         })
 
-    return render_template("results.html", results=result_data)
+    # Add debug logging
+    app.logger.debug(f"Adjusted date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
+    app.logger.debug(f"Total cities processed: {len(cities)}")
+    app.logger.debug(f"Cities with valid forecasts: {len(city_sunshine)}")
+    app.logger.debug(f"Top 5 cities: {[city['city'] for city in top_5_cities]}")
+
+    print(f"Adjusted date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
+    print(f"Total cities processed: {len(cities)}")
+    print(f"Cities with valid forecasts: {len(city_sunshine)}")
+    print(f"Top 5 cities: {[city['city'] for city in top_5_cities]}")
+    print(f"Result data: {result_data}")
+
+    return render_template("results.html", results=result_data, start_date=start_date.strftime('%Y-%m-%d'), end_date=end_date.strftime('%Y-%m-%d'), current_location=current_location)
 
 
 if __name__ == '__main__':

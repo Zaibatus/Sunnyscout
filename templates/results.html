@@ -16,7 +16,7 @@
             <h3><a href="{{ url_for('home') }}">PLACEHOLDER ☀️</a></h3>
         </div>
         <nav>
-          <a href="#">About</a>
+          <a href="{{ url_for('about') }}">About</a>
         </nav>
     </header>
 
@@ -24,6 +24,8 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>Top 5 Sunniest Cities ☀</h1>
+                <p>For the period: {{ start_date }} to {{ end_date }}</p>
+                <p>Current location: {{ current_location }}</p>
                 <table class="table table-striped">
                     <thead>
                         <tr>
