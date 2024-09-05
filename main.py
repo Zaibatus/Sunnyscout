@@ -10,8 +10,6 @@ from retry_requests import retry
 OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
 ACCOUNT_SID = "ACd455f42c5bf06c805b5075033b1da34a"
 AUTH_TOKEN = "1c3ecbe8b623d1ebaa31a67af561542a"
-MY_LAT = 45.943439
-MY_LONG = 10.278610
 
 app = Flask(__name__)
 
@@ -97,15 +95,15 @@ def about():
     return render_template("about.html")
 
 
-# Calculate the hours/day average for every city, Exclude cities that has an average below 11, Calculate total hrs of
-# sunlight for each remaining city, Pick the top 5 cities
-def sunlight_ranking():
+@app.route("/results")
+def result():
     cities = get_cities_data()
     city_sunshine = []
 
     for city in cities:
         if pd.isna(city['Latitude']) or pd.isna(city['Longitude']):
-            print(f"\nWarning: Missing coordinates for {city['City']}. Skipping forecast.")
+            # Instead of printing, we could log this information
+            app.logger.warning(f"Missing coordinates for {city['City']}. Skipping forecast.")
             continue
 
         forecast = get_sunshine_forecast(city['City'], city['Latitude'], city['Longitude'])
@@ -123,13 +121,18 @@ def sunlight_ranking():
     # Sort cities by total sunshine and get top 5
     top_5_cities = sorted(city_sunshine, key=lambda x: x['total_sunshine'], reverse=True)[:5]
 
-    print("\nTop 5 Sunniest Cities:")
+    # Prepare data for the template
+    result_data = []
     for rank, city_data in enumerate(top_5_cities, 1):
-        print(f"{rank}. {city_data['city']}:")
-        print(f"   Average sunshine: {city_data['avg_sunshine']:.2f} hours/day")
-        print(f"   Total sunshine: {city_data['total_sunshine']:.2f} hours")
+        result_data.append({
+            'rank': rank,
+            'city': city_data['city'],
+            'avg_sunshine': f"{city_data['avg_sunshine']:.2f}",
+            'total_sunshine': f"{city_data['total_sunshine']:.2f}"
+        })
+
+    return render_template("results.html", results=result_data)
 
 
 if __name__ == '__main__':
-    sunlight_ranking()
     app.run(host='0.0.0.0', port=5001, debug=True)
