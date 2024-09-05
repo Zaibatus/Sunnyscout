@@ -33,6 +33,9 @@
                             <th>City</th>
                             <th>Average Sunshine (hours/day)</th>
                             <th>Total Sunshine (hours)</th>
+                            {% if show_distance %}
+                            <th>Distance from {{ current_location }} (km)</th>
+                            {% endif %}
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +45,9 @@
                             <td>{{ city.city }}</td>
                             <td>{{ city.avg_sunshine }}</td>
                             <td>{{ city.total_sunshine }}</td>
+                            {% if show_distance %}
+                            <td>{{ city.distance if city.distance else 'N/A' }}</td>
+                            {% endif %}
                         </tr>
                         {% endfor %}
                     </tbody>

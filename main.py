@@ -1,10 +1,11 @@
 import os
 import pandas as pd
 import requests
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 import openmeteo_requests #should we add this to the requirements.txt? 
 import requests_cache #should we add this to the requirements.txt? 
 from retry_requests import retry #should we add this to the requirements.txt? 
+from math import radians, sin, cos, sqrt, atan2
 
 # Constants
 OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
@@ -96,6 +97,24 @@ def get_sunshine_forecast(city, lat, lon):
         app.logger.error(f"Error getting forecast for {city}: {str(e)}")
         return None
 
+def haversine_distance(lat1, lon1, lat2, lon2):
+    R = 6371  # Earth's radius in kilometers
+
+    lat1, lon1, lat2, lon2 = map(radians, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1-a))
+    distance = R * c
+
+    return round(distance, 2)
+
+@app.route('/get_cities')
+def get_cities():
+    df = pd.read_csv('europe_cities.csv')
+    cities = df['city'].tolist()
+    return jsonify(cities)
 
 # Flask routes
 @app.route("/")
@@ -130,6 +149,12 @@ def result():
     cities = get_cities_data()
     city_sunshine = []
 
+    # Get current location coordinates
+    current_city = next((city for city in cities if city['City'].lower() == current_location.lower()), None)
+    current_lat, current_lon = None, None
+    if current_city:
+        current_lat, current_lon = current_city['Latitude'], current_city['Longitude']
+
     for city in cities:
         if pd.isna(city['Latitude']) or pd.isna(city['Longitude']):
             app.logger.warning(f"Missing coordinates for {city['City']}. Skipping forecast.")
@@ -144,42 +169,40 @@ def result():
                 avg_sunshine = forecast_in_range['sunshine_duration'].mean()
                 total_sunshine = forecast_in_range['sunshine_duration'].sum()
 
-                city_sunshine.append({
+                city_data = {
                     'city': city['City'],
                     'avg_sunshine': avg_sunshine,
                     'total_sunshine': total_sunshine
-                })
+                }
+
+                if current_lat and current_lon:
+                    distance = haversine_distance(current_lat, current_lon, city['Latitude'], city['Longitude'])
+                    city_data['distance'] = distance
+
+                city_sunshine.append(city_data)
                 app.logger.debug(f"Added {city['City']} to results with avg_sunshine: {avg_sunshine}, total_sunshine: {total_sunshine}")
             else:
                 app.logger.debug(f"No data in range for {city['City']}. Date range: {date_range}, Forecast dates: {forecast['date'].tolist()}")
         else:
             app.logger.debug(f"No forecast data for {city['City']}")
+
     # Sort cities by total sunshine and get top 5
     top_5_cities = sorted(city_sunshine, key=lambda x: x['total_sunshine'], reverse=True)[:5]
 
     # Prepare data for the template
     result_data = []
     for rank, city_data in enumerate(top_5_cities, 1):
-        result_data.append({
+        result = {
             'rank': rank,
             'city': city_data['city'],
             'avg_sunshine': f"{city_data['avg_sunshine']:.2f}",
             'total_sunshine': f"{city_data['total_sunshine']:.2f}"
-        })
+        }
+        if 'distance' in city_data:
+            result['distance'] = f"{city_data['distance']:.2f}"
+        result_data.append(result)
 
-    # Add debug logging
-    # app.logger.debug(f"Adjusted date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
-    # app.logger.debug(f"Total cities processed: {len(cities)}")
-    # app.logger.debug(f"Cities with valid forecasts: {len(city_sunshine)}")
-    # app.logger.debug(f"Top 5 cities: {[city['city'] for city in top_5_cities]}")
-
-    # print(f"Adjusted date range: {start_date.strftime('%Y-%m-%d')} to {end_date.strftime('%Y-%m-%d')}")
-    # print(f"Total cities processed: {len(cities)}")
-    # print(f"Cities with valid forecasts: {len(city_sunshine)}")
-    # print(f"Top 5 cities: {[city['city'] for city in top_5_cities]}")
-    # print(f"Result data: {result_data}")
-
-    return render_template("results.html", results=result_data, start_date=start_date.strftime('%Y-%m-%d'), end_date=end_date.strftime('%Y-%m-%d'), current_location=current_location)
+    return render_template("results.html", results=result_data, start_date=start_date.strftime('%Y-%m-%d'), end_date=end_date.strftime('%Y-%m-%d'), current_location=current_location, show_distance=current_lat is not None)
 
 
 if __name__ == '__main__':
