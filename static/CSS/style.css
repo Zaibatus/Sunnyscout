@@ -160,7 +160,7 @@ nav a {
 }
 
 footer {
-    background: linear-gradient(to bottom, #f9e79f, #f1c40f);
+    background-color: lightgoldenrodyellow;
     display: flex;
     justify-content: center;
     text-align: center;
