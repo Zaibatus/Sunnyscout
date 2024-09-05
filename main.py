@@ -1,7 +1,5 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import Integer, String, Float
 import pandas as pd
 import openmeteo_requests
 import requests_cache
@@ -102,16 +100,32 @@ def about():
 # Main execution
 if __name__ == '__main__':
     cities = get_cities_data()
+    city_sunshine = []
 
     for city in cities:
         if pd.isna(city['Latitude']) or pd.isna(city['Longitude']):
             print(f"\nWarning: Missing coordinates for {city['City']}. Skipping forecast.")
             continue
 
-        print(f"\nSunshine forecast for {city['City']}:")
         forecast = get_sunshine_forecast(city['City'], city['Latitude'], city['Longitude'])
         if forecast is not None:
-            for _, row in forecast.iterrows():
-                print(f"  {row['date'].strftime('%Y-%m-%d')}: {row['sunshine_duration']:.2f} hours of sunshine")
+            avg_sunshine = forecast['sunshine_duration'].mean()
+            total_sunshine = forecast['sunshine_duration'].sum()
+
+            if avg_sunshine >= 11:
+                city_sunshine.append({
+                    'city': city['City'],
+                    'avg_sunshine': avg_sunshine,
+                    'total_sunshine': total_sunshine
+                })
+
+    # Sort cities by total sunshine and get top 5
+    top_5_cities = sorted(city_sunshine, key=lambda x: x['total_sunshine'], reverse=True)[:5]
+
+    print("\nTop 5 Sunniest Cities:")
+    for rank, city_data in enumerate(top_5_cities, 1):
+        print(f"{rank}. {city_data['city']}:")
+        print(f"   Average sunshine: {city_data['avg_sunshine']:.2f} hours/day")
+        print(f"   Total sunshine: {city_data['total_sunshine']:.2f} hours")
 
     app.run(host='0.0.0.0', port=5001, debug=True)
