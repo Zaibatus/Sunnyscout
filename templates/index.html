@@ -126,5 +126,37 @@
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startDate = document.getElementById('start-date');
+        const endDate = document.getElementById('end-date');
+
+        // Set min date to today
+        const today = new Date().toISOString().split('T')[0];
+        startDate.min = today;
+        endDate.min = today;
+
+        // Set max date to 16 days from today
+        const maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() + 15);
+        const maxDateString = maxDate.toISOString().split('T')[0];
+        startDate.max = maxDateString;
+        endDate.max = maxDateString;
+
+        // Update end date min when start date changes
+        startDate.addEventListener('change', function() {
+            endDate.min = this.value;
+            const newMaxDate = new Date(this.value);
+            newMaxDate.setDate(newMaxDate.getDate() + 15);
+            const newMaxDateString = newMaxDate.toISOString().split('T')[0];
+            endDate.max = newMaxDateString > maxDateString ? maxDateString : newMaxDateString;
+        });
+
+        // Update start date max when end date changes
+        endDate.addEventListener('change', function() {
+            startDate.max = this.value;
+        });
+    });
+    </script>
 </body>
 </html>
