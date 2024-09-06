@@ -72,7 +72,7 @@ def update_iata_codes():
 
 
 def get_cities_data():
-    df = pd.read_csv('cities_airports.csv', usecols=['City', 'Latitude', 'Longitude'])
+    df = pd.read_csv('cities_airports.csv', usecols=['City', 'Latitude', 'Longitude', 'IATA_Code', 'Country', 'Island', 'Capital', 'EU', 'Schengen'])
     return df.to_dict('records')
 
 
@@ -154,6 +154,7 @@ def result():
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
     current_location = request.args.get('current_location')
+    preferences = request.args.get('preferences', '').split(',')
 
     if not all([start_date, end_date, current_location]):
         return redirect(url_for('home'))
@@ -169,19 +170,25 @@ def result():
     date_range = pd.date_range(start=start_date, end=end_date, tz='UTC')
 
     cities = get_cities_data()
+    
+    # Filter cities based on preferences
+    filtered_cities = filter_cities_by_preferences(cities, preferences)
+    
     city_sunshine = []
 
     # Get current location coordinates
-    current_city = next((city for city in cities if city['City'].lower() == current_location.lower()), None)
-    current_lat, current_lon = None, None
-    if current_city:
-        current_lat, current_lon = current_city['Latitude'], current_city['Longitude']
+    europe_cities_df = pd.read_csv('europe_cities.csv')
+    current_city = europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].iloc[0] if not europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].empty else None
+    if current_city is not None:
+        current_lat, current_lon = current_city['lat'], current_city['lng']
+    else:
+        current_lat, current_lon = None, None
 
-    for city in cities:
+    for city in filtered_cities:
         if pd.isna(city['Latitude']) or pd.isna(city['Longitude']):
             app.logger.warning(f"Missing coordinates for {city['City']}. Skipping forecast.")
             continue
-
+        
         app.logger.debug(f"Fetching forecast for {city['City']}")
         forecast = get_sunshine_forecast(city['City'], city['Latitude'], city['Longitude'])
         if forecast is not None:
@@ -197,13 +204,15 @@ def result():
                     'total_sunshine': total_sunshine
                 }
 
-                if current_lat and current_lon:
+                if current_lat is not None and current_lon is not None:
                     distance = haversine_distance(current_lat, current_lon, city['Latitude'], city['Longitude'])
                     city_data['distance'] = distance
+                else:
+                    city_data['distance'] = 'N/A'
 
                 city_sunshine.append(city_data)
                 app.logger.debug(
-                    f"Added {city['City']} to results with avg_sunshine: {avg_sunshine}, total_sunshine: {total_sunshine}")
+                    f"Added {city['City']} to results with avg_sunshine: {avg_sunshine}, total_sunshine: {total_sunshine}, distance: {city_data['distance']}")
             else:
                 app.logger.debug(
                     f"No data in range for {city['City']}. Date range: {date_range}, Forecast dates: {forecast['date'].tolist()}")
@@ -220,15 +229,29 @@ def result():
             'rank': rank,
             'city': city_data['city'],
             'avg_sunshine': f"{city_data['avg_sunshine']:.2f}",
-            'total_sunshine': f"{city_data['total_sunshine']:.2f}"
+            'total_sunshine': f"{city_data['total_sunshine']:.2f}",
+            'distance': f"{city_data['distance']}"
         }
-        if 'distance' in city_data:
-            result['distance'] = f"{city_data['distance']:.2f}"
         result_data.append(result)
+
+    show_distance = current_lat is not None and current_lon is not None
 
     return render_template("results.html", results=result_data, start_date=start_date.strftime('%Y-%m-%d'),
                            end_date=end_date.strftime('%Y-%m-%d'), current_location=current_location,
-                           show_distance=current_lat is not None)
+                           show_distance=show_distance)
+
+
+def filter_cities_by_preferences(cities, preferences):
+    filtered_cities = cities
+    if 'island' in preferences:
+        filtered_cities = [city for city in filtered_cities if city['Island'] == 'yes']
+    if 'capital' in preferences:
+        filtered_cities = [city for city in filtered_cities if city['Capital'] == 'yes']
+    if 'eu' in preferences:
+        filtered_cities = [city for city in filtered_cities if city['EU'] == 'yes']
+    if 'schengen' in preferences:
+        filtered_cities = [city for city in filtered_cities if city['Schengen'] == 'yes']
+    return filtered_cities
 
 
 if __name__ == '__main__':

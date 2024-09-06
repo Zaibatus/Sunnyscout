@@ -1,5 +1,3 @@
-
-
 body {
     width: 100%;
     margin: 0 auto;
@@ -83,6 +81,21 @@ nav a {
     border-radius: 8px;
 }
 
+.preferences {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Align checkboxes vertically */
+    align-items: center; /* Center checkboxes */
+}
+
+.preferences div {
+    display: flex;
+    align-items: center; /* Align items horizontally */
+}
+
+.preferences label {
+    margin-left: 8px; /* Spacing between checkbox and label */
+}
 
 .search-button {
     margin-top: 20px;
