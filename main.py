@@ -2,13 +2,17 @@ import os
 import pandas as pd
 import requests
 from flask import Flask, render_template, redirect, url_for, request, jsonify
-import openmeteo_requests #should we add this to the requirements.txt? 
-import requests_cache #should we add this to the requirements.txt? 
-from retry_requests import retry #should we add this to the requirements.txt? 
+import openmeteo_requests  # should we add this to the requirements.txt?
+import requests_cache  # should we add this to the requirements.txt?
+from retry_requests import retry  # should we add this to the requirements.txt?
 from math import radians, sin, cos, sqrt, atan2
+from requests.exceptions import RequestException
+import time
+from flight_search import FlightSearch
 
 # Constants
 OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
+
 ACCOUNT_SID = "ACd455f42c5bf06c805b5075033b1da34a"
 AUTH_TOKEN = "1c3ecbe8b623d1ebaa31a67af561542a"
 
@@ -50,6 +54,21 @@ def update_coordinates():
     df['Latitude'] = df['City'].map(lambda x: city_coordinates.get(x, {}).get('lat'))
     df['Longitude'] = df['City'].map(lambda x: city_coordinates.get(x, {}).get('lon'))
     df.to_csv('cities_airports.csv', index=False)
+
+
+def update_iata_codes():
+    flight_search = FlightSearch()
+    df = pd.read_csv('cities_airports.csv')
+
+    iata_codes = []
+    for city in df['City']:
+        iata_code = flight_search.get_destination_code(city)
+        iata_codes.append(iata_code)
+        time.sleep(1)  # Add a delay to avoid rate limiting
+
+    df['IATA_Code'] = iata_codes
+    df.to_csv('cities_airports.csv', index=False)
+    print("IATA codes have been added to the CSV file.")
 
 
 def get_cities_data():
@@ -97,6 +116,7 @@ def get_sunshine_forecast(city, lat, lon):
         app.logger.error(f"Error getting forecast for {city}: {str(e)}")
         return None
 
+
 def haversine_distance(lat1, lon1, lat2, lon2):
     R = 6371  # Earth's radius in kilometers
 
@@ -104,17 +124,19 @@ def haversine_distance(lat1, lon1, lat2, lon2):
     dlat = lat2 - lat1
     dlon = lon2 - lon1
 
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * atan2(sqrt(a), sqrt(1-a))
+    a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
     distance = R * c
 
     return round(distance, 2)
+
 
 @app.route('/get_cities')
 def get_cities():
     df = pd.read_csv('europe_cities.csv')
     cities = df['city'].tolist()
     return jsonify(cities)
+
 
 # Flask routes
 @app.route("/")
@@ -138,7 +160,7 @@ def result():
 
     start_date = pd.to_datetime(start_date).tz_localize('UTC')
     end_date = pd.to_datetime(end_date).tz_localize('UTC')
-    
+
     # Adjust date range to be within the next 16 days
     today = pd.Timestamp.now().tz_localize('UTC').floor('D')
     forecast_end = today + pd.Timedelta(days=15)
@@ -180,9 +202,11 @@ def result():
                     city_data['distance'] = distance
 
                 city_sunshine.append(city_data)
-                app.logger.debug(f"Added {city['City']} to results with avg_sunshine: {avg_sunshine}, total_sunshine: {total_sunshine}")
+                app.logger.debug(
+                    f"Added {city['City']} to results with avg_sunshine: {avg_sunshine}, total_sunshine: {total_sunshine}")
             else:
-                app.logger.debug(f"No data in range for {city['City']}. Date range: {date_range}, Forecast dates: {forecast['date'].tolist()}")
+                app.logger.debug(
+                    f"No data in range for {city['City']}. Date range: {date_range}, Forecast dates: {forecast['date'].tolist()}")
         else:
             app.logger.debug(f"No forecast data for {city['City']}")
 
@@ -202,7 +226,9 @@ def result():
             result['distance'] = f"{city_data['distance']:.2f}"
         result_data.append(result)
 
-    return render_template("results.html", results=result_data, start_date=start_date.strftime('%Y-%m-%d'), end_date=end_date.strftime('%Y-%m-%d'), current_location=current_location, show_distance=current_lat is not None)
+    return render_template("results.html", results=result_data, start_date=start_date.strftime('%Y-%m-%d'),
+                           end_date=end_date.strftime('%Y-%m-%d'), current_location=current_location,
+                           show_distance=current_lat is not None)
 
 
 if __name__ == '__main__':
