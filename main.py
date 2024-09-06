@@ -174,11 +174,26 @@ def result():
     
     # Get current location coordinates
     europe_cities_df = pd.read_csv('europe_cities.csv')
+    airports_df = pd.read_csv('cities_airports.csv')
+
     current_city = europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].iloc[0] if not europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].empty else None
+
     if current_city is not None:
         current_lat, current_lon = current_city['lat'], current_city['lng']
+        
+        # Check if the current location is in the airports database
+        current_airport = airports_df[airports_df['City'].str.lower() == current_location.lower()]
+        
+        if current_airport.empty:
+            # Find the closest airport
+            closest_city, closest_airport_code = find_closest_airport(current_lat, current_lon, airports_df)
+            current_location_code = closest_airport_code
+            print(f"No airport found for {current_location}. Using closest airport: {closest_city} ({closest_airport_code})")
+        else:
+            current_location_code = current_airport.iloc[0]['IATA_Code']
     else:
         current_lat, current_lon = None, None
+        current_location_code = None
 
     # Filter cities based on preferences and distance
     filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference)
@@ -227,12 +242,21 @@ def result():
     # Prepare data for the template
     result_data = []
     for rank, city_data in enumerate(top_5_cities, 1):
+        flight_search = FlightSearch()
+        destination_code = flight_search.get_destination_code(city_data['city'].split(',')[0])
+
+        if current_location_code and destination_code != "N/A" and destination_code != "Not Found":
+            kayak_link = f"https://www.kayak.com/flights/{current_location_code}-{destination_code}/{start_date.strftime('%Y-%m-%d')}/{end_date.strftime('%Y-%m-%d')}"
+        else:
+            kayak_link = None
+
         result = {
             'rank': rank,
             'city': f"{city_data['city']}, {city_data['country']}",
             'avg_sunshine': f"{city_data['avg_sunshine']:.2f}",
             'total_sunshine': f"{city_data['total_sunshine']:.2f}",
-            'distance': f"{city_data['distance']}"
+            'distance': f"{city_data['distance']}",
+            'kayak_link': kayak_link
         }
         result_data.append(result)
 
@@ -262,6 +286,12 @@ def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, 
         ]
     
     return filtered_cities
+
+
+def find_closest_airport(lat, lon, airports_df):
+    airports_df['distance'] = airports_df.apply(lambda row: haversine_distance(lat, lon, row['Latitude'], row['Longitude']), axis=1)
+    closest_airport = airports_df.loc[airports_df['distance'].idxmin()]
+    return closest_airport['City'], closest_airport['IATA_Code']
 
 
 if __name__ == '__main__':

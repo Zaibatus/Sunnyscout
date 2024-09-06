@@ -34,6 +34,7 @@
                             <th>Average Sunshine (hours/day)</th>
                             <th>Total Sunshine (hours)</th>
                             <th>Distance from {{ current_location }} (km)</th>
+                            <th>Flights</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -44,6 +45,13 @@
                             <td>{{ city.avg_sunshine }}</td>
                             <td>{{ city.total_sunshine }}</td>
                             <td>{{ city.distance if city.distance != 'N/A' else 'N/A' }}</td>
+                            <td>
+                                {% if city.kayak_link %}
+                                    <a href="{{ city.kayak_link }}" target="_blank" class="btn btn-primary btn-sm">Search Flights</a>
+                                {% else %}
+                                    <span class="text-muted">No flight search available</span>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
