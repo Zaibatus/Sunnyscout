@@ -1,313 +1,309 @@
-City,Latitude,Longitude,IATA_Code
-Aalborg,57.0462626,9.9215263,AAL
-Aarhus,56.1496278,10.2134046,Not Found
-Aberdeen,57.1482429,-2.0928095,ABR
-Adana,36.9863599,35.3252861,ADA
-Akureyri,65.68390355,-18.11217559813441,AEY
-Alanya/Gazipaşa,,,Not Found
-Ålesund,62.76712545,6.168828066313526,Not Found
-Alghero,40.5600205,8.3151473,AHO
-Alicante,38.3436365,-0.4881708,ALC
-Almería,36.8414197,-2.4628135,Not Found
-Alta,44.4970713,34.1586871,AAT
-Amasya/Merzifon,,,Not Found
-Amsterdam,52.3727598,4.8936041,AMS
-Ancona,43.6170137,13.5170982,AOI
-Andenes,69.3218204,16.1247217,ANX
-Ankara,39.9207886,32.8540482,ANK
-Antalya,36.8872942,30.7074549,AYT
-Asturias,3.0929627,-75.86173741584238,OVD
-Athens,37.9839412,23.7283052,AHN
-Bacău,46.5560493,26.9153557,Not Found
-Baku,40.3755885,49.8328009,BAK
-Banja Luka,44.7720845,17.1917651,BNX
-Barcelona,41.3828939,2.1774322,BCN
-Bardufoss,69.065637,18.5159237,BDU
-Bari,41.1257843,16.8620293,BRI
-Basel-Mulhouse-Freiburg,,,Not Found
-Batman,37.8793969,41.1235427,BAL
-Batumi,41.6509502,41.6360085,BUS
-Beauvais,49.4300997,2.0823355,Not Found
-Belfast,54.596391,-5.9301829,BFS
-Belgrade,44.8178131,20.4568974,BEG
-Bergamo,45.6944947,9.6698727,Not Found
-Bergen,60.3943055,5.3259192,BGO
-Bergerac,44.8534568,0.487531,EGC
-Berlin,52.5170365,13.3888599,BER
-Béziers,43.3426562,3.2131307,Not Found
-Biarritz,43.4832523,-1.5592776,BIQ
-Bilbao,43.2630018,-2.9350039,BIO
-Billund,55.7247018,9.1195835,BLL
-Bingöl,38.8861265,40.4972333,Not Found
-Birmingham,52.4796992,-1.9026911,BHM
-Bodø,67.2844323,14.3817466,Not Found
-Bodrum,37.0343987,27.430651,BJV
-Bologna,44.4938203,11.3426327,BLQ
-Bordeaux,44.841225,-0.5800364,BOD
-Bournemouth,50.720097,-1.8799272,BOH
-Brașov,45.6523093,25.6102746,Not Found
-Bratislava,48.1435149,17.108279,BTS
-Bremen,53.0758196,8.8071646,BRE
-Brindisi,40.6395295,17.945526,BDS
-Bristol,51.4538022,-2.5972985,BRS
-Brive-la-Gaillarde,45.1584982,1.5332389,Not Found
-Brno,49.1922443,16.6113382,BRQ
-Brussels,50.8465573,4.351697,BRU
-Bucharest,44.4361414,26.1027202,BUH
-Budapest,47.4979937,19.0403594,BUD
-Burgas,42.4936616,27.4721276,BOJ
-Bydgoszcz,53.1219648,18.0002529,BZG
-Cagliari,39.2171994,9.113311,CAG
-Cagliari,39.2171994,9.113311,CAG
-Carcassonne,43.2130358,2.3491069,CCF
-Cardiff,51.4816546,-3.1791934,CWL
-Castellón,8.3829741,-72.2000652,Not Found
-Castellón de la Plana,39.9860347,-0.0377354,Not Found
-Catania,37.5023612,15.0873718,CTA
-Châlons,45.4458331,4.9310763,Not Found
-Chania,35.5120831,24.0191544,CHQ
-Charleroi,50.4120332,4.4436244,Not Found
-Chişinău,47.0245117,28.8322923,Not Found
-Clermont-Ferrand,45.7774551,3.0819427,Not Found
-Cluj-Napoca,46.769379,23.5899542,Not Found
-Cologne/Bonn,,,Not Found
-Comiso,36.9507336,14.6074553,CIY
-Constanta,44.1767161,28.6507598,CND
-Copenhagen,55.6867243,12.5700724,CPH
-Corfu,39.591337,19.85961891873385,CFU
-Cork,51.897077,-8.4654674,ORK
-Craiova,44.3190159,23.7965614,CRA
-Crawley,51.1103444,-0.1801094,Not Found
-Crotone,39.0806223,17.127196,CRV
-Cuneo,44.389633,7.5479007,CUF
-Dalaman,36.7665315,28.8009588,DLM
-Debrecen,47.531399,21.6259782,DEB
-Denizli,37.7833152,29.0844832,DNZ
-Derry,54.9978678,-7.3213056,LDY
-Diyarbakir,37.9162222,40.2363542,DIY
-Dole,47.0921047,5.4925463,DLE
-Dortmund,51.5142273,7.4652789,DTM
-Douglas,54.149774,-4.4779021,DUG
-Dresden,51.0493286,13.7381437,DRS
-Dublin,53.3498006,-6.2602964,DBN
-Düsseldorf,51.2254018,6.7763137,Not Found
-East Midlands,,,Not Found
-Edinburgh,55.9533456,-3.1883749,EDI
-Edremit,39.597846,27.0181836,EDO
-Eindhoven,51.4392648,5.478633,EIN
-Elazığ,38.6747164,39.2227135,Not Found
-Erzincan,39.7467552,39.49103,ERC
-Erzurum,39.90632,41.2727715,ERZ
-Exeter,50.7255794,-3.5269497,EXT
-Faro,37.0162727,-7.9351771,FAE
-Forlì,44.2227278,12.041273,Not Found
-Frankfurt,50.1106444,8.6820917,FRA
-Friedrichshafen,47.6500279,9.4800858,FDH
-Fuerteventura,28.40037685,-14.004869713542156,Not Found
-Funchal,32.6496497,-16.9086783,FNC
-Ganja,40.6798083,46.3597178,KVD
-Gaziantep,37.0628317,37.3792617,GZT
-Gdańsk,54.42880315,18.79832590284685,Not Found
-Geneva,46.2017559,6.1466014,XES
-Genoa,44.40726,8.9338624,GOA
-Gibraltar,36.140807,-5.3541295,GIB
-Girona,41.9793006,2.8199439,GRO
-Glasgow,55.8609825,-4.2488787,GGW
-Gothenburg,57.7072326,11.9670171,Not Found
-Gran Canaria,27.9580004,-15.6062305376665,LPA
-Granada,37.1734995,-3.5995337,GRX
-Grozny,43.3197031,45.6934308,GRV
-Hahn,49.9632742,7.2691209,Not Found
-Hamburg,53.550341,10.000654,HAM
-Hanover,52.3744779,9.7385532,Not Found
-Harstad/Narvik,,,Not Found
-Haugesund,59.46824785,5.082761213563481,HAU
-Helsinki,60.1674881,24.9427473,HEL
-Iași,47.1615416,27.5837224,Not Found
-Ibiza,38.9743901,1.4197463178515335,IBZ
-Iğdır,39.9218784,44.0467957,Not Found
-Innsbruck,47.2654296,11.3927685,INN
-Inverness,57.4790124,-4.225739,INV
-Istanbul,41.0091982,28.9662187,IST
-İzmir,38.4224548,27.1310699,IZM
-Jerez de la Frontera,36.6816936,-6.1377402,XRY
-Jersey,49.21230655,-2.1255999596428845,JEC
-Kahramanmaraş,37.5812744,36.927509,Not Found
-Karlsruhe/Baden-Baden,,,Not Found
-Kars,40.6076749,43.0948497,KSY
-Katowice,50.2598987,19.0215852,KTW
-Kaunas,54.8982139,23.9044817,KUN
-Kayseri,38.7219011,35.4873214,ASR
-Kemi / Tornio,65.81486849999999,25.00247493664892,Not Found
-Kerry,52.5025395,-3.2573033,KIR
-Kirkenes,69.7271478,30.0448971,KKN
-Kiruna,68.166667,19.5,KRN
-Klagenfurt,46.623943,14.3075976,KLU
-Knock,54.6379431,-2.4982748,NOC
-Konya,37.872734,32.4924376,KYA
-Košice,48.7172272,21.2496774,Not Found
-Krakow,50.0619474,19.9368564,KRK
-Kristiansand,58.0856276,7.93185802875815,KRS
-Kütahya,39.4199106,29.9857886,Not Found
-Kutaisi,42.2716078,42.7054475,KUT
-La Palma,28.6552318,-17.85732234254766,NDO
-La Rochelle,46.1591126,-1.1520434,LRH
-Lakselv,70.0524983,24.9606571,LKL
-Lamezia Terme,38.9645069,16.3021451,SUF
-Lampedusa,35.511134150000004,12.59629135962961,LMP
-Lanzarote,29.03970805,-13.636291608604138,Not Found
-Larnaca,34.9236095,33.6236184,LCA
-Las Palmas,28.1288694,-15.4349015,LPA
-Leeds,53.7974185,-1.5437941,LBA
-Leipzig,51.3406321,12.3747329,LEJ
-Lille,50.6365654,3.0635282,LIL
-Limoges,45.8354243,1.2644847,LIG
-Linz,48.3059078,14.286198,LNZ
-Lisbon,38.7077507,-9.1365919,LIS
-Liverpool,53.4071991,-2.99168,LPL
-Ljubljana,46.0500268,14.5069289,LJU
-Łódź,51.7687323,19.4569911,Not Found
-London,51.5073219,-0.1276474,LON
-Longyearbyen,78.2231558,15.6463656,LYR
-Lourdes/Tarbes,,,Not Found
-Lublin,51.250559,22.5701022,LUZ
-Luleå,65.5831187,22.1459535,Not Found
-Luqa,35.859653,14.4892913,Not Found
-Luxembourg City,49.6112768,6.129799,Not Found
-Lyon,45.7578137,4.8320114,LYS
-Maastricht,50.8512438,5.6909768,MST
-Madrid,40.4167047,-3.7035825,MAD
-Málaga,36.7213028,-4.4216366,Not Found
-Malatya,38.3488506,38.3189466,MLX
-Malmö,55.6052931,13.0001566,Not Found
-Malta,35.90221125,14.413771221238456,MLK
-Manchester,53.4794892,-2.2451148,MAN
-Mardin,37.3205482,40.7257727,MQM
-Marseille,43.2961743,5.3699525,MRS
-Memmingen,47.9867696,10.181319,FMM
-Menorca,39.949401,4.0593888,Not Found
-Milan,45.4641943,9.1896346,MIL
-Mineralnye Vody,44.2107377,43.134969,MRV
-Molde,62.60162565,8.138620840166594,MOL
-Montpellier,43.6112422,3.8767337,MPL
-Moscow,55.7504461,37.6174943,MOW
-Munich,48.1371079,11.5753822,MUC
-Münster,51.9625101,7.6251879,Not Found
-Murcia,37.9923795,-1.1305431,MJV
-Muş,38.7322221,41.4898925,Not Found
-Nantes,47.2186371,-1.5541362,NTE
-Naples,40.8358846,14.2487679,APF
-Newcastle upon Tyne,54.9738474,-1.6131572,NCL
-Newquay,50.4134414,-5.0848836,NQY
-Nice,43.7009358,7.2683912,NCE
-Nîmes,43.8374249,4.3600687,Not Found
-Niš,43.3211301,21.8959232,Not Found
-North Nicosia,,,Not Found
-Norwich,52.6285694,1.2923049,NWI
-Nuremberg,49.453872,11.077298,Not Found
-Ohrid,41.1170203,20.8017387,OHD
-Olbia,40.9232659,9.5027442,OLB
-Olsztyn,53.7767239,20.47778052340973,QYO
-Ordu,40.9852301,37.8797732,BGJ
-Oslo,59.9133301,10.7389701,OSL
-Ostrava,49.8349139,18.2820084,OSR
-Oulu,65.0118734,25.4716809,OUL
-Paderborn,51.71895955,8.764869778177559,PAD
-Palanga,55.9229818,21.0682657,PLQ
-Palermo,38.1112268,13.3524434,PMO
-Palma de Mallorca,39.5695818,2.6500745,Not Found
-Paphos,34.7743988,32.4231586,PFO
-Paris,48.8588897,2.3200410217200766,PAR
-Parma,44.8013678,10.3280833,Not Found
-Perpignan,42.6985304,2.8953121,PGF
-Perugia,43.1119613,12.3890104,PEG
-Pescara,42.469613,14.2059269,PSR
-Pisa,43.7159395,10.4018624,PSA
-Plovdiv,42.1418541,24.7499297,PDV
-Podgorica,42.4415238,19.2621081,TGD
-Poitiers,46.5802596,0.340196,PIS
-Ponta Delgada,37.7394344,-25.6683618,PDL
-Poprad,49.0541521,20.2976401,TAT
-Porto,41.1494512,-8.6107884,BPS
-Porto Santo,33.0657845,-16.336223627136313,Not Found
-Poznań,52.4006632,16.91973259178088,Not Found
-Prague,50.0874654,14.4212535,PRG
-Pristina,42.6638771,21.1640849,PRN
-Reggio Calabria,38.1035389,15.6397556,REG
-Rennes,48.1113387,-1.6800198,RNS
-Reus,41.1555564,1.1076133,REU
-Reykjavík,64.145981,-21.9422367,Not Found
-Rhodes,36.17262995,27.919418145633188,Not Found
-Riga,56.9493977,24.1051846,DGA
-Rize,41.0248249,40.5199142,BZZ
-Rome,41.8933203,12.4829321,ROM
-Rotterdam,51.9244424,4.47775,RTM
-Rovaniemi,66.4976214,25.7192101,RVN
-Rzeszów,50.0374531,22.0047174,Not Found
-Saint Petersburg,59.938732,30.316229,LED
-Salerno,40.6803601,14.7594542,QSR
-Salzburg,47.7981346,13.0464806,SZG
-Samsun,41.2946149,36.3320596,SZF
-Sandefjord,59.07990035,10.28043216859497,ZYS
-Şanlıurfa,37.1564696,38.7921012,Not Found
-Santander,43.4620412,-3.8099719,SDR
-Santiago de Compostela,42.8804219,-8.5458608,SCQ
-Sarajevo,43.8519774,18.3866868,SJJ
-Satu Mare,47.7891763,22.8725598,SUJ
-Seville,37.3886303,-5.9953403,Not Found
-Shannon,42.1547457,-89.7398389,SNN
-Sibiu,45.7973912,24.1519202,SBZ
-Sinop,42.0265798,35.1511512,NOP
-Sivas,39.7503572,37.0145185,VAS
-Skellefteå,64.7520185,20.959339,Not Found
-Skopje,41.9960924,21.4316495,SKP
-Sofia,42.6977028,23.3217359,SOF
-Southampton,50.9025349,-1.404189,SOU
-Stavanger,58.9699509,5.7318061,SVG
-Stockholm,59.3251172,18.0710935,STO
-Strasbourg,48.584614,7.7507127,SXB
-Stuttgart,48.7784485,9.1800132,SGT
-Suceava,47.647001,26.2522599,SCV
-Szczecin,53.4301818,14.5509623,SZZ
-Tallinn,59.4372155,24.7453688,TLL
-Târgu Mureş,46.5446253,24.561196,Not Found
-Tbilisi,41.6934591,44.8014495,TBS
-Teesside,,,Not Found
-Tekirdağ,40.9781214,27.5107799,Not Found
-Tenerife,28.2935785,-16.621447121144122,TCI
-Terceira Island,,,Not Found
-Thessaloniki,40.6403167,22.9352716,SKG
-Timișoara,45.7538355,21.2257474,Not Found
-Tirana,41.3305141,19.82556285758297,TIA
-Toulon,43.1257311,5.9304919,TLN
-Toulouse,43.6044622,1.4442469,TLS
-Tours,47.3900474,0.6889268,LTL
-Trabzon,41.0062202,39.7257547,TZX
-Trapani,38.0174321,12.515992,TPS
-Treviso,45.6658505,12.2455414,Not Found
-Trieste,45.6496485,13.7772781,TRS
-Tromsø,69.651648,18.9558186,Not Found
-Trondheim,63.4305658,10.3951929,TRD
-Turin,45.0677551,7.6824892,TRN
-Turku,60.4517531,22.2670522,TKU
-Tuzla,44.5391105,18.675193,TZL
-Umeå,63.8256568,20.2630745,Not Found
-Valencia,39.4697065,-0.3763353,VLC
-Valladolid,41.6521328,-4.728562,VLL
-Valletta Luqa,,,Not Found
-Van,47.6586772,-2.7599079,Not Found
-Varna,43.2073873,27.9166653,VAR
-Växjö,56.8787183,14.8094385,Not Found
-Venice,45.4371908,12.3345898,VCE
-Verona,45.4384958,10.9924122,VRN
-Vienna,48.2083537,16.3725042,VIE
-Vigo,42.2376602,-8.7247205,VGO
-Vilnius,54.6870458,25.2829111,VNO
-Vitoria-Gasteiz,42.8465088,-2.6724025,Not Found
-Warsaw,52.2319581,21.0067249,WAW
-Weeze,51.6267298,6.2011559,Not Found
-Wrocław,51.1089776,17.0326689,Not Found
-Yerevan,40.1776245,44.5126174,EVN
-Zagreb,45.84264135,15.962231476593626,ZAG
-Zaragoza,41.6521342,-0.8809428,ZAZ
-Zurich,47.3744489,8.5410422,ZRH
+City,Latitude,Longitude,IATA_Code,Country,Island,Capital,EU,Schengen
+Aalborg,57.0462626,9.9215263,AAL,Denmark,no,no,yes,yes
+Aarhus,56.1496278,10.2134046,AAR,Denmark,no,no,yes,yes
+Aberdeen,57.1482429,-2.0928095,ABR,United Kingdom,no,no,no,no
+Adana,36.9863599,35.3252861,ADA,Turkey,no,no,no,no
+Akureyri,65.68390355,-18.1121756,AEY,Iceland,no,no,no,yes
+Alanya,36.549362,31.996994,GZP,Turkey,no,no,no,no
+Ålesund,62.76712545,6.168828066,AES,Norway,no,no,no,yes
+Alghero,40.5600205,8.3151473,AHO,Italy,yes,no,yes,yes
+Alicante,38.3436365,-0.4881708,ALC,Spain,no,no,yes,yes
+Almería,36.8414197,-2.4628135,LEI,Spain,no,no,yes,yes
+Alta,44.4970713,34.1586871,AAT,Norway,no,no,no,yes
+Amasya,40.652382,35.828819,MZH,Turkey,no,no,no,no
+Amsterdam,52.3727598,4.8936041,AMS,Netherlands,no,yes,yes,yes
+Ancona,43.6170137,13.5170982,AOI,Italy,no,no,yes,yes
+Andenes,69.3218204,16.1247217,ANX,Norway,no,no,no,yes
+Ankara,39.9207886,32.8540482,ANK,Turkey,no,yes,no,no
+Antalya,36.8872942,30.7074549,AYT,Turkey,no,no,no,no
+Asturias,3.0929627,-75.86173742,OVD,Spain,no,no,yes,yes
+Athens,37.9839412,23.7283052,AHN,Greece,no,yes,yes,yes
+Bacău,46.5560493,26.9153557,BCM,Romania,no,no,yes,yes
+Baden-Baden,48.758339,8.243008,FKB,Germany,no,no,yes,yes
+Baku,40.3755885,49.8328009,BAK,Azerbaijan,no,yes,no,no
+Banja Luka,44.7720845,17.1917651,BNX,Bosnia and Herzegovina,no,no,no,no
+Barcelona,41.3828939,2.1774322,BCN,Spain,no,no,yes,yes
+Bardufoss,69.065637,18.5159237,BDU,Norway,no,no,no,yes
+Bari,41.1257843,16.8620293,BRI,Italy,no,no,yes,yes
+Basel,47.559601,7.588576,BSL,Switzerland,no,no,no,yes
+Batman,37.8793969,41.1235427,BAL,Turkey,no,no,no,no
+Batumi,41.6509502,41.6360085,BUS,Georgia,no,no,no,no
+Beauvais,49.4300997,2.0823355,BVA,France,no,no,yes,yes
+Belfast,54.596391,-5.9301829,BFS,United Kingdom,no,no,no,no
+Belgrade,44.8178131,20.4568974,BEG,Serbia,no,yes,no,no
+Bergamo,45.6944947,9.6698727,BGY,Italy,no,no,yes,yes
+Bergen,60.3943055,5.3259192,BGO,Norway,no,no,no,yes
+Bergerac,44.8534568,0.487531,EGC,France,no,no,yes,yes
+Berlin,52.5170365,13.3888599,BER,Germany,no,yes,yes,yes
+Béziers,43.3426562,3.2131307,BZR,France,no,no,yes,yes
+Biarritz,43.4832523,-1.5592776,BIQ,France,no,no,yes,yes
+Bilbao,43.2630018,-2.9350039,BIO,Spain,no,no,yes,yes
+Billund,55.7247018,9.1195835,BLL,Denmark,no,no,yes,yes
+Bingöl,38.8861265,40.4972333,BGG,Turkey,no,no,no,no
+Birmingham,52.4796992,-1.9026911,BHM,United Kingdom,no,no,no,no
+Bodø,67.2844323,14.3817466,BOO,Norway,no,no,no,yes
+Bodrum,37.0343987,27.430651,BJV,Turkey,no,no,no,no
+Bologna,44.4938203,11.3426327,BLQ,Italy,no,no,yes,yes
+Bordeaux,44.841225,-0.5800364,BOD,France,no,no,yes,yes
+Bournemouth,50.720097,-1.8799272,BOH,United Kingdom,no,no,no,no
+Brașov,45.6523093,25.6102746,GHV,Romania,no,no,yes,yes
+Bratislava,48.1435149,17.108279,BTS,Slovakia,no,yes,yes,yes
+Bremen,53.0758196,8.8071646,BRE,Germany,no,no,yes,yes
+Brindisi,40.6395295,17.945526,BDS,Italy,no,no,yes,yes
+Bristol,51.4538022,-2.5972985,BRS,United Kingdom,no,no,no,no
+Brive-la-Gaillarde,45.1584982,1.5332389,BVE,France,no,no,yes,yes
+Brno,49.1922443,16.6113382,BRQ,Czech Republic,no,no,yes,yes
+Brussels,50.8465573,4.351697,BRU,Belgium,no,yes,yes,yes
+Bucharest,44.4361414,26.1027202,BUH,Romania,no,yes,yes,yes
+Budapest,47.4979937,19.0403594,BUD,Hungary,no,yes,yes,yes
+Burgas,42.4936616,27.4721276,BOJ,Bulgaria,no,no,yes,yes
+Bydgoszcz,53.1219648,18.0002529,BZG,Poland,no,no,yes,yes
+Cagliari,39.2171994,9.113311,CAG,Italy,yes,no,yes,yes
+Carcassonne,43.2130358,2.3491069,CCF,France,no,no,yes,yes
+Cardiff,51.4816546,-3.1791934,CWL,United Kingdom,no,no,no,no
+Castellón de la Plana,39.9860347,-0.0377354,CDT,Spain,no,no,yes,yes
+Catania,37.5023612,15.0873718,CTA,Italy,no,no,yes,yes
+Châlons,45.4458331,4.9310763,XCR,France,no,no,yes,yes
+Chania,35.5120831,24.0191544,CHQ,Greece,yes,no,yes,yes
+Charleroi,50.4120332,4.4436244,CRL,Belgium,no,no,yes,yes
+Chişinău,47.0245117,28.8322923,RMO,Moldova,no,yes,no,no
+Clermont-Ferrand,45.7774551,3.0819427,CFE,France,no,no,yes,yes
+Cluj-Napoca,46.769379,23.5899542,CLJ,Romania,no,no,yes,yes
+Cologne/Bonn,,,CGN,Germany,no,no,yes,yes
+Comiso,36.9507336,14.6074553,CIY,Italy,no,no,yes,yes
+Constanta,44.1767161,28.6507598,CND,Romania,no,no,yes,yes
+Copenhagen,55.6867243,12.5700724,CPH,Denmark,yes,yes,yes,yes
+Corfu,39.591337,19.85961892,CFU,Greece,yes,no,yes,yes
+Cork,51.897077,-8.4654674,ORK,Ireland,no,no,yes,no
+Craiova,44.3190159,23.7965614,CRA,Romania,no,no,yes,yes
+Crawley,51.1103444,-0.1801094,LGW,United Kingdom,no,no,no,no
+Crotone,39.0806223,17.127196,CRV,Italy,no,no,yes,yes
+Cuneo,44.389633,7.5479007,CUF,Italy,no,no,yes,yes
+Dalaman,36.7665315,28.8009588,DLM,Turkey,no,no,no,no
+Debrecen,47.531399,21.6259782,DEB,Hungary,no,no,yes,yes
+Denizli,37.7833152,29.0844832,DNZ,Turkey,no,no,no,no
+Derry,54.9978678,-7.3213056,LDY,United Kingdom,no,no,no,no
+Diyarbakir,37.9162222,40.2363542,DIY,Turkey,no,no,no,no
+Dole,47.0921047,5.4925463,DLE,France,no,no,yes,yes
+Dortmund,51.5142273,7.4652789,DTM,Germany,no,no,yes,yes
+Douglas,54.149774,-4.4779021,DUG,United Kingdom,yes,no,no,no
+Dresden,51.0493286,13.7381437,DRS,Germany,no,no,yes,yes
+Dublin,53.3498006,-6.2602964,DBN,Ireland,no,yes,yes,no
+Düsseldorf,51.2254018,6.7763137,DUS,Germany,no,no,yes,yes
+Edinburgh,55.9533456,-3.1883749,EDI,United Kingdom,no,no,no,no
+Edremit,39.597846,27.0181836,EDO,Turkey,no,no,no,no
+Eindhoven,51.4392648,5.478633,EIN,Netherlands,no,no,yes,yes
+Elazığ,38.6747164,39.2227135,EZS,Turkey,no,no,no,no
+Erzincan,39.7467552,39.49103,ERC,Turkey,no,no,no,no
+Erzurum,39.90632,41.2727715,ERZ,Turkey,no,no,no,no
+Evenes,68.488889,16.678333,EVE,Norway,no,no,no,yes
+Exeter,50.7255794,-3.5269497,EXT,United Kingdom,no,no,no,no
+Faro,37.0162727,-7.9351771,FAE,Portugal,no,no,yes,yes
+Forlì,44.2227278,12.041273,FRL,Italy,no,no,yes,yes
+Frankfurt,50.1106444,8.6820917,FRA,Germany,no,no,yes,yes
+Friedrichshafen,47.6500279,9.4800858,FDH,Germany,no,no,yes,yes
+Fuerteventura,28.40037685,-14.00486971,FUE,Spain,no,no,yes,yes
+Funchal,32.6496497,-16.9086783,FNC,Portugal,yes,no,yes,yes
+Ganja,40.6798083,46.3597178,KVD,Azerbaijan,no,no,no,no
+Gaziantep,37.0628317,37.3792617,GZT,Turkey,no,no,no,no
+Gdańsk,54.42880315,18.7983259,GDN,Poland,no,no,yes,yes
+Geneva,46.2017559,6.1466014,XES,Switzerland,no,no,no,yes
+Genoa,44.40726,8.9338624,GOA,Italy,no,no,yes,yes
+Gibraltar,36.140807,-5.3541295,GIB,United Kingdom,no,no,no,no
+Girona,41.9793006,2.8199439,GRO,Spain,no,no,yes,yes
+Glasgow,55.8609825,-4.2488787,GGW,United Kingdom,no,no,no,no
+Gothenburg,57.7072326,11.9670171,GOT,Sweden,no,no,yes,yes
+Gran Canaria,27.9580004,-15.60623054,LPA,Spain,yes,no,yes,yes
+Granada,37.1734995,-3.5995337,GRX,Spain,no,no,yes,yes
+Grozny,43.3197031,45.6934308,GRV,Russia,no,no,no,no
+Hahn,49.9632742,7.2691209,HHN,Germany,no,no,yes,yes
+Hamburg,53.550341,10.000654,HAM,Germany,no,no,yes,yes
+Hanover,52.3744779,9.7385532,HAJ,Germany,no,no,yes,yes
+Haugesund,59.46824785,5.082761214,HAU,Norway,no,no,no,yes
+Helsinki,60.1674881,24.9427473,HEL,Finland,no,yes,yes,yes
+Iași,47.1615416,27.5837224,IAS,Romania,no,no,yes,yes
+Ibiza,38.9743901,1.419746318,IBZ,Spain,yes,no,yes,yes
+Iğdır,39.9218784,44.0467957,IGD,Turkey,no,no,no,no
+Innsbruck,47.2654296,11.3927685,INN,Austria,no,no,yes,yes
+Inverness,57.4790124,-4.225739,INV,United Kingdom,no,no,no,no
+Istanbul,41.0091982,28.9662187,IST,Turkey,no,no,no,no
+İzmir,38.4224548,27.1310699,IZM,Turkey,no,no,no,no
+Jerez de la Frontera,36.6816936,-6.1377402,XRY,Spain,no,no,yes,yes
+Jersey,49.21230655,-2.12559996,JEC,United Kingdom,yes,no,no,no
+Kahramanmaraş,37.5812744,36.927509,KCM,Turkey,no,no,no,no
+Kars,40.6076749,43.0948497,KSY,Turkey,no,no,no,no
+Katowice,50.2598987,19.0215852,KTW,Poland,no,no,yes,yes
+Kaunas,54.8982139,23.9044817,KUN,Lithuania,no,no,yes,yes
+Kayseri,38.7219011,35.4873214,ASR,Turkey,no,no,no,no
+Kemi / Tornio,65.8148685,25.00247494,KEM,Finland,no,no,yes,yes
+Kerry,52.5025395,-3.2573033,KIR,Ireland,no,no,yes,no
+Kirkenes,69.7271478,30.0448971,KKN,Norway,no,no,no,yes
+Kiruna,68.166667,19.5,KRN,Sweden,no,no,yes,yes
+Klagenfurt,46.623943,14.3075976,KLU,Austria,no,no,yes,yes
+Knock,54.6379431,-2.4982748,NOC,Ireland,no,no,yes,no
+Konya,37.872734,32.4924376,KYA,Turkey,no,no,no,no
+Košice,48.7172272,21.2496774,KSC,Slovakia,no,no,yes,yes
+Krakow,50.0619474,19.9368564,KRK,Poland,no,no,yes,yes
+Kristiansand,58.0856276,7.931858029,KRS,Norway,no,no,no,yes
+Kütahya,39.4199106,29.9857886,KZR,Turkey,no,no,no,no
+Kutaisi,42.2716078,42.7054475,KUT,Georgia,no,no,no,no
+La Palma,28.6552318,-17.85732234,NDO,Spain,yes,no,yes,yes
+La Rochelle,46.1591126,-1.1520434,LRH,France,no,no,yes,yes
+Lakselv,70.0524983,24.9606571,LKL,Norway,no,no,no,yes
+Lamezia Terme,38.9645069,16.3021451,SUF,Italy,no,no,yes,yes
+Lampedusa,35.51113415,12.59629136,LMP,Italy,yes,no,yes,yes
+Lanzarote,29.03970805,-13.63629161,ACE,Spain,yes,no,yes,yes
+Larnaca,34.9236095,33.6236184,LCA,Cyprus,yes,no,yes,no
+Las Palmas,28.1288694,-15.4349015,LPA,Spain,yes,no,yes,yes
+Leeds,53.7974185,-1.5437941,LBA,United Kingdom,no,no,no,no
+Leipzig,51.3406321,12.3747329,LEJ,Germany,no,no,yes,yes
+Lille,50.6365654,3.0635282,LIL,France,no,no,yes,yes
+Limoges,45.8354243,1.2644847,LIG,France,no,no,yes,yes
+Linz,48.3059078,14.286198,LNZ,Austria,no,no,yes,yes
+Lisbon,38.7077507,-9.1365919,LIS,Portugal,no,yes,yes,yes
+Liverpool,53.4071991,-2.99168,LPL,United Kingdom,no,no,no,no
+Ljubljana,46.0500268,14.5069289,LJU,Slovenia,no,yes,yes,yes
+Łódź,51.7687323,19.4569911,LCJ,Poland,no,no,yes,yes
+London,51.5073219,-0.1276474,LON,United Kingdom,no,yes,no,no
+Longyearbyen,78.2231558,15.6463656,LYR,Norway,no,no,no,yes
+Lublin,51.250559,22.5701022,LUZ,Poland,no,no,yes,yes
+Luleå,65.5831187,22.1459535,LLA,Sweden,no,no,yes,yes
+Luqa,35.859653,14.4892913,MLA,Malta,yes,no,yes,yes
+Luxembourg City,49.6112768,6.129799,LUX,Luxembourg,no,yes,yes,yes
+Lyon,45.7578137,4.8320114,LYS,France,no,no,yes,yes
+Maastricht,50.8512438,5.6909768,MST,Netherlands,no,no,yes,yes
+Madrid,40.4167047,-3.7035825,MAD,Spain,no,yes,yes,yes
+Málaga,36.7213028,-4.4216366,AGP,Spain,no,no,yes,yes
+Malatya,38.3488506,38.3189466,MLX,Turkey,no,no,no,no
+Malmö,55.6052931,13.0001566,MMX,Sweden,no,no,yes,yes
+Manchester,53.4794892,-2.2451148,MAN,United Kingdom,no,no,no,no
+Mardin,37.3205482,40.7257727,MQM,Turkey,no,no,no,no
+Marseille,43.2961743,5.3699525,MRS,France,no,no,yes,yes
+Memmingen,47.9867696,10.181319,FMM,Germany,no,no,yes,yes
+Menorca,39.949401,4.0593888,MAH,Spain,yes,no,yes,yes
+Milan,45.4641943,9.1896346,MIL,Italy,no,no,yes,yes
+Mineralnye Vody,44.2107377,43.134969,MRV,Russia,no,no,no,no
+Molde,62.60162565,8.13862084,MOL,Norway,no,no,no,yes
+Montpellier,43.6112422,3.8767337,MPL,France,no,no,yes,yes
+Moscow,55.7504461,37.6174943,MOW,Russia,no,yes,no,no
+Munich,48.1371079,11.5753822,MUC,Germany,no,no,yes,yes
+Münster,51.9625101,7.6251879,FMO,Germany,no,no,yes,yes
+Murcia,37.9923795,-1.1305431,MJV,Spain,no,no,yes,yes
+Muş,38.7322221,41.4898925,MSR,Turkey,no,no,no,no
+Nantes,47.2186371,-1.5541362,NTE,France,no,no,yes,yes
+Naples,40.8358846,14.2487679,APF,Italy,no,no,yes,yes
+Newcastle upon Tyne,54.9738474,-1.6131572,NCL,United Kingdom,no,no,no,no
+Newquay,50.4134414,-5.0848836,NQY,United Kingdom,no,no,no,no
+Nice,43.7009358,7.2683912,NCE,France,no,no,yes,yes
+Nîmes,43.8374249,4.3600687,FNI,France,no,no,yes,yes
+Niš,43.3211301,21.8959232,INI,Serbia,no,no,no,no
+North Nicosia,35.19,33.363611,ECN,Northern Cyprus,no,yes,no,no
+Norwich,52.6285694,1.2923049,NWI,United Kingdom,no,no,no,no
+Nuremberg,49.453872,11.077298,NUE,Germany,no,no,yes,yes
+Ohrid,41.1170203,20.8017387,OHD,North Macedonia,no,no,no,no
+Olbia,40.9232659,9.5027442,OLB,Italy,yes,no,yes,yes
+Olsztyn,53.7767239,20.47778052,QYO,Poland,no,no,yes,yes
+Ordu,40.9852301,37.8797732,BGJ,Turkey,no,no,no,no
+Oslo,59.9133301,10.7389701,OSL,Norway,no,yes,no,yes
+Ostrava,49.8349139,18.2820084,OSR,Czech Republic,no,no,yes,yes
+Oulu,65.0118734,25.4716809,OUL,Finland,no,no,yes,yes
+Paderborn,51.71895955,8.764869778,PAD,Germany,no,no,yes,yes
+Palanga,55.9229818,21.0682657,PLQ,Lithuania,no,no,yes,yes
+Palermo,38.1112268,13.3524434,PMO,Italy,yes,no,yes,yes
+Palma de Mallorca,39.5695818,2.6500745,PMI,Spain,yes,no,yes,yes
+Paphos,34.7743988,32.4231586,PFO,Cyprus,yes,no,yes,no
+Paris,48.8588897,2.320041022,PAR,France,no,yes,yes,yes
+Parma,44.8013678,10.3280833,PMF,Italy,no,no,yes,yes
+Perpignan,42.6985304,2.8953121,PGF,France,no,no,yes,yes
+Perugia,43.1119613,12.3890104,PEG,Italy,no,no,yes,yes
+Pescara,42.469613,14.2059269,PSR,Italy,no,no,yes,yes
+Pisa,43.7159395,10.4018624,PSA,Italy,no,no,yes,yes
+Plovdiv,42.1418541,24.7499297,PDV,Bulgaria,no,no,yes,yes
+Podgorica,42.4415238,19.2621081,TGD,Montenegro,no,yes,no,no
+Poitiers,46.5802596,0.340196,PIS,France,no,no,yes,yes
+Ponta Delgada,37.7394344,-25.6683618,PDL,Portugal,yes,no,yes,yes
+Poprad,49.0541521,20.2976401,TAT,Slovakia,no,no,yes,yes
+Porto,41.1494512,-8.6107884,BPS,Portugal,no,no,yes,yes
+Porto Santo,33.0657845,-16.33622363,PXO,Portugal,yes,no,yes,yes
+Poznań,52.4006632,16.91973259,POZ,Poland,no,no,yes,yes
+Prague,50.0874654,14.4212535,PRG,Czech Republic,no,yes,yes,yes
+Pristina,42.6638771,21.1640849,PRN,Kosovo,no,yes,no,no
+Reggio Calabria,38.1035389,15.6397556,REG,Italy,no,no,yes,yes
+Rennes,48.1113387,-1.6800198,RNS,France,no,no,yes,yes
+Reus,41.1555564,1.1076133,REU,Spain,no,no,yes,yes
+Reykjavík,64.145981,-21.9422367,RKV,Iceland,yes,yes,no,yes
+Rhodes,36.17262995,27.91941815,RHO,Greece,yes,no,yes,yes
+Riga,56.9493977,24.1051846,DGA,Latvia,no,yes,yes,yes
+Rize,41.0248249,40.5199142,BZZ,Turkey,no,no,no,no
+Rome,41.8933203,12.4829321,ROM,Italy,no,yes,yes,yes
+Rotterdam,51.9244424,4.47775,RTM,Netherlands,no,no,yes,yes
+Rovaniemi,66.4976214,25.7192101,RVN,Finland,no,no,yes,yes
+Rzeszów,50.0374531,22.0047174,RZE,Poland,no,no,yes,yes
+Saint Petersburg,59.938732,30.316229,LED,Russia,no,no,no,no
+Salerno,40.6803601,14.7594542,QSR,Italy,no,no,yes,yes
+Salzburg,47.7981346,13.0464806,SZG,Austria,no,no,yes,yes
+Samsun,41.2946149,36.3320596,SZF,Turkey,no,no,no,no
+Sandefjord,59.07990035,10.28043217,ZYS,Norway,no,no,no,yes
+Şanlıurfa,37.1564696,38.7921012,SFQ,Turkey,no,no,no,no
+Santander,43.4620412,-3.8099719,SDR,Spain,no,no,yes,yes
+Santiago de Compostela,42.8804219,-8.5458608,SCQ,Spain,no,no,yes,yes
+Sarajevo,43.8519774,18.3866868,SJJ,Bosnia and Herzegovina,no,yes,no,no
+Satu Mare,47.7891763,22.8725598,SUJ,Romania,no,no,yes,yes
+Seville,37.3886303,-5.9953403,SVQ,Spain,no,no,yes,yes
+Shannon,42.1547457,-89.7398389,SNN,Ireland,no,no,yes,no
+Sibiu,45.7973912,24.1519202,SBZ,Romania,no,no,yes,yes
+Sinop,42.0265798,35.1511512,NOP,Turkey,no,no,no,no
+Sivas,39.7503572,37.0145185,VAS,Turkey,no,no,no,no
+Skellefteå,64.7520185,20.959339,SFT,Sweden,no,no,yes,yes
+Skopje,41.9960924,21.4316495,SKP,North Macedonia,no,yes,no,no
+Sofia,42.6977028,23.3217359,SOF,Bulgaria,no,yes,yes,yes
+Southampton,50.9025349,-1.404189,SOU,United Kingdom,no,no,no,no
+Stavanger,58.9699509,5.7318061,SVG,Norway,no,no,no,yes
+Stockholm,59.3251172,18.0710935,STO,Sweden,no,yes,yes,yes
+Strasbourg,48.584614,7.7507127,SXB,France,no,no,yes,yes
+Stuttgart,48.7784485,9.1800132,SGT,Germany,no,no,yes,yes
+Suceava,47.647001,26.2522599,SCV,Romania,no,no,yes,yes
+Szczecin,53.4301818,14.5509623,SZZ,Poland,no,no,yes,yes
+Tallinn,59.4372155,24.7453688,TLL,Estonia,no,yes,yes,yes
+Tarbes,43.185,-0.001944,LDE,France,no,no,yes,yes
+Târgu Mureş,46.5446253,24.561196,TGM,Romania,no,no,yes,yes
+Tbilisi,41.6934591,44.8014495,TBS,Georgia,no,yes,no,no
+Teesside,54.567,-1.233,MME,United Kingdom,no,no,no,no
+Tekirdağ,40.9781214,27.5107799,TEQ,Turkey,no,no,no,no
+Tenerife,28.2935785,-16.62144712,TCI,Spain,yes,no,yes,yes
+Terceira Island,38.662331,-27.180883,TER,Portugal,yes,no,yes,yes
+Thessaloniki,40.6403167,22.9352716,SKG,Greece,no,no,yes,yes
+Timișoara,45.7538355,21.2257474,TSR,Romania,no,no,yes,yes
+Tirana,41.3305141,19.82556286,TIA,Albania,no,yes,no,no
+Toulon,43.1257311,5.9304919,TLN,France,no,no,yes,yes
+Toulouse,43.6044622,1.4442469,TLS,France,no,no,yes,yes
+Tours,47.3900474,0.6889268,LTL,France,no,no,yes,yes
+Trabzon,41.0062202,39.7257547,TZX,Turkey,no,no,no,no
+Trapani,38.0174321,12.515992,TPS,Italy,yes,no,yes,yes
+Treviso,45.6658505,12.2455414,TSF,Italy,no,no,yes,yes
+Trieste,45.6496485,13.7772781,TRS,Italy,no,no,yes,yes
+Tromsø,69.651648,18.9558186,TOS,Norway,no,no,no,yes
+Trondheim,63.4305658,10.3951929,TRD,Norway,no,no,no,yes
+Turin,45.0677551,7.6824892,TRN,Italy,no,no,yes,yes
+Turku,60.4517531,22.2670522,TKU,Finland,yes,no,yes,yes
+Tuzla,44.5391105,18.675193,TZL,Bosnia and Herzegovina,no,no,no,no
+Umeå,63.8256568,20.2630745,UME,Sweden,no,no,yes,yes
+Valencia,39.4697065,-0.3763353,VLC,Spain,no,no,yes,yes
+Valladolid,41.6521328,-4.728562,VLL,Spain,no,no,yes,yes
+Valletta,35.884445,14.506944,MLA,Malta,yes,yes,yes,yes
+Van,47.6586772,-2.7599079,VAN,Turkey,no,no,no,no
+Varna,43.2073873,27.9166653,VAR,Bulgaria,no,no,yes,yes
+Växjö,56.8787183,14.8094385,VXO,Sweden,no,no,yes,yes
+Venice,45.4371908,12.3345898,VCE,Italy,yes,no,yes,yes
+Verona,45.4384958,10.9924122,VRN,Italy,no,no,yes,yes
+Vienna,48.2083537,16.3725042,VIE,Austria,no,yes,yes,yes
+Vigo,42.2376602,-8.7247205,VGO,Spain,no,no,yes,yes
+Vilnius,54.6870458,25.2829111,VNO,Lithuania,no,yes,yes,yes
+Vitoria-Gasteiz,42.8465088,-2.6724025,VIT,Spain,no,no,yes,yes
+Warsaw,52.2319581,21.0067249,WAW,Poland,no,yes,yes,yes
+Weeze,51.6267298,6.2011559,NRN,Germany,no,no,yes,yes
+Wrocław,51.1089776,17.0326689,WRQ,Poland,no,no,yes,yes
+Yerevan,40.1776245,44.5126174,EVN,Armenia,no,yes,no,no
+Zagreb,45.84264135,15.96223148,ZAG,Croatia,no,yes,yes,yes
+Zaragoza,41.6521342,-0.8809428,ZAZ,Spain,no,no,yes,yes
+Zurich,47.3744489,8.5410422,ZRH,Switzerland,no,no,no,yes
