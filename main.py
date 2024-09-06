@@ -155,6 +155,7 @@ def result():
     end_date = request.args.get('end_date')
     current_location = request.args.get('current_location')
     preferences = request.args.get('preferences', '').split(',')
+    distance_preference = request.args.get('distance', '')
 
     if not all([start_date, end_date, current_location]):
         return redirect(url_for('home'))
@@ -171,11 +172,6 @@ def result():
 
     cities = get_cities_data()
     
-    # Filter cities based on preferences
-    filtered_cities = filter_cities_by_preferences(cities, preferences)
-    
-    city_sunshine = []
-
     # Get current location coordinates
     europe_cities_df = pd.read_csv('europe_cities.csv')
     current_city = europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].iloc[0] if not europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].empty else None
@@ -183,6 +179,11 @@ def result():
         current_lat, current_lon = current_city['lat'], current_city['lng']
     else:
         current_lat, current_lon = None, None
+
+    # Filter cities based on preferences and distance
+    filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference)
+    
+    city_sunshine = []
 
     for city in filtered_cities:
         if pd.isna(city['Latitude']) or pd.isna(city['Longitude']):
@@ -200,6 +201,7 @@ def result():
 
                 city_data = {
                     'city': city['City'],
+                    'country': city['Country'],
                     'avg_sunshine': avg_sunshine,
                     'total_sunshine': total_sunshine
                 }
@@ -227,7 +229,7 @@ def result():
     for rank, city_data in enumerate(top_5_cities, 1):
         result = {
             'rank': rank,
-            'city': city_data['city'],
+            'city': f"{city_data['city']}, {city_data['country']}",
             'avg_sunshine': f"{city_data['avg_sunshine']:.2f}",
             'total_sunshine': f"{city_data['total_sunshine']:.2f}",
             'distance': f"{city_data['distance']}"
@@ -241,7 +243,7 @@ def result():
                            show_distance=show_distance)
 
 
-def filter_cities_by_preferences(cities, preferences):
+def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference):
     filtered_cities = cities
     if 'island' in preferences:
         filtered_cities = [city for city in filtered_cities if city['Island'] == 'yes']
@@ -251,6 +253,14 @@ def filter_cities_by_preferences(cities, preferences):
         filtered_cities = [city for city in filtered_cities if city['EU'] == 'yes']
     if 'schengen' in preferences:
         filtered_cities = [city for city in filtered_cities if city['Schengen'] == 'yes']
+    
+    if current_lat is not None and current_lon is not None and distance_preference:
+        min_dist, max_dist = map(int, distance_preference.split('-')) if '-' in distance_preference else (2001, float('inf'))
+        filtered_cities = [
+            city for city in filtered_cities
+            if min_dist <= haversine_distance(current_lat, current_lon, city['Latitude'], city['Longitude']) < max_dist
+        ]
+    
     return filtered_cities
 
 

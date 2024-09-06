@@ -97,6 +97,14 @@ nav a {
     margin-left: 8px; /* Spacing between checkbox and label */
 }
 
+.distance-filter {
+    margin-top: 20px;
+}
+
+.distance-select {
+    margin-left: 8px;
+}
+
 .search-button {
     margin-top: 20px;
     color: gold;

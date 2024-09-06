@@ -42,13 +42,13 @@
             <form id="search-form" action="{{ url_for('result') }}" method="GET">
                 <div class="current-location">
                     <div class="input-group mb-3">
-                        <label for="current-location" class="input-group-text">I'm located in: </label>  
+                        <label for="current-location" class="input-group-text"><b>I'm located in: </b></label>  
                         <input type="text" id="current-location" name="current_location" class="form-control" placeholder="Your current location" aria-label="Your current location" required autocomplete="off" list="cities-list" />
                     </div>
                 </div>
                 <datalist id="cities-list"></datalist>
                 <div class="preferences">
-                    <label for="preferences">Preferences:</label>
+                    <label for="preferences"><b>Filter Preferences:</b></label>
                     <div>
                         <input type="checkbox" id="island" name="preferences" value="island">
                         <label for="island">Island</label>
@@ -65,15 +65,26 @@
                         <input type="checkbox" id="schengen" name="preferences" value="schengen">
                         <label for="schengen">Schengen</label>
                     </div>
+                    <div class="distance-filter">
+                        <label for="distance"><b>Distance:</b></label>
+                        <div class="distance-select">
+                            <select id="distance" name="distance">
+                                <option value="">Any distance</option>
+                            <option value="0-500">Under 500 km</option>
+                            <option value="501-1000">501 - 1000 km</option>
+                                <option value="1001-2000">1001 - 2000 km</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="date-range">
-                    <label for="date-range">Select Dates:</label>
+                    <label for="date-range"><b>Select Dates:</b></label>
                     <div class="input-field">
                         <input type="text" id="date-range" name="date_range" required>
                     </div> 
                 </div>
                 <div class="search-button">
-                    <button id="explore-button" class="btn btn-warning rounded-pill px-3" type="submit">Explore</button>
+                    <button id="explore-button" class="btn btn-warning rounded-pill px-3" type="submit"><b>Explore</b></button>
                 </div>
             </form>
         </section>
@@ -150,12 +161,14 @@
                 const endDate = dateRange[1] || dateRange[0];
                 const currentLocation = document.getElementById('current-location').value;
                 const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(checkbox => checkbox.value);
+                const distance = document.getElementById('distance').value;
                 
                 const queryParams = new URLSearchParams({
                     start_date: startDate,
                     end_date: endDate,
                     current_location: currentLocation,
-                    preferences: preferences.join(',')
+                    preferences: preferences.join(','),
+                    distance: distance
                 });
                 
                 window.location.href = `/results?${queryParams.toString()}`;
