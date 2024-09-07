@@ -196,6 +196,9 @@ def result():
         current_lat, current_lon = None, None
         current_location_code = None
 
+    # Parse preferences
+    preferences = json.loads(request.args.get('preferences', '{}'))
+    
     # Filter cities based on preferences
     filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference)
     
@@ -251,13 +254,17 @@ def result():
         else:
             kayak_link = None
 
+        # Create Booking.com link
+        booking_link = f"https://www.booking.com/{city_data['city'].split(',')[0].lower().replace(' ', '-')}"
+
         result = {
             'rank': rank,
             'city': f"{city_data['city']}, {city_data['country']}",
             'avg_sunshine': f"{city_data['avg_sunshine']:.2f}",
             'total_sunshine': f"{city_data['total_sunshine']:.2f}",
             'distance': f"{city_data['distance']}",
-            'kayak_link': kayak_link
+            'kayak_link': kayak_link,
+            'booking_link': booking_link
         }
         result_data.append(result)
 
