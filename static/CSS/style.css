@@ -181,16 +181,85 @@ nav a {
 }
 
 footer {
+    flex-shrink: 0;
     background-color: lightgoldenrodyellow;
-    display: flex;
-    justify-content: center;
     text-align: center;
-    align-items: center;
-    height: 50px; 
-    margin-top: 100px;
-    position: relative; 
-    bottom: 0;
+    padding: 10px 0;
     width: 100%;
-    margin-top: auto; 
 }
 
+.typeform-like-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+.question h2 {
+    margin-bottom: 15px;
+}
+
+.preference-option {
+    margin-bottom: 10px;
+}
+
+.next-btn {
+    margin-top: 15px;
+    background-color: gold;
+    border-color: gold;
+    color: black;
+    border-radius: 8px;
+}
+
+.preferences {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+datalist {
+    display: none;
+}
+
+input::-webkit-calendar-picker-indicator {
+    display: none !important;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.preference-matrix {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.preference-matrix th,
+.preference-matrix td {
+    text-align: center;
+    padding: 5px;
+}
+
+.preference-matrix td:first-child {
+    text-align: left;
+    font-weight: bold;
+}
+
+.preference-matrix input[type="radio"] {
+    margin: 0;
+}

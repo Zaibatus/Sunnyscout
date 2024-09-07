@@ -11,144 +11,102 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        datalist {
-            display: none;
-        }
-        input::-webkit-calendar-picker-indicator {
-            display: none !important;
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <div class="app-name">
-            </h3><a href="#">PLACEHOLDER ☀️</a></h3>
-        </div>
-        <nav>
-          <a href="{{ url_for('about') }}">About</a>
-        </nav>
-    </header>
-                <!-- look into Datepicker / find a better calendar! (ideally airbnb style - one calendar to choose the range)-->
-                <!-- even more ideally - a calendar that allows only e.g. 14 days in advance (a la calendly)-->
-
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Plan your next trip ☀️</h1>
-                <h6>Tired of gloomy weather? Find the <u>sunniest</u> destinations for your weekend trip!</h6>
+    <div class="page-container">
+        <header>
+            <div class="app-name">
+                <h3><a href="#">PLACEHOLDER ☀️</a></h3>
             </div>
-            <hr>
+            <nav>
+              <a href="{{ url_for('about') }}">About</a>
+            </nav>
+        </header>
+
+        <main>
             <form id="search-form" action="{{ url_for('result') }}" method="GET">
-                <div class="current-location">
-                    <div class="input-group mb-3">
-                        <label for="current-location" class="input-group-text"><b>I'm located in: </b></label>  
-                        <input type="text" id="current-location" name="current_location" class="form-control" placeholder="Your current location" aria-label="Your current location" required autocomplete="off" list="cities-list" />
+                <div class="typeform-like-container">
+                    <div class="question" id="location-question">
+                        <h2>Where are you located?</h2>
+                        <input type="text" id="current-location" name="current_location" class="form-control" placeholder="Your current location" required autocomplete="off" list="cities-list">
+                        <datalist id="cities-list"></datalist>
+                        <button type="button" class="btn btn-primary next-btn" onclick="showNextQuestion('date-question')">Next</button>
                     </div>
-                </div>
-                <datalist id="cities-list"></datalist>
-                <div class="preferences">
-                    <label for="preferences"><b>Filter Preferences:</b></label>
-                    <div>
-                        <input type="checkbox" id="island" name="preferences" value="island">
-                        <label for="island">Island</label>
+
+                    <div class="question" id="date-question" style="display: none;">
+                        <h2>When do you want to travel?</h2>
+                        <div class="date-range">
+                            <input type="text" id="date-range" name="date_range" required>
+                        </div>
+                        <button type="button" class="btn btn-primary next-btn" onclick="showNextQuestion('preferences-question')">Next</button>
                     </div>
-                    <div>
-                        <input type="checkbox" id="capital" name="preferences" value="capital">
-                        <label for="capital">Capital City</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="eu" name="preferences" value="eu">
-                        <label for="eu">EU</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" id="schengen" name="preferences" value="schengen">
-                        <label for="schengen">Schengen</label>
-                    </div>
-                    <div class="distance-filter">
-                        <label for="distance"><b>Distance:</b></label>
-                        <div class="distance-select">
+
+                    <div class="question" id="preferences-question" style="display: none;">
+                        <h2>Select your preferences</h2>
+                        <table class="preference-matrix">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Must have</th>
+                                    <th>Don't want</th>
+                                    <th>Either way!</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Island</td>
+                                    <td><input type="radio" name="island" value="must" id="island-must"></td>
+                                    <td><input type="radio" name="island" value="dont" id="island-dont"></td>
+                                    <td><input type="radio" name="island" value="either" id="island-either" checked></td>
+                                </tr>
+                                <tr>
+                                    <td>Capital City</td>
+                                    <td><input type="radio" name="capital" value="must" id="capital-must"></td>
+                                    <td><input type="radio" name="capital" value="dont" id="capital-dont"></td>
+                                    <td><input type="radio" name="capital" value="either" id="capital-either" checked></td>
+                                </tr>
+                                <tr>
+                                    <td>European Union</td>
+                                    <td><input type="radio" name="eu" value="must" id="eu-must"></td>
+                                    <td><input type="radio" name="eu" value="dont" id="eu-dont"></td>
+                                    <td><input type="radio" name="eu" value="either" id="eu-either" checked></td>
+                                </tr>
+                                <tr>
+                                    <td>Schengen Area</td>
+                                    <td><input type="radio" name="schengen" value="must" id="schengen-must"></td>
+                                    <td><input type="radio" name="schengen" value="dont" id="schengen-dont"></td>
+                                    <td><input type="radio" name="schengen" value="either" id="schengen-either" checked></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="preference-option">
+                            <label for="distance">Distance:</label>
                             <select id="distance" name="distance">
                                 <option value="">Any distance</option>
-                            <option value="0-500">Under 500 km</option>
-                            <option value="501-1000">501 - 1000 km</option>
+                                <option value="0-500">Under 500 km</option>
+                                <option value="501-1000">501 - 1000 km</option>
                                 <option value="1001-2000">1001 - 2000 km</option>
                             </select>
                         </div>
+                        <button type="submit" class="btn btn-warning rounded-pill px-3" id="explore-button"><b>Explore</b></button>
                     </div>
-                </div>
-                <div class="date-range">
-                    <label for="date-range"><b>Select Dates:</b></label>
-                    <div class="input-field">
-                        <input type="text" id="date-range" name="date_range" required>
-                    </div> 
-                </div>
-                <div class="search-button">
-                    <button id="explore-button" class="btn btn-warning rounded-pill px-3" type="submit"><b>Explore</b></button>
                 </div>
             </form>
-        </section>
+        </main>
 
+        <footer>
+            <p>&copy; 2024 PLACEHOLDER</p>
+        </footer>
+    </div>
 
-        <!-- TESTIMONIALS Section :) -->
-        <!-- <section class="home-testimonial">
-            <div class="container-fluid">
-                <div class="row d-flex justify-content-center testimonial-pos">
-                    <div class="col-md-12 pt-4 d-flex justify-content-center">
-                        <h3>Testimonials</h3>
-                    </div>
-                    <div class="col-md-12 d-flex justify-content-center">
-                        <h2>Explore the students experience</h2>
-                    </div>
-                </div>
-                <section class="home-testimonial-bottom">
-                    <div class="container testimonial-inner">
-                        <div class="row d-flex justify-content-center">
-                            <div class="col-md-4 style-3">
-                                <div class="tour-item ">
-                                    <div class="tour-desc bg-white">
-                                        <div class="tour-text color-grey-3 text-center">&ldquo;At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.&rdquo;</div>
-                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/6625914/pexels-photo-6625914.jpeg" alt=""></div>
-                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
-                                        <div class="link-position d-flex justify-content-center">Student</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 style-3">
-                                <div class="tour-item ">
-                                    <div class="tour-desc bg-white">
-                                        <div class="tour-text color-grey-3 text-center">&ldquo;At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.&rdquo;</div>
-                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
-                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
-                                        <div class="link-position d-flex justify-content-center">Student</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 style-3">
-                                <div class="tour-item ">
-                                    <div class="tour-desc bg-white">
-                                        <div class="tour-text color-grey-3 text-center">&ldquo;At this School, our mission is to balance a rigorous comprehensive college preparatory curriculum with healthy social and emotional development.&rdquo;</div>
-                                        <div class="d-flex justify-content-center pt-2 pb-2"><img class="tm-people" src="https://images.pexels.com/photos/4946604/pexels-photo-4946604.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt=""></div>
-                                        <div class="link-name d-flex justify-content-center">Balbir Kaur</div>
-                                        <div class="link-position d-flex justify-content-center">Student</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
-                </section>
-            </div>
-        </section> -->
-      
-        
-    </main>
-
-
-    <footer>
-        <p>&copy; 2024 PLACEHOLDER</p>
-    </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eHz" crossorigin="anonymous"></script>
     <script>
+    function showNextQuestion(nextQuestionId) {
+        const currentQuestion = document.querySelector('.question:not([style*="display: none"])');
+        currentQuestion.style.display = 'none';
+        document.getElementById(nextQuestionId).style.display = 'block';
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const exploreButton = document.getElementById('explore-button');
         const searchForm = document.getElementById('search-form');
@@ -160,14 +118,19 @@
                 const startDate = dateRange[0];
                 const endDate = dateRange[1] || dateRange[0];
                 const currentLocation = document.getElementById('current-location').value;
-                const preferences = Array.from(document.querySelectorAll('input[name="preferences"]:checked')).map(checkbox => checkbox.value);
+                const preferences = {
+                    island: document.querySelector('input[name="island"]:checked').value,
+                    capital: document.querySelector('input[name="capital"]:checked').value,
+                    eu: document.querySelector('input[name="eu"]:checked').value,
+                    schengen: document.querySelector('input[name="schengen"]:checked').value
+                };
                 const distance = document.getElementById('distance').value;
                 
                 const queryParams = new URLSearchParams({
                     start_date: startDate,
                     end_date: endDate,
                     current_location: currentLocation,
-                    preferences: preferences.join(','),
+                    preferences: JSON.stringify(preferences),
                     distance: distance
                 });
                 
@@ -178,7 +141,6 @@
         });
     });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eHz" crossorigin="anonymous"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const dateRangeInput = document.getElementById('date-range');

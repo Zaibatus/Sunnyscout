@@ -9,6 +9,7 @@ from math import radians, sin, cos, sqrt, atan2
 from requests.exceptions import RequestException
 import time
 from flight_search import FlightSearch
+import json
 
 # Constants
 OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
@@ -154,7 +155,7 @@ def result():
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
     current_location = request.args.get('current_location')
-    preferences = request.args.get('preferences', '').split(',')
+    preferences = json.loads(request.args.get('preferences', '{}'))
     distance_preference = request.args.get('distance', '')
 
     if not all([start_date, end_date, current_location]):
@@ -195,7 +196,7 @@ def result():
         current_lat, current_lon = None, None
         current_location_code = None
 
-    # Filter cities based on preferences and distance
+    # Filter cities based on preferences
     filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference)
     
     city_sunshine = []
@@ -268,15 +269,22 @@ def result():
 
 
 def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference):
-    filtered_cities = cities
-    if 'island' in preferences:
-        filtered_cities = [city for city in filtered_cities if city['Island'] == 'yes']
-    if 'capital' in preferences:
-        filtered_cities = [city for city in filtered_cities if city['Capital'] == 'yes']
-    if 'eu' in preferences:
-        filtered_cities = [city for city in filtered_cities if city['EU'] == 'yes']
-    if 'schengen' in preferences:
-        filtered_cities = [city for city in filtered_cities if city['Schengen'] == 'yes']
+    filtered_cities = cities.copy()
+    
+    preference_mapping = {
+        'island': 'Island',
+        'capital': 'Capital',
+        'eu': 'EU',
+        'schengen': 'Schengen'
+    }
+    
+    for pref, value in preferences.items():
+        if pref in preference_mapping:
+            key = preference_mapping[pref]
+            if value == 'must':
+                filtered_cities = [city for city in filtered_cities if city.get(key) == 'yes']
+            elif value == 'dont':
+                filtered_cities = [city for city in filtered_cities if city.get(key) != 'yes']
     
     if current_lat is not None and current_lon is not None and distance_preference:
         min_dist, max_dist = map(int, distance_preference.split('-')) if '-' in distance_preference else (2001, float('inf'))
