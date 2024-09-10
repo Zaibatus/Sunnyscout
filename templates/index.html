@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
-<body>
+<body class="recursive-<uniquifier>">
     <div class="page-container">
         <header>
             <div class="app-name">
@@ -125,7 +125,7 @@
                     schengen: document.querySelector('input[name="schengen"]:checked').value
                 };
                 const distance = document.getElementById('distance').value;
-                
+
                 const queryParams = new URLSearchParams({
                     start_date: startDate,
                     end_date: endDate,
@@ -133,7 +133,7 @@
                     preferences: JSON.stringify(preferences),
                     distance: distance
                 });
-                
+
                 window.location.href = `/results?${queryParams.toString()}`;
             } else {
                 searchForm.reportValidity();

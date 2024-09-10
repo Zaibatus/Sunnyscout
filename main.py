@@ -73,7 +73,9 @@ def update_iata_codes():
 
 
 def get_cities_data():
-    df = pd.read_csv('cities_airports.csv', usecols=['City', 'Latitude', 'Longitude', 'IATA_Code', 'Country', 'Island', 'Capital', 'EU', 'Schengen'])
+    df = pd.read_csv('cities_airports.csv',
+                     usecols=['City', 'Latitude', 'Longitude', 'IATA_Code', 'Country', 'Island', 'Capital', 'EU',
+                              'Schengen'])
     return df.to_dict('records')
 
 
@@ -172,24 +174,26 @@ def result():
     date_range = pd.date_range(start=start_date, end=end_date, tz='UTC')
 
     cities = get_cities_data()
-    
+
     # Get current location coordinates
     europe_cities_df = pd.read_csv('europe_cities.csv')
     airports_df = pd.read_csv('cities_airports.csv')
 
-    current_city = europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].iloc[0] if not europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].empty else None
+    current_city = europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].iloc[0] if not \
+        europe_cities_df[europe_cities_df['city'].str.lower() == current_location.lower()].empty else None
 
     if current_city is not None:
         current_lat, current_lon = current_city['lat'], current_city['lng']
-        
+
         # Check if the current location is in the airports database
         current_airport = airports_df[airports_df['City'].str.lower() == current_location.lower()]
-        
+
         if current_airport.empty:
             # Find the closest airport
             closest_city, closest_airport_code = find_closest_airport(current_lat, current_lon, airports_df)
             current_location_code = closest_airport_code
-            print(f"No airport found for {current_location}. Using closest airport: {closest_city} ({closest_airport_code})")
+            print(
+                f"No airport found for {current_location}. Using closest airport: {closest_city} ({closest_airport_code})")
         else:
             current_location_code = current_airport.iloc[0]['IATA_Code']
     else:
@@ -198,17 +202,17 @@ def result():
 
     # Parse preferences
     preferences = json.loads(request.args.get('preferences', '{}'))
-    
+
     # Filter cities based on preferences
     filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference)
-    
+
     city_sunshine = []
 
     for city in filtered_cities:
         if pd.isna(city['Latitude']) or pd.isna(city['Longitude']):
             app.logger.warning(f"Missing coordinates for {city['City']}. Skipping forecast.")
             continue
-        
+
         app.logger.debug(f"Fetching forecast for {city['City']}")
         forecast = get_sunshine_forecast(city['City'], city['Latitude'], city['Longitude'])
         if forecast is not None:
@@ -243,6 +247,18 @@ def result():
     # Sort cities by total sunshine and get top 5
     top_5_cities = sorted(city_sunshine, key=lambda x: x['total_sunshine'], reverse=True)[:5]
 
+    # Load city descriptions and additional information from CSV file
+    city_info = {}
+    try:
+        info_df = pd.read_csv('cities_airports.csv')
+        city_info = info_df.set_index('City')[['City_Description', 'City_To_Dos', 'Food_to_try']].to_dict('index')
+    except FileNotFoundError:
+        app.logger.warning("Cities information file not found. Additional info will not be included.")
+    except pd.errors.EmptyDataError:
+        app.logger.warning("Cities information file is empty. Additional info will not be included.")
+    except KeyError as e:
+        app.logger.warning(f"Column {e} not found in the CSV. Some additional info may not be included.")
+
     # Prepare data for the template
     result_data = []
     for rank, city_data in enumerate(top_5_cities, 1):
@@ -257,12 +273,19 @@ def result():
         # Create Booking.com link
         booking_link = f"https://www.booking.com/{city_data['city'].split(',')[0].lower().replace(' ', '-')}"
 
+        # Get city information
+        city_name = city_data['city'].split(',')[0].strip()
+        city_info_data = city_info.get(city_name, {})
+
         result = {
             'rank': rank,
             'city': f"{city_data['city']}, {city_data['country']}",
             'avg_sunshine': f"{city_data['avg_sunshine']:.2f}",
             'total_sunshine': f"{city_data['total_sunshine']:.2f}",
             'distance': f"{city_data['distance']}",
+            'description': city_info_data.get('City_Description', "No description available."),
+            'to_dos': city_info_data.get('City_To_Dos', "No to-dos available."),
+            'food_to_try': city_info_data.get('Food_to_try', "No food recommendations available."),
             'kayak_link': kayak_link,
             'booking_link': booking_link
         }
@@ -277,14 +300,14 @@ def result():
 
 def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference):
     filtered_cities = cities.copy()
-    
+
     preference_mapping = {
         'island': 'Island',
         'capital': 'Capital',
         'eu': 'EU',
         'schengen': 'Schengen'
     }
-    
+
     for pref, value in preferences.items():
         if pref in preference_mapping:
             key = preference_mapping[pref]
@@ -292,19 +315,21 @@ def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, 
                 filtered_cities = [city for city in filtered_cities if city.get(key) == 'yes']
             elif value == 'dont':
                 filtered_cities = [city for city in filtered_cities if city.get(key) != 'yes']
-    
+
     if current_lat is not None and current_lon is not None and distance_preference:
-        min_dist, max_dist = map(int, distance_preference.split('-')) if '-' in distance_preference else (2001, float('inf'))
+        min_dist, max_dist = map(int, distance_preference.split('-')) if '-' in distance_preference else (
+        2001, float('inf'))
         filtered_cities = [
             city for city in filtered_cities
             if min_dist <= haversine_distance(current_lat, current_lon, city['Latitude'], city['Longitude']) < max_dist
         ]
-    
+
     return filtered_cities
 
 
 def find_closest_airport(lat, lon, airports_df):
-    airports_df['distance'] = airports_df.apply(lambda row: haversine_distance(lat, lon, row['Latitude'], row['Longitude']), axis=1)
+    airports_df['distance'] = airports_df.apply(
+        lambda row: haversine_distance(lat, lon, row['Latitude'], row['Longitude']), axis=1)
     closest_airport = airports_df.loc[airports_df['distance'].idxmin()]
     return closest_airport['City'], closest_airport['IATA_Code']
 

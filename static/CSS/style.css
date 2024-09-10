@@ -6,6 +6,7 @@ body {
     background-color: lightgoldenrodyellow;
 }
 
+
 header {
     background: linear-gradient(to top, #f9e79f, #f1c40f);
     display: flex;
@@ -263,3 +264,65 @@ main {
 .preference-matrix input[type="radio"] {
     margin: 0;
 }
+
+.description-full {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-width: 300px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 200px; /* Set the max height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.description-container {
+    position: relative;
+    max-width: 300px;
+    }
+
+.description-preview {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    padding-right: 20px;
+    }
+
+.description-full {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-width: 300px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    }
+
+
+.toggle-description {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    }
+
+
+.description-open .toggle-description {
+    transform: translateY(-50%) rotate(180deg);
+    }

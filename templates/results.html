@@ -8,6 +8,7 @@
     <link rel="apple-touch-icon" sizes="192x192" href="{{ url_for('static', filename='images/favicon-192x192.png') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
 </head>
 <body>
@@ -26,48 +27,107 @@
                 <h1>Top 5 Sunniest Cities ☀</h1>
                 <p>For the period: {{ start_date }} to {{ end_date }}</p>
                 <p>Current location: {{ current_location }}</p>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Destination</th>
-                            <th>Average Sunshine (hours/day)</th>
-                            <th>Total Sunshine (hours)</th>
-                            <th>Distance from {{ current_location }} (km)</th>
-                            <th>Flights</th>
-                            <th>Stay</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for city in results %}
-                        <tr>
-                            <td>{{ city.rank }}</td>
-                            <td>{{ city.city }}</td>
-                            <td>{{ city.avg_sunshine }}</td>
-                            <td>{{ city.total_sunshine }}</td>
-                            <td>{{ city.distance if city.distance != 'N/A' else 'N/A' }}</td>
-                            <td>
-                                {% if city.kayak_link %}
-                                    <a href="{{ city.kayak_link }}" target="_blank" class="btn btn-primary btn-sm">Search Flights</a>
-                                {% else %}
-                                    <span class="text-muted">No flight search available</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a href="{{ city.booking_link }}" target="_blank" class="btn btn-success btn-sm">Find Hotels</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </main>
+<div class="table-responsive" style="max-height: 80vh; overflow-y: auto;">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Destination</th>
+                    <th>Average Sunshine (hours/day)</th>
+                    <th>Total Sunshine (hours)</th>
+                    <th>Distance from {{ current_location }} (km)</th>
+                    <th>Description</th>
+                    <th>Things to Do</th>
+                    <th>Food to Try</th>
+                    <th>Flights</th>
+                    <th>Stay</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for city in results %}
+                <tr>
+                    <td>{{ city.rank }}</td>
+                    <td>{{ city.city }}</td>
+                    <td>{{ city.avg_sunshine }}</td>
+                    <td>{{ city.total_sunshine }}</td>
+                    <td>{{ city.distance if city.distance != 'N/A' else 'N/A' }}</td>
+                    <td>
+                        <div class="description-container">
+                            <div class="description-preview">
+                                {{ city.description[:100] }}{% if city.description|length > 100 %}...{% endif %}
+                            </div>
+                            <i class="fas fa-chevron-down toggle-description" onclick="toggleDescription(this)"></i>
+                            <div class="description-full">
+                                <h5>Description:</h5>
+                                <p>{{ city.description }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="description-container">
+                            <div class="description-preview">
+                                {{ city.to_dos[:100] }}{% if city.to_dos|length > 100 %}...{% endif %}
+                            </div>
+                            <i class="fas fa-chevron-down toggle-description" onclick="toggleDescription(this)"></i>
+                            <div class="description-full">
+                                <h5>Things to Do:</h5>
+                                <p>{{ city.to_dos }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="description-container">
+                            <div class="description-preview">
+                                {{ city.food_to_try[:100] }}{% if city.food_to_try|length > 100 %}...{% endif %}
+                            </div>
+                            <i class="fas fa-chevron-down toggle-description" onclick="toggleDescription(this)"></i>
+                            <div class="description-full">
+                                <h5>Food to Try:</h5>
+                                <p>{{ city.food_to_try }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {% if city.kayak_link %}
+                            <a href="{{ city.kayak_link }}" target="_blank" class="btn btn-primary btn-sm">Search Flights</a>
+                        {% else %}
+                            <span class="text-muted">No flight search available</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ city.booking_link }}" target="_blank" class="btn btn-success btn-sm">Find Hotels</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-    <footer>
-        <p>&copy; 2024 PLACEHOLDER</p>
-    </footer>
+    <script>
+        function toggleDescription(element) {
+            const container = element.closest('.description-container');
+            const fullDescription = container.querySelector('.description-full');
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            if (fullDescription.style.display === "none" || fullDescription.style.display === "") {
+                fullDescription.style.display = "block";
+                container.classList.add('description-open');
+            } else {
+                fullDescription.style.display = "none";
+                container.classList.remove('description-open');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const openDropdowns = document.querySelectorAll('.description-container.description-open');
+            openDropdowns.forEach(function(dropdown) {
+                if (!dropdown.contains(event.target)) {
+                    const fullDescription = dropdown.querySelector('.description-full');
+                    fullDescription.style.display = "none";
+                    dropdown.classList.remove('description-open');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
