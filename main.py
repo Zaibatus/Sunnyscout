@@ -75,7 +75,7 @@ def update_iata_codes():
 def get_cities_data():
     df = pd.read_csv('cities_airports.csv',
                      usecols=['City', 'Latitude', 'Longitude', 'IATA_Code', 'Country', 'Island', 'Capital', 'EU',
-                              'Schengen'])
+                              'Schengen', 'Population'])
     return df.to_dict('records')
 
 
@@ -159,6 +159,8 @@ def result():
     current_location = request.args.get('current_location')
     preferences = json.loads(request.args.get('preferences', '{}'))
     distance_preference = request.args.get('distance', '')
+    population_min = request.args.get('population_min', '0')
+    population_max = request.args.get('population_max', '')
 
     if not all([start_date, end_date, current_location]):
         return redirect(url_for('home'))
@@ -204,7 +206,7 @@ def result():
     preferences = json.loads(request.args.get('preferences', '{}'))
 
     # Filter cities based on preferences
-    filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference)
+    filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_min, population_max)
 
     city_sunshine = []
 
@@ -298,7 +300,7 @@ def result():
                            show_distance=show_distance)
 
 
-def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference):
+def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_min, population_max):
     filtered_cities = cities.copy()
 
     preference_mapping = {
@@ -324,7 +326,29 @@ def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, 
             if min_dist <= haversine_distance(current_lat, current_lon, city['Latitude'], city['Longitude']) < max_dist
         ]
 
-    return filtered_cities
+    # Filter by population
+    population_min = int(population_min) if population_min else 0
+    population_max = int(population_max) if population_max else float('inf')
+    
+    print(f"Debug: population_min = {population_min}, population_max = {population_max}")
+    
+    filtered_cities_by_population = []
+    for city in filtered_cities:
+        try:
+            population = city.get('Population', '0')
+            if isinstance(population, str):
+                population = population.replace(',', '').replace('.', '')  # Remove commas and periods
+            population = int(population)
+            if population_min <= population <= population_max:
+                filtered_cities_by_population.append(city)
+        except ValueError as e:
+            print(f"Debug: Error processing population for city {city.get('City', 'Unknown')}: {e}")
+            print(f"Debug: Population value: {city.get('Population', 'Not found')}")
+    
+    print(f"Debug: Cities before population filter: {len(filtered_cities)}")
+    print(f"Debug: Cities after population filter: {len(filtered_cities_by_population)}")
+    
+    return filtered_cities_by_population
 
 
 def find_closest_airport(lat, lon, airports_df):

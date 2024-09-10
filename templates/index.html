@@ -88,6 +88,12 @@
                                 <option value="1001-2000">1001 - 2000 km</option>
                             </select>
                         </div>
+                        <div class="preference-option">
+                            <label for="population-min">Population:</label>
+                            <input type="number" id="population-min" name="population_min" placeholder="Min" min="0" value="0">
+                            <span>-</span>
+                            <input type="number" id="population-max" name="population_max" placeholder="Max" min="0">
+                        </div>
                         <button type="submit" class="btn btn-warning rounded-pill px-3" id="explore-button"><b>Explore</b></button>
                     </div>
                 </div>
@@ -125,13 +131,17 @@
                     schengen: document.querySelector('input[name="schengen"]:checked').value
                 };
                 const distance = document.getElementById('distance').value;
+                const populationMin = document.getElementById('population-min').value;
+                const populationMax = document.getElementById('population-max').value;
 
                 const queryParams = new URLSearchParams({
                     start_date: startDate,
                     end_date: endDate,
                     current_location: currentLocation,
                     preferences: JSON.stringify(preferences),
-                    distance: distance
+                    distance: distance,
+                    population_min: populationMin,
+                    population_max: populationMax
                 });
 
                 window.location.href = `/results?${queryParams.toString()}`;
