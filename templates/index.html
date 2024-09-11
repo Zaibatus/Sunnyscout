@@ -11,12 +11,57 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        .home-page, .typeform-container {
+            display: none;
+        }
+        .home-page.active, .typeform-container.active {
+            display: block;
+        }
+        .progress-bar {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            background-color: #e0e0e0;
+            padding: 3px;
+            border-radius: 3px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+        }
+        .progress {
+            display: block;
+            height: 22px;
+            background-color: #39ff14; /* Neon green */
+            border-radius: 3px;
+            transition: width 500ms ease-in-out;
+        }
+        .question {
+            display: none;
+        }
+        .question.active {
+            display: block;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .back-button, .next-button {
+            width: 100px;  /* Set a fixed width for both button containers */
+        }
+        .back-button button, .next-button button {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body class="recursive-<uniquifier>">
     <div class="page-container">
         <header>
             <div class="app-name">
-                <h3><a href="#">PLACEHOLDER ☀️</a></h3>
+                <h3><a href="{{ url_for('home') }}">PLACEHOLDER ☀️</a></h3>
             </div>
             <nav>
               <a href="{{ url_for('about') }}">About</a>
@@ -24,80 +69,138 @@
         </header>
 
         <main>
-            <form id="search-form" action="{{ url_for('result') }}" method="GET">
-                <div class="typeform-like-container">
-                    <div class="question" id="location-question">
-                        <h2>Where are you located?</h2>
-                        <input type="text" id="current-location" name="current_location" class="form-control" placeholder="Your current location" required autocomplete="off" list="cities-list">
-                        <datalist id="cities-list"></datalist>
-                        <button type="button" class="btn btn-primary next-btn" onclick="showNextQuestion('date-question')">Next</button>
-                    </div>
-
-                    <div class="question" id="date-question" style="display: none;">
-                        <h2>When do you want to travel?</h2>
-                        <div class="date-range">
-                            <input type="text" id="date-range" name="date_range" required>
-                        </div>
-                        <button type="button" class="btn btn-primary next-btn" onclick="showNextQuestion('preferences-question')">Next</button>
-                    </div>
-
-                    <div class="question" id="preferences-question" style="display: none;">
-                        <h2>Select your preferences</h2>
-                        <table class="preference-matrix">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Must have</th>
-                                    <th>Don't want</th>
-                                    <th>Either way!</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Island</td>
-                                    <td><input type="radio" name="island" value="must" id="island-must"></td>
-                                    <td><input type="radio" name="island" value="dont" id="island-dont"></td>
-                                    <td><input type="radio" name="island" value="either" id="island-either" checked></td>
-                                </tr>
-                                <tr>
-                                    <td>Capital City</td>
-                                    <td><input type="radio" name="capital" value="must" id="capital-must"></td>
-                                    <td><input type="radio" name="capital" value="dont" id="capital-dont"></td>
-                                    <td><input type="radio" name="capital" value="either" id="capital-either" checked></td>
-                                </tr>
-                                <tr>
-                                    <td>European Union</td>
-                                    <td><input type="radio" name="eu" value="must" id="eu-must"></td>
-                                    <td><input type="radio" name="eu" value="dont" id="eu-dont"></td>
-                                    <td><input type="radio" name="eu" value="either" id="eu-either" checked></td>
-                                </tr>
-                                <tr>
-                                    <td>Schengen Area</td>
-                                    <td><input type="radio" name="schengen" value="must" id="schengen-must"></td>
-                                    <td><input type="radio" name="schengen" value="dont" id="schengen-dont"></td>
-                                    <td><input type="radio" name="schengen" value="either" id="schengen-either" checked></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="preference-option">
-                            <label for="distance">Distance:</label>
-                            <select id="distance" name="distance">
-                                <option value="">Any distance</option>
-                                <option value="0-500">Under 500 km</option>
-                                <option value="501-1000">501 - 1000 km</option>
-                                <option value="1001-2000">1001 - 2000 km</option>
-                            </select>
-                        </div>
-                        <div class="preference-option">
-                            <label for="population-min">Population:</label>
-                            <input type="number" id="population-min" name="population_min" placeholder="Min" min="0" value="0">
-                            <span>-</span>
-                            <input type="number" id="population-max" name="population_max" placeholder="Max" min="0">
-                        </div>
-                        <button type="submit" class="btn btn-warning rounded-pill px-3" id="explore-button"><b>Explore</b></button>
-                    </div>
+            <div class="home-page active text-center">
+                <h1>Welcome to PLACEHOLDER ☀️</h1>
+                <p>Discover your perfect sunny getaway!</p>
+                <div class="homepage-img">
+                    <img src="{{ url_for('static', filename='images/paris_cafe.png') }}" alt="Paris Cafe" class="img-fluid">
                 </div>
-            </form>
+                <button id="start-search" class="btn btn-primary">Start Search</button>
+            </div>
+
+            <div class="typeform-container">
+                <div class="typeform-like-container">
+                    <div class="progress-bar">
+                        <span class="progress" style="width: 0%"></span>
+                    </div>
+                    <form id="search-form" action="{{ url_for('result') }}" method="GET">
+                        <div class="question active" id="location-question" data-question="1">
+                            <h2>Where are you located?</h2>
+                            <input type="text" id="current-location" name="current_location" class="form-control" placeholder="Your current location" required autocomplete="off" list="cities-list">
+                            <datalist id="cities-list"></datalist>
+                            <div class="button-group">
+                                <div class="back-button">
+                                    <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                </div>
+                                <div class="next-button">
+                                    <button type="button" class="btn btn-primary next-btn">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question" id="date-question" data-question="2">
+                            <h2>When do you want to travel?</h2>
+                            <div class="date-range">
+                                <input type="text" id="date-range" name="date_range" required>
+                            </div>
+                            <div class="button-group">
+                                <div class="back-button">
+                                    <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                </div>
+                                <div class="next-button">
+                                    <button type="button" class="btn btn-primary next-btn">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question" id="distance-question" data-question="3">
+                            <h2>How far are you willing to travel?</h2>
+                            <div class="preference-option">
+                                <select id="distance" name="distance">
+                                    <option value="">Any distance</option>
+                                    <option value="0-500">Under 500 km</option>
+                                    <option value="501-1000">501 - 1000 km</option>
+                                    <option value="1001-2000">1001 - 2000 km</option>
+                                </select>
+                            </div>
+                            <div class="button-group">
+                                <div class="back-button">
+                                    <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                </div>
+                                <div class="next-button">
+                                    <button type="button" class="btn btn-primary next-btn">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question" id="population-question" data-question="4">
+                            <h2>Big or small city?</h2>
+                            <div class="preference-option">
+                                <label for="population-min">Population range:</label>
+                                <input type="number" id="population-min" name="population_min" placeholder="Min" min="0" value="0">
+                                <span>-</span>
+                                <input type="number" id="population-max" name="population_max" placeholder="Max" min="0">
+                            </div>
+                            <div class="button-group">
+                                <div class="back-button">
+                                    <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                </div>
+                                <div class="next-button">
+                                    <button type="button" class="btn btn-primary next-btn">Next</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="question" id="preferences-question" data-question="5">
+                            <h2>More preferences to refine your search</h2>
+                            <table class="preference-matrix">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Must have</th>
+                                        <th>Don't want</th>
+                                        <th>Either way!</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Island</td>
+                                        <td><input type="radio" name="island" value="must" id="island-must"></td>
+                                        <td><input type="radio" name="island" value="dont" id="island-dont"></td>
+                                        <td><input type="radio" name="island" value="either" id="island-either" checked></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Capital City</td>
+                                        <td><input type="radio" name="capital" value="must" id="capital-must"></td>
+                                        <td><input type="radio" name="capital" value="dont" id="capital-dont"></td>
+                                        <td><input type="radio" name="capital" value="either" id="capital-either" checked></td>
+                                    </tr>
+                                    <tr>
+                                        <td>European Union</td>
+                                        <td><input type="radio" name="eu" value="must" id="eu-must"></td>
+                                        <td><input type="radio" name="eu" value="dont" id="eu-dont"></td>
+                                        <td><input type="radio" name="eu" value="either" id="eu-either" checked></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Schengen Area</td>
+                                        <td><input type="radio" name="schengen" value="must" id="schengen-must"></td>
+                                        <td><input type="radio" name="schengen" value="dont" id="schengen-dont"></td>
+                                        <td><input type="radio" name="schengen" value="either" id="schengen-either" checked></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="button-group">
+                                <div class="back-button">
+                                    <button type="button" class="btn btn-secondary back-btn">Back</button>
+                                </div>
+                                <div class="next-button">
+                                    <button type="submit" class="btn btn-warning rounded-pill px-3" id="explore-button"><b>Explore</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </main>
 
         <footer>
@@ -107,13 +210,60 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eHz" crossorigin="anonymous"></script>
     <script>
-    function showNextQuestion(nextQuestionId) {
-        const currentQuestion = document.querySelector('.question:not([style*="display: none"])');
-        currentQuestion.style.display = 'none';
-        document.getElementById(nextQuestionId).style.display = 'block';
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
+        const startSearchBtn = document.getElementById('start-search');
+        const homePage = document.querySelector('.home-page');
+        const typeformContainer = document.querySelector('.typeform-container');
+        const progressBar = document.querySelector('.progress');
+        const questions = document.querySelectorAll('.question');
+        const totalQuestions = questions.length;
+
+        startSearchBtn.addEventListener('click', function() {
+            homePage.classList.remove('active');
+            typeformContainer.classList.add('active');
+            updateProgress(1);
+        });
+
+        function showQuestion(questionIndex) {
+            questions.forEach((q, index) => {
+                if (index === questionIndex) {
+                    q.classList.add('active');
+                } else {
+                    q.classList.remove('active');
+                }
+            });
+            updateProgress(questionIndex + 1);
+        }
+
+        function updateProgress(currentQuestion) {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        document.querySelectorAll('.next-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const currentQuestion = this.closest('.question');
+                const nextQuestion = currentQuestion.nextElementSibling;
+                if (nextQuestion) {
+                    currentQuestion.classList.remove('active');
+                    nextQuestion.classList.add('active');
+                    updateProgress(parseInt(nextQuestion.dataset.question));
+                }
+            });
+        });
+
+        document.querySelectorAll('.back-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const currentQuestion = this.closest('.question');
+                const previousQuestion = currentQuestion.previousElementSibling;
+                if (previousQuestion) {
+                    currentQuestion.classList.remove('active');
+                    previousQuestion.classList.add('active');
+                    updateProgress(parseInt(previousQuestion.dataset.question));
+                }
+            });
+        });
+
         const exploreButton = document.getElementById('explore-button');
         const searchForm = document.getElementById('search-form');
 
@@ -205,6 +355,20 @@
             }
         });
     });
+    </script>
+    <script>
+    // Check if the URL contains the #search-form anchor
+    if (window.location.hash === '#search-form') {
+        // Hide the home page and show the typeform container
+        document.querySelector('.home-page').classList.remove('active');
+        document.querySelector('.typeform-container').classList.add('active');
+        
+        // Show the first question
+        showQuestion(0);
+        
+        // Scroll to the form
+        document.getElementById('search-form').scrollIntoView();
+    }
     </script>
 </body>
 </html>

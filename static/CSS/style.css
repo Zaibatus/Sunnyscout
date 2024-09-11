@@ -345,3 +345,14 @@ main {
 .results-container {
     margin-top: 20px;
 }
+
+
+.homepage-img {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%; /* Change width to 100% for full width */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Center text inside the flex container */
+}
