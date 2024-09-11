@@ -264,39 +264,43 @@ def result():
     except KeyError as e:
         app.logger.warning(f"Column {e} not found in the CSV. Some additional info may not be included.")
 
+    # Load flag emojis
+    flag_emojis = {}
+    try:
+        flag_df = pd.read_csv('flag_emoji.csv')
+        flag_emojis = dict(zip(flag_df['Country'], flag_df['Flag']))
+    except FileNotFoundError:
+        app.logger.warning("Flag emoji file not found. Flags will not be displayed.")
+    except pd.errors.EmptyDataError:
+        app.logger.warning("Flag emoji file is empty. Flags will not be displayed.")
+
     # Prepare data for the template
     result_data = []
-    for rank, city_data in enumerate(top_5_cities, 1):
-        flight_search = FlightSearch()
-        destination_code = flight_search.get_destination_code(city_data['city'].split(',')[0])
+    for city in top_5_cities:
+        city_name = city['city']
+        country = city['country']
+        flag_emoji = flag_emojis.get(country, '')
+        
+        # Find the IATA code for the city
+        city_airport = airports_df[airports_df['City'].str.lower() == city_name.lower()]
+        iata_code = city_airport['IATA_Code'].iloc[0] if not city_airport.empty else ''
 
-        if current_location_code and destination_code != "N/A" and destination_code != "Not Found":
-            kayak_link = f"https://www.kayak.com/flights/{current_location_code}-{destination_code}/{start_date.strftime('%Y-%m-%d')}/{end_date.strftime('%Y-%m-%d')}"
-        else:
-            kayak_link = None
-
-        # Create Booking.com link
-        booking_link = f"https://www.booking.com/{city_data['city'].split(',')[0].lower().replace(' ', '-')}"
-
-        # Get city information
-        city_name = city_data['city'].split(',')[0].strip()
-        city_info_data = city_info.get(city_name, {})
-
-        result = {
-            'rank': rank,
-            'city': f"{city_data['city']}, {city_data['country']}",
-            'avg_sunshine': f"{city_data['avg_sunshine']:.2f}",
-            'total_sunshine': f"{city_data['total_sunshine']:.2f}",
-            'distance': f"{city_data['distance']}",
-            'description': city_info_data.get('City_Description', "No description available."),
-            'to_dos': city_info_data.get('City_To_Dos', "No to-dos available."),
-            'food_to_try': city_info_data.get('Food_to_try', "No food recommendations available."),
-            'kayak_link': kayak_link,
-            'booking_link': booking_link,
-            'latitude': city_data.get('latitude'),
-            'longitude': city_data.get('longitude')
-        }
-        result_data.append(result)
+        result_data.append({
+            'city': city_name,
+            'country': country,
+            'flag_emoji': flag_emoji,
+            'avg_sunshine': round(city['avg_sunshine'], 2),
+            'total_sunshine': round(city['total_sunshine'], 2),
+            'distance': round(city['distance']) if isinstance(city['distance'], (int, float)) else city['distance'],
+            'latitude': city['latitude'],
+            'longitude': city['longitude'],
+            'description': city_info.get(city_name, {}).get('City_Description', ''),
+            'to_dos': city_info.get(city_name, {}).get('City_To_Dos', ''),
+            'food_to_try': city_info.get(city_name, {}).get('Food_to_try', ''),
+            'iata_code': iata_code,
+            'kayak_link': f"https://www.kayak.com/flights/{current_location_code}-{iata_code}/{start_date}/{end_date}" if iata_code else '#',
+            'booking_link': f"https://www.booking.com/searchresults.html?ss={city_name}&checkin={start_date}&checkout={end_date}"
+        })
 
     show_distance = current_lat is not None and current_lon is not None
 

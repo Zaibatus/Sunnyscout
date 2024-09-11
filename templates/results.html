@@ -95,7 +95,7 @@
             <div class="list-view">
                 {% for city in results %}
                 <div class="destination-card" data-lat="{{ city.latitude }}" data-lon="{{ city.longitude }}">
-                    <h3>{{ city.city }}</h3>
+                    <h3>{{ city.city }}, {{ city.country }} {{ city.flag_emoji|safe }}</h3>
                     <p>Average Sunshine: {{ city.avg_sunshine }} hours/day</p>
                     <div class="destination-details">
                         <p>Total Sunshine: {{ city.total_sunshine }} hours</p>
