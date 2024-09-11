@@ -63,6 +63,18 @@
         .results-container {
             margin-top: 20px;
         }
+        .new-search-container {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .new-search-btn {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background-color: gold;
+            color: black;
+            border: gold;
+        }
     </style>
 </head>
 <body>
@@ -113,6 +125,9 @@
                 {% endfor %}
             </div>
             <div id="map" class="map-view"></div>
+        </div>
+        <div class="new-search-container">
+            <a href="{{ url_for('home') }}" class="btn btn-primary new-search-btn"><b>New Search</b></a>
         </div>
     </main>
 
