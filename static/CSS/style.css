@@ -326,3 +326,22 @@ main {
 .description-open .toggle-description {
     transform: translateY(-50%) rotate(180deg);
     }
+
+.results-hero {
+    height: auto;
+    padding: 20px 0;
+    margin-bottom: 10px;
+}
+
+.results-hero .hero-content {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.view-toggle {
+    margin-bottom: 20px;
+}
+
+.results-container {
+    margin-top: 20px;
+}

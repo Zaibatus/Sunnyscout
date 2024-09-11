@@ -10,6 +10,7 @@ from requests.exceptions import RequestException
 import time
 from flight_search import FlightSearch
 import json
+from datetime import datetime
 
 # Constants
 OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
@@ -228,7 +229,9 @@ def result():
                     'city': city['City'],
                     'country': city['Country'],
                     'avg_sunshine': avg_sunshine,
-                    'total_sunshine': total_sunshine
+                    'total_sunshine': total_sunshine,
+                    'latitude': city['Latitude'],
+                    'longitude': city['Longitude']
                 }
 
                 if current_lat is not None and current_lon is not None:
@@ -289,15 +292,20 @@ def result():
             'to_dos': city_info_data.get('City_To_Dos', "No to-dos available."),
             'food_to_try': city_info_data.get('Food_to_try', "No food recommendations available."),
             'kayak_link': kayak_link,
-            'booking_link': booking_link
+            'booking_link': booking_link,
+            'latitude': city_data.get('latitude'),
+            'longitude': city_data.get('longitude')
         }
         result_data.append(result)
 
     show_distance = current_lat is not None and current_lon is not None
 
+    current_lat = current_city['lat'] if current_city is not None else None
+    current_lon = current_city['lng'] if current_city is not None else None
+
     return render_template("results.html", results=result_data, start_date=start_date.strftime('%Y-%m-%d'),
                            end_date=end_date.strftime('%Y-%m-%d'), current_location=current_location,
-                           show_distance=show_distance)
+                           show_distance=show_distance, current_lat=current_lat, current_lon=current_lon)
 
 
 def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_min, population_max):
@@ -356,6 +364,12 @@ def find_closest_airport(lat, lon, airports_df):
         lambda row: haversine_distance(lat, lon, row['Latitude'], row['Longitude']), axis=1)
     closest_airport = airports_df.loc[airports_df['distance'].idxmin()]
     return closest_airport['City'], closest_airport['IATA_Code']
+
+
+@app.template_filter('format_date')
+def format_date(date_string):
+    date = datetime.strptime(date_string, '%Y-%m-%d')
+    return date.strftime('%A, %B %d')
 
 
 if __name__ == '__main__':
