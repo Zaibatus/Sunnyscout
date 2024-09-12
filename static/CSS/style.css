@@ -1,3 +1,9 @@
+/* General Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     width: 100%;
     margin: 0 auto;
@@ -6,7 +12,17 @@ body {
     background-color: lightgoldenrodyellow;
 }
 
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
+main {
+    flex: 1 0 auto;
+}
+
+/* Header Styles */
 header {
     background: linear-gradient(to top, #f9e79f, #f1c40f);
     display: flex;
@@ -31,16 +47,18 @@ nav {
 }
 
 nav a {
-    color: black; 
-    text-decoration: none; 
-    font-weight: normal; 
+    color: black;
+    text-decoration: none;
+    font-weight: normal;
 }
 
+/* Hero Section Styles */
 .hero {
     align-items: center;
     justify-content: center;
     text-align: center;
     height: 100vh;
+    padding: 20px 0;
 }
 
 .hero-content {
@@ -53,28 +71,29 @@ nav a {
     margin-bottom: 50px;
 }
 
+/* Form Styles */
 .input-group {
-    width: 100%; /* has to be 100% to allow centering */ 
-    display: flex; 
-    justify-content: center; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
 .input-group-text {
     background-color: lightgoldenrodyellow;
     border: none;
-    display: flex; 
-    justify-content: right; 
-    align-items: center; 
+    display: flex;
+    justify-content: right;
+    align-items: center;
     width: 50%;
 }
 
 .form-control {
     background-color: lightgoldenrodyellow;
     border: none;
-    display: flex; 
-    justify-content: left; 
-    align-items: center; 
+    display: flex;
+    justify-content: left;
+    align-items: center;
     margin-right: 35%;
 }
 
@@ -82,20 +101,21 @@ nav a {
     border-radius: 8px;
 }
 
+/* Preference Styles */
 .preferences {
     margin-bottom: 20px;
     display: flex;
-    flex-direction: column; /* Align checkboxes vertically */
-    align-items: center; /* Center checkboxes */
+    flex-direction: column;
+    align-items: center;
 }
 
 .preferences div {
     display: flex;
-    align-items: center; /* Align items horizontally */
+    align-items: center;
 }
 
 .preferences label {
-    margin-left: 8px; /* Spacing between checkbox and label */
+    margin-left: 8px;
 }
 
 .distance-filter {
@@ -111,11 +131,12 @@ nav a {
     color: gold;
 }
 
+/* Testimonial Styles */
 .home-testimonial {
     background-color: #231834;
     height: 380px;
 }
-    
+
 .home-testimonial-bottom {
     background-color: #f8f8f8;
     transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
@@ -125,7 +146,7 @@ nav a {
     height: 130px;
     top: 190px
 }
-    
+
 .home-testimonial h3 {
     color: var(--orange);
     font-size: 14px;
@@ -173,7 +194,7 @@ nav a {
 .link-name {
     font-family: "Montserrat", Sans-serif;
     font-size: 14px;color: #6c83a2
-} 
+}
 
 .link-position {
     font-family: "Montserrat", Sans-serif;
@@ -181,6 +202,7 @@ nav a {
     color: #6c83a2
 }
 
+/* Footer Styles */
 footer {
     flex-shrink: 0;
     background-color: lightgoldenrodyellow;
@@ -189,6 +211,7 @@ footer {
     width: 100%;
 }
 
+/* Typeform-like Container Styles */
 .typeform-like-container {
     max-width: 600px;
     margin: 0 auto;
@@ -229,21 +252,7 @@ input::-webkit-calendar-picker-indicator {
     display: none !important;
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-}
-
-.page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-main {
-    flex: 1 0 auto;
-}
-
+/* Preference Matrix Styles */
 .preference-matrix {
     width: 100%;
     border-collapse: separate;
@@ -265,6 +274,7 @@ main {
     margin: 0;
 }
 
+/* Description Styles */
 .description-full {
     display: none;
     position: absolute;
@@ -279,8 +289,8 @@ main {
     max-width: 300px;
     white-space: pre-wrap;
     word-wrap: break-word;
-    max-height: 200px; /* Set the max height */
-    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 200px;
+    overflow-y: auto;
 }
 
 .description-container {
@@ -327,6 +337,7 @@ main {
     transform: translateY(-50%) rotate(180deg);
     }
 
+/* Results Page Styles */
 .results-hero {
     height: auto;
     padding: 20px 0;
@@ -343,16 +354,125 @@ main {
 }
 
 .results-container {
+    display: flex;
     margin-top: 20px;
 }
 
+.list-view {
+    width: 50%;
+    padding-right: 20px;
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+.map-view {
+    width: 50%;
+    height: 600px;
+}
+
+.destination-card {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.destination-card.expanded {
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.destination-details {
+    display: none;
+    margin-top: 10px;
+}
+
+.destination-card.expanded .destination-details {
+    display: block;
+}
+
+.new-search-container {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.new-search-btn {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    background-color: gold;
+    color: black;
+    border: gold;
+}
 
 .homepage-img {
     margin-top: 20px;
     margin-bottom: 20px;
-    width: 100%; /* Change width to 100% for full width */
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center; /* Center text inside the flex container */
+    text-align: center;
 }
+
+.home-page, .typeform-container {
+    display: none;
+    }
+
+
+.home-page.active, .typeform-container.active {
+    display: block;
+    }
+
+
+/* Progress Bar Styles */
+.progress-bar {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    background-color: #e0e0e0;
+    padding: 3px;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+    }
+
+.progress {
+    display: block;
+    height: 22px;
+    background-color: #39ff14;
+    border-radius: 3px;
+    transition: width 500ms ease-in-out;
+    }
+
+
+.question {
+    display: none;
+    }
+
+
+.question.active {
+    display: block;
+    }
+
+
+/* Button Styles */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+    }
+
+
+.back-button, .next-button {
+    width: 100px;
+    }
+
+
+.back-button button, .next-button button {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    text-align: center;
+    }

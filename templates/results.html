@@ -12,71 +12,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <style>
-        .hero {
-            padding: 20px 0;
-        }
-        .results-container {
-            display: flex;
-            margin-top: 20px;
-        }
-        .list-view {
-            width: 50%;
-            padding-right: 20px;
-            overflow-y: auto;
-            max-height: 600px;
-        }
-        .map-view {
-            width: 50%;
-            height: 600px;
-        }
-        .destination-card {
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            padding: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .destination-card.expanded {
-            background-color: #f8f8f8;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .destination-details {
-            display: none;
-            margin-top: 10px;
-        }
-        .destination-card.expanded .destination-details {
-            display: block;
-        }
-        .results-hero {
-            height: auto;
-            padding: 20px 0;
-            margin-bottom: 50px;
-        }
-        .results-hero .hero-content {
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-        .view-toggle {
-            margin-bottom: 20px;
-        }
-        .results-container {
-            margin-top: 20px;
-        }
-        .new-search-container {
-            text-align: center;
-            margin-top: 30px;
-            margin-bottom: 30px;
-        }
-        .new-search-btn {
-            font-size: 1.2em;
-            padding: 10px 20px;
-            background-color: gold;
-            color: black;
-            border: gold;
-        }
-    </style>
 </head>
+
 <body>
     <header>
         <div class="app-name">

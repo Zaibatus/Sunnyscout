@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,52 +12,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <style>
-        .home-page, .typeform-container {
-            display: none;
-        }
-        .home-page.active, .typeform-container.active {
-            display: block;
-        }
-        .progress-bar {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto 20px;
-            background-color: #e0e0e0;
-            padding: 3px;
-            border-radius: 3px;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
-        }
-        .progress {
-            display: block;
-            height: 22px;
-            background-color: #39ff14; /* Neon green */
-            border-radius: 3px;
-            transition: width 500ms ease-in-out;
-        }
-        .question {
-            display: none;
-        }
-        .question.active {
-            display: block;
-        }
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            width: 100%;
-        }
-        .back-button, .next-button {
-            width: 100px;  /* Set a fixed width for both button containers */
-        }
-        .back-button button, .next-button button {
-            width: 100%;
-            padding: 10px 0;
-            font-size: 16px;
-            text-align: center;
-        }
-    </style>
 </head>
+
 <body class="recursive-<uniquifier>">
     <div class="page-container">
         <header>
