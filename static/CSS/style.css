@@ -453,13 +453,32 @@ input::-webkit-calendar-picker-indicator {
 .button-group {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 20px;
     width: 100%;
-    font-family: 'Lora', serif;
+}
+
+.back-button, .next-button {
+    flex: 0 0 auto;
 }
 
 .btn {
-    font-family: 'Lora', serif;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+}
+
+.btn-dark {
+    background-color: gold;
+    color: black;
+    border: none;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lora:wght@400;700&display=swap');
