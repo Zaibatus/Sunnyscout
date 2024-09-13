@@ -537,3 +537,14 @@ input[type="range"]::-ms-thumb {
 #distance-value {
     font-weight: bold;
 }
+
+/* Custom button classes */
+.btn-kayak {
+    background-color: #FF6600;
+    color: white;
+}
+
+.btn-booking {
+    background-color: #003580;
+    color: white;
+}

@@ -49,14 +49,14 @@
                     <div class="destination-details">
                         <p>Total Sunshine: {{ city.total_sunshine }} hours</p>
                         <p>Distance from {{ current_location }}: {{ city.distance }} km</p>
-                        <h4>Description:</h4>
+                        <h4><b>Description:</b></h4>
                         <p>{{ city.description }}</p>
-                        <h4>Things to Do:</h4>
+                        <h4><b>Things to Do:</b></h4>
                         <p>{{ city.to_dos }}</p>
-                        <h4>Food to Try:</h4>
+                        <h4><b>Food to Try:</b></h4>
                         <p>{{ city.food_to_try }}</p>
-                        <a href="{{ city.kayak_link }}" target="_blank" class="btn btn-primary">Search Flights</a>
-                        <a href="{{ city.booking_link }}" target="_blank" class="btn btn-success">Find Hotels</a>
+                        <a href="{{ city.kayak_link }}" target="_blank" class="btn btn-kayak">Search Flights</a>
+                        <a href="{{ city.booking_link }}" target="_blank" class="btn btn-booking">Find Hotels</a>
                     </div>
                 </div>
                 {% endfor %}

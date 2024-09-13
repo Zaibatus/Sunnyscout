@@ -298,7 +298,7 @@ def result():
             'to_dos': city_info.get(city_name, {}).get('City_To_Dos', ''),
             'food_to_try': city_info.get(city_name, {}).get('Food_to_try', ''),
             'iata_code': iata_code,
-            'kayak_link': f"https://www.kayak.com/flights/{current_location_code}-{iata_code}/{start_date}/{end_date}" if iata_code else '#',
+            'kayak_link': f"https://www.kayak.com/flights/{current_location_code}-{iata_code}/{start_date.strftime('%Y-%m-%d')}/{end_date.strftime('%Y-%m-%d')}" if iata_code else '#',
             'booking_link': f"https://www.booking.com/searchresults.html?ss={city_name}&checkin={start_date}&checkout={end_date}"
         })
 
