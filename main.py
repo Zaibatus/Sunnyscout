@@ -331,36 +331,22 @@ def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, 
                 filtered_cities = [city for city in filtered_cities if city.get(key) != 'yes']
 
     if current_lat is not None and current_lon is not None and distance_preference:
-        min_dist, max_dist = map(int, distance_preference.split('-')) if '-' in distance_preference else (
-        2001, float('inf'))
-        filtered_cities = [
-            city for city in filtered_cities
-            if min_dist <= haversine_distance(current_lat, current_lon, city['Latitude'], city['Longitude']) < max_dist
-        ]
+        max_dist = int(distance_preference)
+        if max_dist < 5000:  # Only filter if it's not "Any distance"
+            filtered_cities = [
+                city for city in filtered_cities
+                if haversine_distance(current_lat, current_lon, city['Latitude'], city['Longitude']) <= max_dist
+            ]
 
     # Filter by population
     population_min = int(population_min) if population_min else 0
     population_max = int(population_max) if population_max else float('inf')
-    
-    print(f"Debug: population_min = {population_min}, population_max = {population_max}")
-    
-    filtered_cities_by_population = []
-    for city in filtered_cities:
-        try:
-            population = city.get('Population', '0')
-            if isinstance(population, str):
-                population = population.replace(',', '').replace('.', '')  # Remove commas and periods
-            population = int(population)
-            if population_min <= population <= population_max:
-                filtered_cities_by_population.append(city)
-        except ValueError as e:
-            print(f"Debug: Error processing population for city {city.get('City', 'Unknown')}: {e}")
-            print(f"Debug: Population value: {city.get('Population', 'Not found')}")
-    
-    print(f"Debug: Cities before population filter: {len(filtered_cities)}")
-    print(f"Debug: Cities after population filter: {len(filtered_cities_by_population)}")
-    
-    return filtered_cities_by_population
+    filtered_cities = [
+        city for city in filtered_cities
+        if population_min <= int(city['Population'].replace(',', '')) <= population_max
+    ]
+
+    return filtered_cities
 
 
 def find_closest_airport(lat, lon, airports_df):

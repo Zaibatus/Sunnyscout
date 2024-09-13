@@ -81,12 +81,8 @@
                         <div class="question" id="distance-question" data-question="3">
                             <h2>How far are you willing to travel?</h2>
                             <div class="preference-option">
-                                <select id="distance" name="distance">
-                                    <option value="">Any distance</option>
-                                    <option value="0-500">Under 500 km</option>
-                                    <option value="501-1000">501 - 1000 km</option>
-                                    <option value="1001-2000">1001 - 2000 km</option>
-                                </select>
+                                <label for="distance">Distance (km): <span id="distance-value">Any distance</span></label>
+                                <input type="range" id="distance" name="distance" min="0" max="5000" step="100" value="5000">
                             </div>
                             <div class="button-group">
                                 <div class="back-button">

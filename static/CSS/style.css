@@ -192,7 +192,8 @@ nav a {
 
 .link-name {
     font-family: "Montserrat", Sans-serif;
-    font-size: 14px;color: #6c83a2
+    font-size: 14px;
+    color: #6c83a2
 }
 
 .link-position {
@@ -295,7 +296,7 @@ input::-webkit-calendar-picker-indicator {
 .description-container {
     position: relative;
     max-width: 300px;
-    }
+}
 
 .description-preview {
     white-space: nowrap;
@@ -303,7 +304,7 @@ input::-webkit-calendar-picker-indicator {
     text-overflow: ellipsis;
     cursor: pointer;
     padding-right: 20px;
-    }
+}
 
 .description-full {
     display: none;
@@ -314,13 +315,12 @@ input::-webkit-calendar-picker-indicator {
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 1000;
     max-width: 300px;
     white-space: pre-wrap;
     word-wrap: break-word;
-    }
-
+}
 
 .toggle-description {
     position: absolute;
@@ -329,12 +329,11 @@ input::-webkit-calendar-picker-indicator {
     transform: translateY(-50%);
     cursor: pointer;
     transition: transform 0.3s ease;
-    }
-
+}
 
 .description-open .toggle-description {
     transform: translateY(-50%) rotate(180deg);
-    }
+}
 
 /* Results Page Styles */
 .results-hero {
@@ -379,7 +378,7 @@ input::-webkit-calendar-picker-indicator {
 
 .destination-card.expanded {
     background-color: #f8f8f8;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .destination-details {
@@ -417,13 +416,11 @@ input::-webkit-calendar-picker-indicator {
 
 .home-page, .typeform-container {
     display: none;
-    }
-
+}
 
 .home-page.active, .typeform-container.active {
     display: block;
-    }
-
+}
 
 /* Progress Bar Styles */
 .progress-bar {
@@ -434,7 +431,7 @@ input::-webkit-calendar-picker-indicator {
     padding: 3px;
     border-radius: 3px;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
-    }
+}
 
 .progress {
     display: block;
@@ -442,18 +439,15 @@ input::-webkit-calendar-picker-indicator {
     background-color: #39ff14;
     border-radius: 3px;
     transition: width 500ms ease-in-out;
-    }
-
+}
 
 .question {
     display: none;
-    }
-
+}
 
 .question.active {
     display: block;
-    }
-
+}
 
 /* Button Styles */
 .button-group {
@@ -462,13 +456,11 @@ input::-webkit-calendar-picker-indicator {
     margin-top: 20px;
     width: 100%;
     font-family: 'Lora', serif;
-    }
-
+}
 
 .btn {
     font-family: 'Lora', serif;
 }
-
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Lora:wght@400;700&display=swap');
 
@@ -478,4 +470,51 @@ h1, h2, h3, h4, h5, h6 {
 
 body, p, span, div, input, button {
     font-family: 'Montserrat', sans-serif;
+}
+
+/* Distance slider styles */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 5px;
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #000000;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #000000;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+input[type="range"]::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    background: #000000;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#distance-value {
+    font-weight: bold;
 }

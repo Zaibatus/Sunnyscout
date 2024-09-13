@@ -152,4 +152,25 @@ document.addEventListener('DOMContentLoaded', function() {
         showQuestion(0);
         document.getElementById('search-form').scrollIntoView();
     }
+
+    // Distance slider functionality
+    const distanceSlider = document.getElementById('distance');
+    const distanceValue = document.getElementById('distance-value');
+
+    distanceSlider.addEventListener('input', function() {
+        if (this.value == 5000) {
+            distanceValue.textContent = 'Any distance';
+        } else {
+            distanceValue.textContent = `${this.value} km`;
+        }
+    });
+
+    // Update the distance value when the page loads
+    window.addEventListener('load', function() {
+        if (distanceSlider.value == 5000) {
+            distanceValue.textContent = 'Any distance';
+        } else {
+            distanceValue.textContent = `${distanceSlider.value} km`;
+        }
+    });
 });
