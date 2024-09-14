@@ -25,7 +25,7 @@ main {
 
 /* Header and Navbar Styles */
 header {
-    background: lightgoldenrodyellow; /* Same color as the rest of the website */
+    background: lightgoldenrodyellow;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,13 +42,21 @@ nav {
     display: flex;
     align-items: center;
     font-family: 'Lora', serif;
+    font-size: 20px;
 }
 
 nav a {
     color: black;
     text-decoration: none;
     font-weight: normal;
-    margin-left: 20px; /* Add some spacing between nav items */
+    color: #333;
+    transition: color 0.3s ease;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    color: gold;
+    text-decoration: none;
 }
 
 /* Hero Section Styles */
@@ -548,3 +556,45 @@ input[type="range"]::-ms-thumb {
     background-color: #003580;
     color: white;
 }
+
+
+/* Custom data-range style */
+
+.date-range {
+    margin: 20px 0;
+}
+
+.date-range input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.date-range input[type="text"]:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Optional: Add a calendar icon */
+.date-range {
+    position: relative;
+}
+
+.date-range::after {
+    content: "\1F4C5";  /* Unicode for calendar emoji */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+
+
+

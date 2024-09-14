@@ -8,6 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalQuestions = questions.length;
     const exploreButton = document.getElementById('explore-button');
     const searchForm = document.getElementById('search-form');
+    const errorMessage = document.getElementById('error-message');
+    const locationInput = document.getElementById('current-location');
+    const dateRangeInput = document.getElementById('date-range');
+    const dateErrorMessage = document.getElementById('date-error-message');
 
     // Function to show a specific question
     function showQuestion(questionIndex) {
@@ -34,11 +38,50 @@ document.addEventListener('DOMContentLoaded', function() {
         updateProgress(1);
     });
 
+    // Function to validate location input before moving to the next question
+    function validateLocationInput() {
+        const locationValue = locationInput.value.trim();
+        if (locationValue === "") {
+            errorMessage.style.display = 'block';  // Show error message
+            return false;
+        } else {
+            errorMessage.style.display = 'none';  // Hide error message
+            return true;
+        }
+    }
+
+    // Function to validate date range input before moving to the next question
+    function validateDateInput() {
+        const dateValue = dateRangeInput.value.trim();
+        if (dateValue === "") {
+            dateErrorMessage.style.display = 'block';  // Show error message
+            return false;
+        } else {
+            dateErrorMessage.style.display = 'none';  // Hide error message
+            return true;
+        }
+    }
+
     // Next button click handlers
     document.querySelectorAll('.next-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const currentQuestion = this.closest('.question');
             const nextQuestion = currentQuestion.nextElementSibling;
+
+            // If this is the location question, validate the input
+            if (currentQuestion.id === 'location-question') {
+                if (!validateLocationInput()) {
+                    return;  // Prevent proceeding if validation fails
+                }
+            }
+
+            // If this is the date question, validate the input
+            if (currentQuestion.id === 'date-question') {
+                if (!validateDateInput()) {
+                    return;  // Prevent proceeding if validation fails
+                }
+            }
+
             if (nextQuestion) {
                 currentQuestion.classList.remove('active');
                 nextQuestion.classList.add('active');
@@ -67,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const dateRange = document.getElementById('date-range').value.split(' to ');
             const startDate = dateRange[0];
             const endDate = dateRange[1] || dateRange[0];
-            const currentLocation = document.getElementById('current-location').value;
+            const currentLocation = locationInput.value;
             const preferences = {
                 island: document.querySelector('input[name="island"]:checked').value,
                 capital: document.querySelector('input[name="capital"]:checked').value,
@@ -95,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Date range picker initialization
-    const dateRangeInput = document.getElementById('date-range');
     const today = new Date();
     const maxDate = new Date();
     maxDate.setDate(today.getDate() + 15);
@@ -119,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // City autocomplete
-    const currentLocationInput = document.getElementById('current-location');
     const citiesList = document.getElementById('cities-list');
 
     fetch('/get_cities')
@@ -132,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-    currentLocationInput.addEventListener('input', function() {
+    locationInput.addEventListener('input', function() {
         const value = this.value.toLowerCase();
         const options = citiesList.getElementsByTagName('option');
         for (let i = 0; i < options.length; i++) {
