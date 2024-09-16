@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
             const distance = document.getElementById('distance').value;
             const populationRanges = Array.from(document.querySelectorAll('input[name="population_range"]:checked:not(#all-population)')).map(input => input.value);
+            const costRanges = Array.from(document.querySelectorAll('input[name="cost_range"]:checked:not(#all-cost)')).map(input => input.value);
 
             const queryParams = new URLSearchParams({
                 start_date: startDate,
@@ -126,7 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 current_location: currentLocation,
                 preferences: JSON.stringify(preferences),
                 distance: distance,
-                population_ranges: JSON.stringify(populationRanges)
+                population_ranges: JSON.stringify(populationRanges),
+                cost_ranges: JSON.stringify(costRanges)
             });
 
             window.location.href = `/results?${queryParams.toString()}`;
@@ -237,4 +239,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize population checkboxes
     updatePopulationCheckboxes();
+
+    // Handle 'Select All' checkbox for cost ranges
+    const allCostCheckbox = document.getElementById('all-cost');
+    const costCheckboxes = document.querySelectorAll('input[name="cost_range"]:not(#all-cost)');
+
+    function updateCostCheckboxes() {
+        costCheckboxes.forEach(checkbox => {
+            checkbox.checked = allCostCheckbox.checked;
+        });
+    }
+
+    allCostCheckbox.addEventListener('change', updateCostCheckboxes);
+
+    costCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (!this.checked) {
+                allCostCheckbox.checked = false;
+            } else {
+                allCostCheckbox.checked = Array.from(costCheckboxes).every(cb => cb.checked);
+            }
+        });
+    });
+
+    // Initialize cost checkboxes
+    updateCostCheckboxes();
 });

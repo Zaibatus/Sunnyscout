@@ -76,7 +76,7 @@ def update_iata_codes():
 def get_cities_data():
     df = pd.read_csv('cities_airports.csv',
                      usecols=['City', 'Latitude', 'Longitude', 'IATA_Code', 'Country', 'Island', 'Capital', 'EU',
-                              'Schengen', 'Population'])
+                              'Schengen', 'Population', 'Cost_Scale'])
     return df.to_dict('records')
 
 
@@ -161,6 +161,7 @@ def result():
     preferences = json.loads(request.args.get('preferences', '{}'))
     distance_preference = request.args.get('distance', '')
     population_ranges = json.loads(request.args.get('population_ranges', '[]'))
+    cost_ranges = json.loads(request.args.get('cost_ranges', '[]'))
 
     if not all([start_date, end_date, current_location]):
         return redirect(url_for('home'))
@@ -206,7 +207,7 @@ def result():
     preferences = json.loads(request.args.get('preferences', '{}'))
 
     # Filter cities based on preferences
-    filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_ranges)
+    filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_ranges, cost_ranges)
 
     city_sunshine = []
 
@@ -311,7 +312,7 @@ def result():
                            show_distance=show_distance, current_lat=current_lat, current_lon=current_lon)
 
 
-def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_ranges):
+def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_ranges, cost_ranges):
     filtered_cities = cities.copy()
 
     preference_mapping = {
@@ -342,6 +343,13 @@ def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, 
         filtered_cities = [
             city for city in filtered_cities
             if any(is_in_population_range(city['Population'], range_name) for range_name in population_ranges)
+        ]
+
+    # Filter by cost ranges
+    if cost_ranges and len(cost_ranges) < 4:  # If not all ranges are selected
+        filtered_cities = [
+            city for city in filtered_cities
+            if city['Cost_Scale'] in cost_ranges
         ]
 
     return filtered_cities
