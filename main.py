@@ -76,7 +76,7 @@ def update_iata_codes():
 def get_cities_data():
     df = pd.read_csv('cities_airports.csv',
                      usecols=['City', 'Latitude', 'Longitude', 'IATA_Code', 'Country', 'Island', 'Capital', 'EU',
-                              'Schengen', 'Population', 'Cost_Scale'])
+                              'Schengen', 'Population', 'Cost_Scale', 'Euro'])
     return df.to_dict('records')
 
 
@@ -319,7 +319,8 @@ def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, 
         'island': 'Island',
         'capital': 'Capital',
         'eu': 'EU',
-        'schengen': 'Schengen'
+        'schengen': 'Schengen',
+        'eurozone': 'Euro'
     }
 
     for pref, value in preferences.items():

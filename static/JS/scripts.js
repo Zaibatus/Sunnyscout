@@ -115,7 +115,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 island: document.querySelector('input[name="island"]:checked').value,
                 capital: document.querySelector('input[name="capital"]:checked').value,
                 eu: document.querySelector('input[name="eu"]:checked').value,
-                schengen: document.querySelector('input[name="schengen"]:checked').value
+                schengen: document.querySelector('input[name="schengen"]:checked').value,
+                eurozone: document.querySelector('input[name="eurozone"]:checked').value
             };
             const distance = document.getElementById('distance').value;
             const populationRanges = Array.from(document.querySelectorAll('input[name="population_range"]:checked:not(#all-population)')).map(input => input.value);
