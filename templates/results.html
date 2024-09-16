@@ -46,6 +46,7 @@
                 <div class="destination-card" data-lat="{{ city.latitude }}" data-lon="{{ city.longitude }}">
                     <h3>{{ city.city }}, {{ city.country }} {{ city.flag_emoji|safe }}</h3>
                     <p>Average Sunshine: {{ city.avg_sunshine }} hours/day</p>
+                    <div class="expand-indicator">[+]</div>
                     <div class="destination-details">
                         <p>Total Sunshine: {{ city.total_sunshine }} hours</p>
                         <p>Distance from {{ current_location }}: {{ city.distance }} km</p>
@@ -102,8 +103,14 @@
         // Make destination cards interactive
         const destinationCards = document.querySelectorAll('.destination-card');
         destinationCards.forEach(card => {
-            card.addEventListener('click', () => {
+            const expandIndicator = card.querySelector('.expand-indicator');
+            card.addEventListener('click', function(event) {
+                // Prevent the click event from triggering on child elements
+                if (event.target !== card && event.target !== expandIndicator) {
+                    return;
+                }
                 card.classList.toggle('expanded');
+                expandIndicator.textContent = card.classList.contains('expanded') ? '[-]' : '[+]';
             });
         });
 
