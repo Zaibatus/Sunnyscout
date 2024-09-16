@@ -160,8 +160,7 @@ def result():
     current_location = request.args.get('current_location')
     preferences = json.loads(request.args.get('preferences', '{}'))
     distance_preference = request.args.get('distance', '')
-    population_min = request.args.get('population_min', '0')
-    population_max = request.args.get('population_max', '')
+    population_ranges = json.loads(request.args.get('population_ranges', '[]'))
 
     if not all([start_date, end_date, current_location]):
         return redirect(url_for('home'))
@@ -207,7 +206,7 @@ def result():
     preferences = json.loads(request.args.get('preferences', '{}'))
 
     # Filter cities based on preferences
-    filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_min, population_max)
+    filtered_cities = filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_ranges)
 
     city_sunshine = []
 
@@ -312,7 +311,7 @@ def result():
                            show_distance=show_distance, current_lat=current_lat, current_lon=current_lon)
 
 
-def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_min, population_max):
+def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, distance_preference, population_ranges):
     filtered_cities = cities.copy()
 
     preference_mapping = {
@@ -338,16 +337,25 @@ def filter_cities_by_preferences(cities, preferences, current_lat, current_lon, 
                 if haversine_distance(current_lat, current_lon, city['Latitude'], city['Longitude']) <= max_dist
             ]
 
-    # Filter by population
-    population_min = int(population_min) if population_min else 0
-    population_max = int(population_max) if population_max else float('inf')
-    filtered_cities = [
-        city for city in filtered_cities
-        if population_min <= int(city['Population'].replace(',', '')) <= population_max
-    ]
+    # Filter by population ranges
+    if population_ranges and len(population_ranges) < 4:  # If not all ranges are selected
+        filtered_cities = [
+            city for city in filtered_cities
+            if any(is_in_population_range(city['Population'], range_name) for range_name in population_ranges)
+        ]
 
     return filtered_cities
 
+def is_in_population_range(population, range_name):
+    population = int(population.replace(',', ''))
+    ranges = {
+        'small': (0, 200000),
+        'medium': (200001, 500000),
+        'metropolitan': (500001, 1500000),
+        'large-metropolitan': (1500001, float('inf'))
+    }
+    min_pop, max_pop = ranges[range_name]
+    return min_pop <= population <= max_pop
 
 def find_closest_airport(lat, lon, airports_df):
     airports_df['distance'] = airports_df.apply(

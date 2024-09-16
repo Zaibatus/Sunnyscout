@@ -118,8 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 schengen: document.querySelector('input[name="schengen"]:checked').value
             };
             const distance = document.getElementById('distance').value;
-            const populationMin = document.getElementById('population-min').value;
-            const populationMax = document.getElementById('population-max').value;
+            const populationRanges = Array.from(document.querySelectorAll('input[name="population_range"]:checked:not(#all-population)')).map(input => input.value);
 
             const queryParams = new URLSearchParams({
                 start_date: startDate,
@@ -127,8 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 current_location: currentLocation,
                 preferences: JSON.stringify(preferences),
                 distance: distance,
-                population_min: populationMin,
-                population_max: populationMax
+                population_ranges: JSON.stringify(populationRanges)
             });
 
             window.location.href = `/results?${queryParams.toString()}`;
@@ -214,4 +212,29 @@ document.addEventListener('DOMContentLoaded', function() {
             distanceValue.textContent = `${distanceSlider.value} km`;
         }
     });
+
+    // Handle 'Select All' checkbox for population ranges
+    const allPopulationCheckbox = document.getElementById('all-population');
+    const populationCheckboxes = document.querySelectorAll('input[name="population_range"]:not(#all-population)');
+
+    function updatePopulationCheckboxes() {
+        populationCheckboxes.forEach(checkbox => {
+            checkbox.checked = allPopulationCheckbox.checked;
+        });
+    }
+
+    allPopulationCheckbox.addEventListener('change', updatePopulationCheckboxes);
+
+    populationCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (!this.checked) {
+                allPopulationCheckbox.checked = false;
+            } else {
+                allPopulationCheckbox.checked = Array.from(populationCheckboxes).every(cb => cb.checked);
+            }
+        });
+    });
+
+    // Initialize population checkboxes
+    updatePopulationCheckboxes();
 });
