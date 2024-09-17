@@ -54,23 +54,41 @@
                             </a>
                         </div>
                     </div>
-                    <p>Average Sunshine: {{ city.avg_sunshine }} hours/day</p>
+                    <p><b>Average Sunshine:</b> {{ city.avg_sunshine }} hours/day</p>
                     <div class="expand-indicator">[+]</div>
                     <div class="destination-details">
-                        <p>Total Sunshine: {{ city.total_sunshine }} hours</p>
-                        <p>Distance from {{ current_location }}: {{ city.distance }} km</p>
+                        <p><b>Total Sunshine:</b> {{ city.total_sunshine }} hours</p>
+                        <p><b>Distance from {{ current_location }}:</b> {{ city.distance }} km</p>
                         <h4><b>Description:</b></h4>
                         <p>{{ city.description }}</p>
                         <h4><b>Things to Do:</b></h4>
-                        <p>{{ city.to_dos }}</p>
+                        <ul>
+                            {% for todo in city.to_dos.split('•') %}
+                                {% if todo.strip() %}
+                                    <li>{{ todo.strip() }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                         <h4><b>Food to Try:</b></h4>
-                        <p>{{ city.food_to_try }}</p>
+                        <ul>
+                            {% for food in city.food_to_try.split('\n') %}
+                                {% set food_item = food.strip() %}
+                                {% if food_item and not food_item[0].isdigit() %}
+                                    <li>{{ food_item }}</li>
+                                {% elif food_item and food_item[0].isdigit() %}
+                                    <li>{{ food_item.split('. ', 1)[-1] }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             <div id="map" class="map-view"></div>
         </div>
+
+
+
         <div class="new-search-container">
             <a href="{{ url_for('home', _anchor='search-form') }}" class="btn btn-dark btn-lg new-search-btn">New Search</a>
         </div>
