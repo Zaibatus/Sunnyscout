@@ -43,7 +43,17 @@
             <div class="list-view">
                 {% for city in results %}
                 <div class="destination-card" data-lat="{{ city.latitude }}" data-lon="{{ city.longitude }}">
-                    <h3>{{ city.city }}, {{ city.country }} {{ city.flag_emoji|safe }}</h3>
+                    <div class="card-header">
+                        <h3>{{ city.city }}, {{ city.country }} {{ city.flag_emoji|safe }}</h3>
+                        <div class="booking-links">
+                            <a href="{{ city.kayak_link }}" target="_blank" class="btn-icon btn-kayak" title="Search Flights on Kayak">
+                                <img src="{{ url_for('static', filename='images/kayak-logo.png') }}" alt="Kayak">
+                            </a>
+                            <a href="{{ city.booking_link }}" target="_blank" class="btn-icon btn-booking" title="Find Hotels on Booking.com">
+                                <img src="{{ url_for('static', filename='images/booking-logo.png') }}" alt="Booking.com">
+                            </a>
+                        </div>
+                    </div>
                     <p>Average Sunshine: {{ city.avg_sunshine }} hours/day</p>
                     <div class="expand-indicator">[+]</div>
                     <div class="destination-details">
@@ -55,8 +65,6 @@
                         <p>{{ city.to_dos }}</p>
                         <h4><b>Food to Try:</b></h4>
                         <p>{{ city.food_to_try }}</p>
-                        <a href="{{ city.kayak_link }}" target="_blank" class="btn btn-kayak">Search Flights</a>
-                        <a href="{{ city.booking_link }}" target="_blank" class="btn btn-booking">Find Hotels</a>
                     </div>
                 </div>
                 {% endfor %}
