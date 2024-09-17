@@ -103,40 +103,46 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Explore button click handler
-    exploreButton.addEventListener('click', function(e) {
-        e.preventDefault();
-        if (searchForm.checkValidity()) {
-            const dateRange = document.getElementById('date-range').value.split(' to ');
-            const startDate = dateRange[0];
-            const endDate = dateRange[1] || dateRange[0];
-            const currentLocation = locationInput.value;
-            const preferences = {
-                island: document.querySelector('input[name="island"]:checked').value,
-                capital: document.querySelector('input[name="capital"]:checked').value,
-                eu: document.querySelector('input[name="eu"]:checked').value,
-                schengen: document.querySelector('input[name="schengen"]:checked').value,
-                eurozone: document.querySelector('input[name="eurozone"]:checked').value
-            };
-            const distance = document.getElementById('distance').value;
-            const populationRanges = Array.from(document.querySelectorAll('input[name="population_range"]:checked:not(#all-population)')).map(input => input.value);
-            const costRanges = Array.from(document.querySelectorAll('input[name="cost_range"]:checked:not(#all-cost)')).map(input => input.value);
+// Explore button click handler
+exploreButton.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (searchForm.checkValidity()) {
+        // Show loading overlay
+        document.getElementById('loading-overlay').style.display = 'block';
 
-            const queryParams = new URLSearchParams({
-                start_date: startDate,
-                end_date: endDate,
-                current_location: currentLocation,
-                preferences: JSON.stringify(preferences),
-                distance: distance,
-                population_ranges: JSON.stringify(populationRanges),
-                cost_ranges: JSON.stringify(costRanges)
-            });
+        const dateRange = document.getElementById('date-range').value.split(' to ');
+        const startDate = dateRange[0];
+        const endDate = dateRange[1] || dateRange[0];
+        const currentLocation = locationInput.value;
+        const preferences = {
+            island: document.querySelector('input[name="island"]:checked').value,
+            capital: document.querySelector('input[name="capital"]:checked').value,
+            eu: document.querySelector('input[name="eu"]:checked').value,
+            schengen: document.querySelector('input[name="schengen"]:checked').value,
+            eurozone: document.querySelector('input[name="eurozone"]:checked').value
+        };
+        const distance = document.getElementById('distance').value;
+        const populationRanges = Array.from(document.querySelectorAll('input[name="population_range"]:checked:not(#all-population)')).map(input => input.value);
+        const costRanges = Array.from(document.querySelectorAll('input[name="cost_range"]:checked:not(#all-cost)')).map(input => input.value);
 
+        const queryParams = new URLSearchParams({
+            start_date: startDate,
+            end_date: endDate,
+            current_location: currentLocation,
+            preferences: JSON.stringify(preferences),
+            distance: distance,
+            population_ranges: JSON.stringify(populationRanges),
+            cost_ranges: JSON.stringify(costRanges)
+        });
+
+        // Use setTimeout to allow the loading overlay to be displayed before redirecting
+        setTimeout(() => {
             window.location.href = `/results?${queryParams.toString()}`;
-        } else {
-            searchForm.reportValidity();
-        }
-    });
+        }, 100);
+    } else {
+        searchForm.reportValidity();
+    }
+});
 
     // Date range picker initialization
     const today = new Date();
