@@ -35,9 +35,8 @@
         <hr>
 
         <div class="view-toggle">
-            <button id="list-view-btn">List View</button>
-            <button id="map-view-btn">Map View</button>
-            <button id="combined-view-btn">Combined View</button>
+            <button id="list-view-btn">Hide Map</button>
+            <button id="combined-view-btn">Show Map</button>
         </div>
 
         <div class="results-container">
@@ -76,7 +75,6 @@
     <script>
         // Add JavaScript for toggling views and expanding cards
         const listViewBtn = document.getElementById('list-view-btn');
-        const mapViewBtn = document.getElementById('map-view-btn');
         const combinedViewBtn = document.getElementById('combined-view-btn');
         const listView = document.querySelector('.list-view');
         const mapView = document.querySelector('.map-view');
@@ -85,12 +83,6 @@
             listView.style.display = 'block';
             listView.style.width = '100%';
             mapView.style.display = 'none';
-        });
-
-        mapViewBtn.addEventListener('click', () => {
-            listView.style.display = 'none';
-            mapView.style.width = '100%';
-            mapView.style.display = 'block';
         });
 
         combinedViewBtn.addEventListener('click', () => {
