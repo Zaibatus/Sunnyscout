@@ -12,12 +12,53 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        .carousel-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .destination-card {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .destination-info {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 15px;
+        }
+        .destination-carousel {
+            flex: 1;
+            min-width: 300px;
+            max-width: calc(100% - 40px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .map-view {
+            height: 400px;
+        }
+        .expand-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .destination-info, .destination-carousel {
+                flex: 100%;
+            }
+            .destination-carousel {
+                margin-top: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <div class="app-name">
-            <h3><a href="{{ url_for('home') }}">PLACEHOLDER ☀️</a></h3>
+            <h3><a href="{{ url_for('home') }}">Sunnyscout</a></h3>
         </div>
         <nav>
           <a href="{{ url_for('about') }}">About</a>
@@ -43,43 +84,70 @@
             <div class="list-view">
                 {% for city in results %}
                 <div class="destination-card" data-lat="{{ city.latitude }}" data-lon="{{ city.longitude }}">
-                    <div class="card-header">
-                        <h3>{{ city.city }}, {{ city.country }} {{ city.flag_emoji|safe }}</h3>
-                        <div class="booking-links">
-                            <a href="{{ city.kayak_link }}" target="_blank" class="btn-icon btn-kayak" title="Search Flights on Kayak">
-                                <img src="{{ url_for('static', filename='images/kayak-logo.png') }}" alt="Kayak">
-                            </a>
-                            <a href="{{ city.booking_link }}" target="_blank" class="btn-icon btn-booking" title="Find Hotels on Booking.com">
-                                <img src="{{ url_for('static', filename='images/booking-logo.png') }}" alt="Booking.com">
-                            </a>
+                    <div class="destination-info">
+                        <div class="card-header">
+                            <h3>{{ city.city }}, {{ city.country }} {{ city.flag_emoji|safe }}</h3>
+                            <div class="booking-links">
+                                <a href="{{ city.kayak_link }}" target="_blank" class="btn-icon btn-kayak" title="Search Flights on Kayak">
+                                    <img src="{{ url_for('static', filename='images/kayak-logo.png') }}" alt="Kayak">
+                                </a>
+                                <a href="{{ city.booking_link }}" target="_blank" class="btn-icon btn-booking" title="Find Hotels on Booking.com">
+                                    <img src="{{ url_for('static', filename='images/booking-logo.png') }}" alt="Booking.com">
+                                </a>
+                            </div>
+                        </div>
+                        <p><b>Average Sunshine:</b> {{ city.avg_sunshine }} hours/day</p>
+                        <div style="position: relative;">
+                            <div class="expand-indicator">[+]</div>
+                        </div>
+                        <div class="destination-details" style="display: none;">
+                            <p><b>Total Sunshine:</b> {{ city.total_sunshine }} hours</p>
+                            <p><b>Distance from {{ current_location }}:</b> {{ city.distance }} km</p>
+                            <h4><b>Description:</b></h4>
+                            <p>{{ city.description }}</p>
+                            <h4><b>Things to Do:</b></h4>
+                            <ul>
+                                {% for todo in city.to_dos.split('•') %}
+                                    {% if todo.strip() %}
+                                        <li>{{ todo.strip() }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                            <h4><b>Food to Try:</b></h4>
+                            <ul>
+                                {% for food in city.food_to_try.split('\n') %}
+                                    {% set food_item = food.strip() %}
+                                    {% if food_item and not food_item[0].isdigit() %}
+                                        <li>{{ food_item }}</li>
+                                    {% elif food_item and food_item[0].isdigit() %}
+                                        <li>{{ food_item.split('. ', 1)[-1] }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         </div>
                     </div>
-                    <p><b>Average Sunshine:</b> {{ city.avg_sunshine }} hours/day</p>
-                    <div class="expand-indicator">[+]</div>
-                    <div class="destination-details">
-                        <p><b>Total Sunshine:</b> {{ city.total_sunshine }} hours</p>
-                        <p><b>Distance from {{ current_location }}:</b> {{ city.distance }} km</p>
-                        <h4><b>Description:</b></h4>
-                        <p>{{ city.description }}</p>
-                        <h4><b>Things to Do:</b></h4>
-                        <ul>
-                            {% for todo in city.to_dos.split('•') %}
-                                {% if todo.strip() %}
-                                    <li>{{ todo.strip() }}</li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                        <h4><b>Food to Try:</b></h4>
-                        <ul>
-                            {% for food in city.food_to_try.split('\n') %}
-                                {% set food_item = food.strip() %}
-                                {% if food_item and not food_item[0].isdigit() %}
-                                    <li>{{ food_item }}</li>
-                                {% elif food_item and food_item[0].isdigit() %}
-                                    <li>{{ food_item.split('. ', 1)[-1] }}</li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
+                    <div class="destination-carousel">
+                        <div id="carousel{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="https://content.r9cdn.net/rimg/dimg/3b/c2/b4c4bfb9-city-27138-55689ae0.jpg?width=1366&height=768&xhint=1902&yhint=1090&crop=true" class="d-block w-100" alt="Image 1">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2b/89/81/f1/caption.jpg?w=1200&h=-1&s=1&cx=1920&cy=1080&chk=v1_f4bbbad307041b35b1d4" class="d-block w-100" alt="Image 2">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="https://cdn-imgix.headout.com/media/images/4f89d6eeb324e19ee61af4fb172380e9-18731-granada-the-alhambra-palace---skip-the-line-e-ticket-with-audio-tour-on-your-phone-04.jpg" class="d-block w-100" alt="Image 3">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -87,28 +155,28 @@
             <div id="map" class="map-view"></div>
         </div>
 
-
-
         <div class="new-search-container">
             <a href="{{ url_for('home', _anchor='search-form') }}" class="btn btn-dark btn-lg new-search-btn">New Search</a>
         </div>
     </main>
 
     <footer>
-        <!-- Include existing footer content -->
+        <p>&copy; 2024 Sunnyscout</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
-        // Add JavaScript for toggling views and expanding cards
         const listViewBtn = document.getElementById('list-view-btn');
         const combinedViewBtn = document.getElementById('combined-view-btn');
         const listView = document.querySelector('.list-view');
         const mapView = document.querySelector('.map-view');
+        const carousels = document.querySelectorAll('.destination-carousel');
 
         listViewBtn.addEventListener('click', () => {
             listView.style.display = 'block';
             listView.style.width = '100%';
             mapView.style.display = 'none';
+            carousels.forEach(carousel => carousel.style.display = 'block');
         });
 
         combinedViewBtn.addEventListener('click', () => {
@@ -116,19 +184,28 @@
             listView.style.width = '50%';
             mapView.style.width = '50%';
             mapView.style.display = 'block';
+            carousels.forEach(carousel => carousel.style.display = 'none');
         });
 
         // Make destination cards interactive
         const destinationCards = document.querySelectorAll('.destination-card');
         destinationCards.forEach(card => {
             const expandIndicator = card.querySelector('.expand-indicator');
+            const details = card.querySelector('.destination-details');
+            const carousel = card.querySelector('.destination-carousel');
+
             card.addEventListener('click', function(event) {
                 // Prevent the click event from triggering on child elements
-                if (event.target !== card && event.target !== expandIndicator) {
+                if (event.target !== card && event.target !== expandIndicator && !event.target.closest('.destination-info')) {
                     return;
                 }
-                card.classList.toggle('expanded');
-                expandIndicator.textContent = card.classList.contains('expanded') ? '[-]' : '[+]';
+
+                // Toggle details visibility
+                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+                expandIndicator.textContent = details.style.display === 'none' ? '[+]' : '[-]';
+
+                // Toggle carousel visibility
+                carousel.style.display = details.style.display === 'none' ? 'block' : 'none';
             });
         });
 
