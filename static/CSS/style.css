@@ -733,10 +733,30 @@ input[type="range"]::-ms-thumb {
 }
 
 /* Icon Styles for Button Hover */
-.btn-kayak::before, .btn-booking::before {
+.btn-kayak::before {
     content: "\2708"; /* Unicode for airplane icon */
-    margin-right: 10px;
+    margin: 0 auto; /* Center the icon */
     font-size: 16px;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+    display: block; /* Make it a block element to center */
+}
+
+.btn-kayak:hover::before {
+    opacity: 1; /* Show icon on hover */
+}
+
+.btn-booking::before {
+    content: "\1F3E0"; /* Unicode for house icon */
+    margin: 0 auto; /* Center the icon */
+    font-size: 16px;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+    display: block; /* Make it a block element to center */
+}
+
+.btn-booking:hover::before {
+    opacity: 1; /* Show icon on hover */
 }
 
 /* Miscellaneous Styling */
