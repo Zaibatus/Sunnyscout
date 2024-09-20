@@ -52,6 +52,35 @@
                 margin-top: 20px;
             }
         }
+        .todo-carousel, .food-carousel {
+            margin-top: 20px;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .todo-carousel .carousel-item, .food-carousel .carousel-item {
+            height: 200px;
+        }
+        .todo-carousel img, .food-carousel img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+        .todo-carousel .carousel-caption, .food-carousel .carousel-caption {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .todo-carousel .carousel-caption p, .food-carousel .carousel-caption p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+        }
+        .carousel-control-prev, .carousel-control-next {
+            width: 10%;
+        }
     </style>
 </head>
 
@@ -105,25 +134,56 @@
                             <p><b>Distance from {{ current_location }}:</b> {{ city.distance }} km</p>
                             <h4><b>Description:</b></h4>
                             <p>{{ city.description }}</p>
+
                             <h4><b>Things to Do:</b></h4>
-                            <ul>
-                                {% for todo in city.to_dos.split('•') %}
-                                    {% if todo.strip() %}
-                                        <li>{{ todo.strip() }}</li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+                            <div id="todoCarousel{{ loop.index }}" class="carousel slide todo-carousel" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for todo in city.to_dos.split('\n') %}
+                                        {% set todo_item = todo.strip() %}
+                                        {% if todo_item %}
+                                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                                <img src="https://www.cyprusminicruises.com/wp-content/uploads/2021/03/sunset-cruises.jpg" class="d-block w-100" alt="{{ todo_item.split('. ', 1)[-1] }}">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <p>{{ todo_item.split('. ', 1)[-1] }}</p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#todoCarousel{{ loop.index }}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#todoCarousel{{ loop.index }}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+
                             <h4><b>Food to Try:</b></h4>
-                            <ul>
-                                {% for food in city.food_to_try.split('\n') %}
-                                    {% set food_item = food.strip() %}
-                                    {% if food_item and not food_item[0].isdigit() %}
-                                        <li>{{ food_item }}</li>
-                                    {% elif food_item and food_item[0].isdigit() %}
-                                        <li>{{ food_item.split('. ', 1)[-1] }}</li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
+                            <div id="foodCarousel{{ loop.index }}" class="carousel slide food-carousel" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for food in city.food_to_try.split('\n') %}
+                                        {% set food_item = food.strip() %}
+                                        {% if food_item %}
+                                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                                <img src="https://kapnosdc.com/wp-content/uploads/2024/01/traditional-greek-foods.jpg" class="d-block w-100" alt="{{ food_item.split('. ', 1)[-1] }}">
+                                                <div class="carousel-caption d-none d-md-block">
+                                                    <p>{{ food_item.split('. ', 1)[-1] }}</p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#foodCarousel{{ loop.index }}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#foodCarousel{{ loop.index }}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="destination-carousel">
@@ -204,8 +264,20 @@
                 details.style.display = details.style.display === 'none' ? 'block' : 'none';
                 expandIndicator.textContent = details.style.display === 'none' ? '[+]' : '[-]';
 
-                // Toggle carousel visibility
+                // Toggle main carousel visibility
                 carousel.style.display = details.style.display === 'none' ? 'block' : 'none';
+
+                // Initialize or destroy the Bootstrap carousels
+                const todoCarousel = new bootstrap.Carousel(card.querySelector('.todo-carousel'));
+                const foodCarousel = new bootstrap.Carousel(card.querySelector('.food-carousel'));
+
+                if (details.style.display === 'none') {
+                    todoCarousel.dispose();
+                    foodCarousel.dispose();
+                } else {
+                    todoCarousel.cycle();
+                    foodCarousel.cycle();
+                }
             });
         });
 
