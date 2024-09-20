@@ -14,36 +14,47 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
         .carousel-item img {
-            width: 100%;
-            height: 250px;
+            width: 70%;
+            height: 400px;
             object-fit: cover;
         }
+
         .destination-card {
             margin-bottom: 20px;
             display: flex;
             flex-wrap: wrap;
         }
+
         .destination-info {
             flex: 1;
             min-width: 300px;
             padding-right: 15px;
         }
+
         .destination-carousel {
             flex: 1;
             min-width: 300px;
             max-width: calc(100% - 40px);
             margin-left: auto;
             margin-right: auto;
+            width: 80%;
+            margin: auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
         }
+
         .map-view {
             height: 400px;
         }
+
         .expand-indicator {
             position: absolute;
             top: 10px;
             right: 10px;
             cursor: pointer;
         }
+
         @media (max-width: 768px) {
             .destination-info, .destination-carousel {
                 flex: 100%;
@@ -52,35 +63,48 @@
                 margin-top: 20px;
             }
         }
+
         .todo-carousel, .food-carousel {
             margin-top: 20px;
-            max-width: 60%;
+            max-width: 70%;
             margin-left: auto;
             margin-right: auto;
+            width: 80%;
+            margin: auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
         }
+
         .todo-carousel .carousel-item, .food-carousel .carousel-item {
             height: 400px;
         }
+
         .todo-carousel img, .food-carousel img {
             object-fit: cover;
             height: 100%;
             width: 100%;
         }
+
         .todo-carousel .carousel-caption, .food-carousel .carousel-caption {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(250, 250, 210, 0.8);;
             padding: 10px;
-            border-radius: 5px;
             bottom: 0;
             left: 0;
             right: 0;
         }
+
         .todo-carousel .carousel-caption p, .food-carousel .carousel-caption p {
             margin-bottom: 0;
             font-size: 0.9rem;
+            font-family: 'Lora', serif;
+            font-color: black;
         }
+
         .carousel-control-prev, .carousel-control-next {
             width: 10%;
         }
+
     </style>
 </head>
 
@@ -188,6 +212,11 @@
                     </div>
                     <div class="destination-carousel">
                         <div id="carousel{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img src="https://content.r9cdn.net/rimg/dimg/3b/c2/b4c4bfb9-city-27138-55689ae0.jpg?width=1366&height=768&xhint=1902&yhint=1090&crop=true" class="d-block w-100" alt="Image 1">
@@ -249,10 +278,27 @@
 
         // Make destination cards interactive
         const destinationCards = document.querySelectorAll('.destination-card');
+
         destinationCards.forEach(card => {
             const expandIndicator = card.querySelector('.expand-indicator');
             const details = card.querySelector('.destination-details');
             const carousel = card.querySelector('.destination-carousel');
+
+            // Stop propagation when interacting with the carousels
+            const todoCarouselElement = card.querySelector('.todo-carousel');
+            const foodCarouselElement = card.querySelector('.food-carousel');
+
+            if (todoCarouselElement) {
+                todoCarouselElement.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Prevent the dropdown menu from closing
+                });
+            }
+
+            if (foodCarouselElement) {
+                foodCarouselElement.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Prevent the dropdown menu from closing
+                });
+            }
 
             card.addEventListener('click', function(event) {
                 // Prevent the click event from triggering on child elements
@@ -268,8 +314,8 @@
                 carousel.style.display = details.style.display === 'none' ? 'block' : 'none';
 
                 // Initialize or destroy the Bootstrap carousels
-                const todoCarousel = new bootstrap.Carousel(card.querySelector('.todo-carousel'));
-                const foodCarousel = new bootstrap.Carousel(card.querySelector('.food-carousel'));
+                const todoCarousel = new bootstrap.Carousel(todoCarouselElement);
+                const foodCarousel = new bootstrap.Carousel(foodCarouselElement);
 
                 if (details.style.display === 'none') {
                     todoCarousel.dispose();
@@ -280,6 +326,7 @@
                 }
             });
         });
+
 
         // Initialize map
         const map = L.map('map').setView([51.505, -0.09], 4);
