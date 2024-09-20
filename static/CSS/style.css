@@ -931,3 +931,35 @@ input[type="range"]::-ms-thumb {
   width: 100%;
   height: 300px;
 }
+
+
+
+.form-check-input:checked {
+    background-color: gold;
+    border-color: gold;
+    color: black; /* This will change the check mark color to black */
+}
+
+input[type="radio"] {
+    appearance: none; /* Remove default styling */
+    width: 20px; /* Set width */
+    height: 20px; /* Set height */
+    border: 2px solid gold; /* Border color */
+    border-radius: 50%; /* Make it circular */
+    outline: none; /* Remove outline */
+    cursor: pointer; /* Change cursor on hover */
+    position: relative; /* Position for the pseudo-element */
+}
+
+input[type="radio"]:checked::before {
+    content: ''; /* Create a pseudo-element */
+    position: absolute; /* Position it absolutely */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    width: 12px; /* Inner circle width */
+    height: 12px; /* Inner circle height */
+    background-color: gold; /* Inner circle color */
+    border-radius: 50%; /* Make it circular */
+    transform: translate(-50%, -50%); /* Center it */
+}
+
