@@ -351,6 +351,52 @@ input::-webkit-calendar-picker-indicator {
     transform: translateY(-50%) rotate(180deg);
 }
 
+<style>
+    .expand-indicator {
+        cursor: pointer;
+        color: blue;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+
+    .expand-indicator:hover {
+        color: darkblue;
+    }
+
+
+.description-preview {
+    font-size: 1rem;
+    color: #333;
+}
+
+.expand-indicator-tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.expand-indicator-tooltip .tooltip-text {
+    visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 100%;
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .expand-indicator-tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+
+
 /* Results Page Styles */
 .results-hero {
     height: auto;
