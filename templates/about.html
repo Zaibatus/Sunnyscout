@@ -21,10 +21,30 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero" style="text-align: center; margin: 0 20%;">
             <div class="hero-content">
-                <h1>About ☀️</h1>
-                <p>lorem ipsum blah blah blah</p>
+                <h1>Welcome to Sunnyscout! ☀️</h1>
+                <p>Looking to get away and enjoy some sun? Sunnyscout helps you plan spontaneous trips by comparing destinations by their weather forecast - and up to 9 additional parameters! Whether you're looking for a sunny getaway or a quick city break, we provide data-driven suggestions to make your last-minute trip a breeze!</p>
+                <p><b>1)</b> Simply input the dates you can travel, <b>2)</b> choose your parameters and <b>3)</b> automatically get the sunniest destinations complete with things to do and foods to try and links to book your trip.</p>
+                <p>* <i>currently we only are available for European destinations</i></p>
+                <hr>
+                <p><b>Have Feedback? Get in Touch!</b></p> 
+                <p>We love hearing from our users! Whether you have a suggestion or want to report an issue, feel free to drop us a message <a href="https://forms.gle/zjwAcsYPzUS5qVG39" target="_blank"><b>here</b></a>.</p>
+                <hr>
+                <p>Our data comes from the below sources:</p>
+                    <ul style="list-style-position: inside;">
+                        <li>Weather forecast: <a href="https://open-meteo.com/en/docs#temperature_unit=fahrenheit&forecast_days=16" target="_blank">Open-Meteo API</a></li>
+                        <li>City data: <a href="https://simplemaps.com/" target="_blank">simplemaps</a></li>
+                        <li>Cost data: <a href="https://www.numbeo.com/cost-of-living/" target="_blank">Numbeo</a></li>
+                    </ul>
+                <hr>
+                <button id="start-search" class="btn btn-dark btn-lg">Start Planning!</button>
+                <script>
+                    document.getElementById('start-search').addEventListener('click', function() {
+                        window.location.href = "{{ url_for('home') }}#search-form";
+                    });
+                </script>
+
             </div>
         </section>
     </main>
