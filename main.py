@@ -299,7 +299,13 @@ def result():
             'food_to_try': city_info.get(city_name, {}).get('Food_to_try', ''),
             'iata_code': iata_code,
             'kayak_link': f"https://www.kayak.com/flights/{current_location_code}-{iata_code}/{start_date.strftime('%Y-%m-%d')}/{end_date.strftime('%Y-%m-%d')}" if iata_code else '#',
-            'booking_link': f"https://www.booking.com/searchresults.html?ss={city_name}&checkin={start_date}&checkout={end_date}"
+            'booking_link': f"https://www.booking.com/searchresults.html?ss={city_name}&checkin={start_date}&checkout={end_date}",
+            'images': [
+                city_airport['city_img_1'].iloc[0] if not city_airport.empty else '',
+                city_airport['city_img_2'].iloc[0] if not city_airport.empty else '',
+                city_airport['city_img_3'].iloc[0] if not city_airport.empty else '',
+                city_airport['city_img_4'].iloc[0] if not city_airport.empty else '',
+            ],
         })
 
     show_distance = current_lat is not None and current_lon is not None
