@@ -123,7 +123,7 @@
             <div class="hero-content">
                 <h1>Sunniest Cities ☀</h1>
                 <p>{{ start_date|format_date }} → {{ end_date|format_date }}</p>
-                <p>Current location: {{ current_location }} <img src="{{ url_for('static', filename='images/location.png') }}" alt="Icon" style="width: 24px; height: 24px; vertical-align: middle;"></p>
+                <p>Your location: {{ current_location }} <img src="{{ url_for('static', filename='images/location.png') }}" alt="Icon" style="width: 24px; height: 24px; vertical-align: middle;"></p>
             </div>
         </section>
         <hr>
