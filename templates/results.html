@@ -143,9 +143,8 @@
     <main>
         <section class="hero results-hero">
             <div class="hero-content">
-                <h1>Sunniest Cities ☀</h1>
-                <p>{{ start_date|format_date }} → {{ end_date|format_date }}</p>
-                <p>Your location: {{ current_location }} <img src="{{ url_for('static', filename='images/location.png') }}" alt="Icon" style="width: 24px; height: 24px; vertical-align: middle;"></p>
+                <h1>Sunniest Cities from <b>{{ start_date|format_date }}</b> → <b>{{ end_date|format_date }}</b></h1>
+                <h3>Your location: {{ current_location }} <img src="{{ url_for('static', filename='images/location.png') }}" alt="Icon" style="width: 24px; height: 24px; vertical-align: middle;"></h3>
             </div>
         </section>
         <hr>
