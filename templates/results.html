@@ -12,12 +12,94 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+
     <style>
-        .carousel-item img {
-            width: 70%;
-            height: 400px;
-            object-fit: cover;
+
+.destination-image {
+    height: 300px; /* Set a fixed height */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex; /* Ensure the content within is aligned properly */
+    align-items: center;
+    justify-content: center;
+}
+
+.destination-image:hover {
+    transform: scale(1.05); /* Slight scale effect on hover */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); /* Deeper shadow on hover */
+}
+
+.destination-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; /* The image won't distort */
+    border-radius: inherit;
+    object-fit: cover; /* Ensures the image covers the container without distortion */
+    transition: transform 0.5s ease;
+}
+
+.destination-image:hover .destination-img {
+    transform: scale(1.1); /* Zoom in the image smoothly */
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent); /* Transparent overlay */
+    color: white;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.4s ease; /* Fade-in effect */
+}
+
+.destination-image:hover .image-overlay {
+    opacity: 1; /* Show the overlay on hover */
+}
+
+.image-overlay h3 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.image-overlay p {
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+.image-overlay .explore-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 10px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.image-overlay .explore-btn:hover {
+    background-color: rgba(255, 255, 255, 1); /* Button effect on hover */
+    color: black;
+}
+
+.hide-image {
+            display: none;
         }
+
 
         .destination-card {
             margin-bottom: 20px;
@@ -32,18 +114,7 @@
             padding-right: 15px;
         }
 
-        .destination-carousel {
-            flex: 1;
-            min-width: 300px;
-            max-width: calc(100% - 40px);
-            margin-left: auto;
-            margin-right: auto;
-            width: 80%;
-            margin: auto;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
-        }
+
 
         .map-view {
             height: 400px;
@@ -56,55 +127,6 @@
             text-decoration: underline;
         }
 
-        @media (max-width: 768px) {
-            .destination-info, .destination-carousel {
-                flex: 100%;
-            }
-            .destination-carousel {
-                margin-top: 20px;
-            }
-        }
-
-        .todo-carousel, .food-carousel {
-            margin-top: 20px;
-            max-width: 60%;
-            margin-left: auto;
-            margin-right: auto;
-            width: 80%;
-            margin: auto;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)
-        }
-
-        .todo-carousel .carousel-item, .food-carousel .carousel-item {
-            height: 300px;
-        }
-
-        .todo-carousel img, .food-carousel img {
-            object-fit: cover;
-            height: 100%;
-            width: 100%;
-        }
-
-        .todo-carousel .carousel-caption, .food-carousel .carousel-caption {
-            background-color: rgba(250, 250, 210, 0.8);;
-            padding: 10px;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-
-        .todo-carousel .carousel-caption p, .food-carousel .carousel-caption p {
-            margin-bottom: 0;
-            font-size: 0.9rem;
-            font-family: 'Lora', serif;
-            font-color: black;
-        }
-
-        .carousel-control-prev, .carousel-control-next {
-            width: 10%;
-        }
     </style>
 </head>
 
@@ -161,81 +183,33 @@
                         </p>
                         <div class="destination-details" style="display: none;">
                             <p class="full-description"><b>Description:</b> {{ city.description }}</p>
-                            <h4><b>Things to Do:</b></h4>
-                            <div id="todoCarousel{{ loop.index }}" class="carousel slide todo-carousel" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    {% for todo in city.to_dos.split('\n') %}
-                                        {% set todo_item = todo.strip() %}
-                                        {% if todo_item %}
-                                            <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                                <img src="https://www.cyprusminicruises.com/wp-content/uploads/2021/03/sunset-cruises.jpg" class="d-block w-100" alt="{{ todo_item.split('. ', 1)[-1] }}">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <p>{{ todo_item.split('. ', 1)[-1] }}</p>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#todoCarousel{{ loop.index }}" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#todoCarousel{{ loop.index }}" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
+                        <h4><b>Things to Do:</b></h4>
+                        <ul>
+                            {% for todo in city.to_dos.split('\n') %}
+                                {% set todo_item = todo.strip() %}
+                                {% if todo_item %}
+                                    <li>{{ todo_item.split('. ', 1)[-1] }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
 
                             <h4><b>Food to Try:</b></h4>
-                            <div id="foodCarousel{{ loop.index }}" class="carousel slide food-carousel" data-bs-ride="carousel">
-                                <div class="carousel-inner">
+                                <ul>
                                     {% for food in city.food_to_try.split('\n') %}
                                         {% set food_item = food.strip() %}
                                         {% if food_item %}
-                                            <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                                <img src="https://kapnosdc.com/wp-content/uploads/2024/01/traditional-greek-foods.jpg" class="d-block w-100" alt="{{ food_item.split('. ', 1)[-1] }}">
-                                                <div class="carousel-caption d-none d-md-block">
-                                                    <p>{{ food_item.split('. ', 1)[-1] }}</p>
-                                                </div>
-                                            </div>
+                                            <li>{{ food_item.split('. ', 1)[-1] }}</li>
                                         {% endif %}
                                     {% endfor %}
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#foodCarousel{{ loop.index }}" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#foodCarousel{{ loop.index }}" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                            </div>
+                                </ul>
+
                         </div>
                     </div>
-                    <div class="destination-carousel">
-                        <div id="carousel{{ loop.index }}" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-indicators">
-                                {% for i in range(4) %}
-                                    <button type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide-to="{{ i }}" {% if i == 0 %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ i + 1 }}"></button>
-                                {% endfor %}
-                            </div>
-                            <div class="carousel-inner">
-                                {% for image_url in city.images %}
-                                    {% if image_url %}
-                                        <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                            <img src="{{ image_url }}" class="d-block w-100" alt="Image of {{ city.city }}">
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ loop.index }}" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
+                    <div class="destination-image">
+                            <div class="aime-inner">
+                                    <div class="carousel-item active">
+                                        <img src="{{ city.image[0] }}" class="d-block w-100" alt="Image of {{ city.city }}">
+                                    </div>
                         </div>
                     </div>
                 </div>
@@ -286,6 +260,7 @@
             const carousel = card.querySelector('.destination-carousel');
             const previewDescription = card.querySelector('.description-preview');
             const fullDescription = card.querySelector('.full-description');
+            const destinationImage = card.querySelector('.destination-image');
 
             // Stop propagation when interacting with the carousels
             const todoCarouselElement = card.querySelector('.todo-carousel');
@@ -304,23 +279,25 @@
             }
 
            card.addEventListener('click', function(event) {
-                // Prevent the click event from triggering on child elements
                 if (event.target !== card && event.target !== expandIndicator && !event.target.closest('.destination-info')) {
                     return;
                 }
 
                 // Toggle details visibility
-                details.style.display = details.style.display === 'none' ? 'block' : 'none';
+                const isDetailsVisible = details.style.display !== 'none';
+                details.style.display = isDetailsVisible ? 'none' : 'block';
 
                 // Update expand indicator and toggle description visibility
-                if (details.style.display === 'none') {
+                if (isDetailsVisible) {
                     expandIndicator.textContent = '[+]';
                     previewDescription.style.display = 'block';
                     fullDescription.style.display = 'none';
+                    destinationImage.classList.remove('hide-image');  // Show image when details are hidden
                 } else {
                     expandIndicator.textContent = '[-]';
                     previewDescription.style.display = 'none';
                     fullDescription.style.display = 'block';
+                    destinationImage.classList.add('hide-image');  // Hide image when details are shown
                 }
 
                 // Toggle main carousel visibility
@@ -369,6 +346,8 @@
                     popupAnchor: [1, -34],
                     shadowSize: [41, 41]
                 });
+
+
 
                 destinationCards.forEach(card => {
                     const lat = parseFloat(card.dataset.lat);
