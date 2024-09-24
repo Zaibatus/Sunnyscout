@@ -5,8 +5,8 @@ import requests
 IATA_ENDPOINT = "https://test.api.amadeus.com/v1/reference-data/locations/cities"
 FLIGHTS_ENDPOINT = "https://test.api.amadeus.com/v2/shopping/flight-offers"
 TOKEN_ENDPOINT = "https://test.api.amadeus.com/v1/security/oauth2/token"
-AMADEUS_API_KEY = "4M0b7gLTYZlF7FZudcG2szHCz8r73u2M"
-AMADEUS_SECRET = "jAQqzaLyk2ZGUU2S"
+AMADEUS_API_KEY = os.getenv("AMADEUS_API_KEY")
+AMADEUS_SECRET = os.getenv("AMADEUS_SECRET")
 
 
 class FlightSearch:

@@ -11,12 +11,15 @@ import time
 from flight_search import FlightSearch
 import json
 from datetime import datetime
+from dotenv import load_dotenv
 
-# Constants
-OPEN_WEATHER_API_KEY = "5fed3257f497dc3c8282e41bf354430b"
+load_dotenv()
 
-ACCOUNT_SID = "ACd455f42c5bf06c805b5075033b1da34a"
-AUTH_TOKEN = "1c3ecbe8b623d1ebaa31a67af561542a"
+
+OPEN_WEATHER_API_KEY = os.getenv("OPEN_WEATHER_API_KEY")
+
+ACCOUNT_SID = os.getenv("ACCOUNT_SID")
+AUTH_TOKEN = os.getenv("AUTH_TOKEN")
 
 app = Flask(__name__)
 
