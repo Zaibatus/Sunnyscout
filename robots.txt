@@ -1,0 +1,10 @@
+User-agent: Googlebot
+Allow: /public/
+Disallow: /admin/
+Disallow: /private/
+
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Allow: /public/
+
